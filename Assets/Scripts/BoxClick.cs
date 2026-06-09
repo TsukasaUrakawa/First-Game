@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class BoxClick : MonoBehaviour
 {
@@ -10,9 +11,20 @@ public class BoxClick : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    void OnMouseDown()
+    void Update()
     {
-        isOpen = !isOpen;
-        animator.SetBool("IsOpen", isOpen);
+        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                if (hit.transform == transform || hit.transform.IsChildOf(transform))
+                {
+                    isOpen = !isOpen;
+                    animator.SetBool("IsOpen", isOpen);
+                }
+            }
+        }
     }
 }
