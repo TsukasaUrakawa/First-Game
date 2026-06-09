@@ -8,7 +8,7 @@ public class BoxClick : MonoBehaviour
     // 本一覧UI
     public GameObject bookListPanel;
 
-    private bool isOpen = false;
+    bool isOpen = false;
 
     void Start()
     {
