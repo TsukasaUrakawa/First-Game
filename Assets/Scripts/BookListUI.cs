@@ -6,7 +6,7 @@ public class BookListUI : MonoBehaviour
     [Header("本のプレハブ")]
     [SerializeField] private GameObject BookItemPrefab;
 
-    [Header("Content")]
+    [Header("コンテンツ")]
     [SerializeField] private Transform Content;
 
     private void Start()

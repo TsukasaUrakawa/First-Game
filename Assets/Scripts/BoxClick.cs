@@ -3,21 +3,21 @@ using UnityEngine.InputSystem;
 
 public class BoxClick : MonoBehaviour
 {
-    private Animator animator;
+    private Animator _animator;
 
     // 本一覧UI
-    public GameObject bookListPanel;
+    public GameObject _bookListPanel;
 
-    bool isOpen = false;
+    bool _isOpen = false;
 
     void Start()
     {
-        animator = GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
 
         // 念のためゲーム開始時は非表示
-        if (bookListPanel != null)
+        if (_bookListPanel != null)
         {
-            bookListPanel.SetActive(false);
+            _bookListPanel.SetActive(false);
         }
     }
 
@@ -31,13 +31,13 @@ public class BoxClick : MonoBehaviour
             {
                 if (hit.transform == transform || hit.transform.IsChildOf(transform))
                 {
-                    isOpen = !isOpen;
-                    animator.SetBool("IsOpen", isOpen);
+                    _isOpen = !_isOpen;
+                    _animator.SetBool("IsOpen", _isOpen);
 
                     // 閉じるときはすぐUIを消す
-                    if (!isOpen)
+                    if (!_isOpen)
                     {
-                        bookListPanel.SetActive(false);
+                        _bookListPanel.SetActive(false);
                     }
                 }
             }
@@ -47,6 +47,6 @@ public class BoxClick : MonoBehaviour
     // Openアニメーションの最後にAnimation Eventから呼ぶ
     public void ShowBookList()
     {
-        bookListPanel.SetActive(true);
+        _bookListPanel.SetActive(true);
     }
 }
