@@ -977,9 +977,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6764019898714205150, guid: 57c9acc510ae1fb4bb6a617279d6e71b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1626826818}
-    - targetCorrespondingSourceObject: {fileID: 6764019898714205150, guid: 57c9acc510ae1fb4bb6a617279d6e71b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1626826822}
   m_SourcePrefab: {fileID: 100100000, guid: 57c9acc510ae1fb4bb6a617279d6e71b, type: 3}
 --- !u!1 &642864390
 GameObject:
@@ -1543,7 +1540,6 @@ GameObject:
   - component: {fileID: 1211368017}
   - component: {fileID: 1211368019}
   - component: {fileID: 1211368018}
-  - component: {fileID: 1211368020}
   m_Layer: 5
   m_Name: BookListUI
   m_TagString: Untagged
@@ -1610,20 +1606,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1211368016}
   m_CullTransparentMesh: 1
---- !u!114 &1211368020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1211368016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 339e28f6710c8734f93727e2ba1690fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BookItemPrefab: {fileID: 5193159025137752661, guid: 0b4c05d18e11d2c43a711cbbad2af163, type: 3}
-  Content: {fileID: 2072999304}
 --- !u!1 &1498360581
 GameObject:
   m_ObjectHideFlags: 0
@@ -1845,19 +1827,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1626826822
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1626826815}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20dedf2c4b37f6c41bb717b8d72d6989, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bookListPanel: {fileID: 1211368016}
 --- !u!1 &1794036157
 GameObject:
   m_ObjectHideFlags: 0
