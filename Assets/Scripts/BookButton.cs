@@ -1,8 +1,12 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BookButton : MonoBehaviour
 {
-    private Image _image;
-    
+    [SerializeField] Sprite _bookSprite;
+    [SerializeField] BookPopUpController _bookPopUpController;
+
+    public void SendSprite()
+    {
+        _bookPopUpController.ShowBookPopUp(_bookSprite);
+    }
 }
