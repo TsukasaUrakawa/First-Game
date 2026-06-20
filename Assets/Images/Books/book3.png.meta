@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 93021899205a9b24a8fbd99deab809b5
+guid: bb2397e2a1bbbc746a33c39c278e1ca0
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,9 +43,9 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -69,10 +69,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -95,12 +95,408 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Beige1
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 11
+        width: 157
+        height: 784
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cab6ded699dd1f34196ba7d97934aba4
+      internalID: 955068583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Beige2
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 11
+        width: 167
+        height: 784
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4958dddd6658413448fc637dc046b0a7
+      internalID: -963440662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Beige3
+      rect:
+        serializedVersion: 2
+        x: 331
+        y: 11
+        width: 168
+        height: 784
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 798f222eaaaa5fb4980c5a031510f609
+      internalID: -2145804827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Beige4
+      rect:
+        serializedVersion: 2
+        x: 499
+        y: 11
+        width: 172
+        height: 784
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75c7777e7e4c72942b4dee5a74782028
+      internalID: -770483183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Beige5
+      rect:
+        serializedVersion: 2
+        x: 671
+        y: 11
+        width: 170
+        height: 784
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfa2832fedf51744386c012b45dae3aa
+      internalID: 1829804482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Beige6
+      rect:
+        serializedVersion: 2
+        x: 841
+        y: 11
+        width: 170
+        height: 784
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a8440ac2e6b74a4dbcb076281bdd494
+      internalID: 2086414617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Beige7
+      rect:
+        serializedVersion: 2
+        x: 1011
+        y: 11
+        width: 170
+        height: 784
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3648c0d70b381454197bb15792bce52c
+      internalID: 2117293371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Beige8
+      rect:
+        serializedVersion: 2
+        x: 1181
+        y: 11
+        width: 167
+        height: 784
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: acd6ebc3e3abf1543b28c493e3930483
+      internalID: 1874568269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Beige9
+      rect:
+        serializedVersion: 2
+        x: 1348
+        y: 11
+        width: 170
+        height: 784
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15081c02aa738c64bbedbe2e963337fa
+      internalID: -587556263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Beige10
+      rect:
+        serializedVersion: 2
+        x: 1518
+        y: 11
+        width: 171
+        height: 784
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b002d6cd36dc11044bb397b2a3605984
+      internalID: 1589663762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Beige11
+      rect:
+        serializedVersion: 2
+        x: 1689
+        y: 11
+        width: 171
+        height: 784
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e3f615c87f068c4ba23928c32723413
+      internalID: 1361922641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Beige12
+      rect:
+        serializedVersion: 2
+        x: 1860
+        y: 11
+        width: 171
+        height: 784
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39e1aef5f2cabf04e8ffb8e6067c9d2c
+      internalID: -1073225314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Beige13
+      rect:
+        serializedVersion: 2
+        x: 2031
+        y: 12
+        width: 171
+        height: 784
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbaf9e5081ea2584c8cde339deda4f79
+      internalID: -2024432032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Beige14
+      rect:
+        serializedVersion: 2
+        x: 2202
+        y: 11
+        width: 171
+        height: 784
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9608301683258b84c8a559d0e19605bb
+      internalID: -2014092833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Beige15
+      rect:
+        serializedVersion: 2
+        x: 2373
+        y: 11
+        width: 168
+        height: 784
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5bb1a4db98f49847b3bcd888f33930a
+      internalID: -331180437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Beige16
+      rect:
+        serializedVersion: 2
+        x: 2541
+        y: 11
+        width: 168
+        height: 784
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1bbeada02da006541a784af739555023
+      internalID: -542137271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Beige17
+      rect:
+        serializedVersion: 2
+        x: 2709
+        y: 11
+        width: 166
+        height: 784
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68f034caff4406b4f8b8635a639faa27
+      internalID: 1797362684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Beige18
+      rect:
+        serializedVersion: 2
+        x: 2875
+        y: 11
+        width: 155
+        height: 784
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14253c4dd97909a48be1adad673b98f1
+      internalID: -1030822658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 148ff624977642f4489ca87427468c47
     internalID: 0
     vertices: []
     indices: 
@@ -109,7 +505,25 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Beige1: 955068583
+      Beige10: 1589663762
+      Beige11: 1361922641
+      Beige12: -1073225314
+      Beige13: -2024432032
+      Beige14: -2014092833
+      Beige15: -331180437
+      Beige16: -542137271
+      Beige17: 1797362684
+      Beige18: -1030822658
+      Beige2: -963440662
+      Beige3: -2145804827
+      Beige4: -770483183
+      Beige5: 1829804482
+      Beige6: 2086414617
+      Beige7: 2117293371
+      Beige8: 1874568269
+      Beige9: -587556263
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

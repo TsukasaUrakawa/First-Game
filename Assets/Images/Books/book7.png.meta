@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f5444cbeb769bc84bbd62083ceb5d75a
+guid: 3293c3a952e833641b3820454159aeea
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,9 +43,9 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -69,10 +69,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -95,12 +95,408 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: White1
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 8
+        width: 155
+        height: 744
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a94d8f03a7dfe2b4ebf095d5368b470b
+      internalID: -482704419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: White2
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 8
+        width: 167
+        height: 744
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4c8fe072eb75f24691cbba583aef698
+      internalID: 1114644743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: White3
+      rect:
+        serializedVersion: 2
+        x: 330
+        y: 8
+        width: 170
+        height: 744
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 463c88cea52aca3479e1e4f37a842c04
+      internalID: 1299655882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: White4
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 8
+        width: 170
+        height: 744
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49ad7eae6656a0b4e9b77657ef549426
+      internalID: -1303200406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: White5
+      rect:
+        serializedVersion: 2
+        x: 670
+        y: 8
+        width: 170
+        height: 744
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2de150bbf83d8fa4f9d8f6ad60212015
+      internalID: -1157609504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: White6
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 8
+        width: 170
+        height: 744
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1762a2ac68fddca4ca254378d8e44dd6
+      internalID: 800283450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: White7
+      rect:
+        serializedVersion: 2
+        x: 1010
+        y: 8
+        width: 171
+        height: 744
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6e3b6475a83d9042aed64a6eef1425b
+      internalID: 726126741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: White8
+      rect:
+        serializedVersion: 2
+        x: 1181
+        y: 8
+        width: 166
+        height: 744
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb2fc5af465878a47829a6f012d566e9
+      internalID: -923037735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: White9
+      rect:
+        serializedVersion: 2
+        x: 1347
+        y: 8
+        width: 171
+        height: 744
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7adf4df0cc5e154badf132157c317d2
+      internalID: 1107541261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: White10
+      rect:
+        serializedVersion: 2
+        x: 1518
+        y: 8
+        width: 171
+        height: 744
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 277f23fe2a362c84e919c7efde2c8816
+      internalID: -913346253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: White11
+      rect:
+        serializedVersion: 2
+        x: 1689
+        y: 8
+        width: 171
+        height: 744
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6ab18b1d781ccf4bb1cd7b6e11eb085
+      internalID: -1944148281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: White12
+      rect:
+        serializedVersion: 2
+        x: 1860
+        y: 8
+        width: 172
+        height: 744
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9df136c3c1593e24094382961834f2fc
+      internalID: -160768304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: White13
+      rect:
+        serializedVersion: 2
+        x: 2032
+        y: 8
+        width: 169
+        height: 744
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a25c816ae192c624089cb65e6a7ca101
+      internalID: -1769185862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: White14
+      rect:
+        serializedVersion: 2
+        x: 2201
+        y: 8
+        width: 171
+        height: 744
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28ccc5d6ba6ae1046b667c05ae9cc692
+      internalID: -1139756635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: White15
+      rect:
+        serializedVersion: 2
+        x: 2372
+        y: 8
+        width: 168
+        height: 744
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb38979a9cb3a20498ccbd74572294aa
+      internalID: 2004948951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: White16
+      rect:
+        serializedVersion: 2
+        x: 2540
+        y: 8
+        width: 168
+        height: 744
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d8be088ed9760e49a02b126d46ea266
+      internalID: -1655644299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: White17
+      rect:
+        serializedVersion: 2
+        x: 2708
+        y: 8
+        width: 167
+        height: 744
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53bffefe34d6b334a8dc61139741bfc7
+      internalID: 1663169593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: White18
+      rect:
+        serializedVersion: 2
+        x: 2875
+        y: 8
+        width: 158
+        height: 744
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb7d385deb183204a9b056592461c392
+      internalID: -415369352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 0c837516c4cf64641b46cb0119951bd2
     internalID: 0
     vertices: []
     indices: 
@@ -109,7 +505,25 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      White1: -482704419
+      White10: -913346253
+      White11: -1944148281
+      White12: -160768304
+      White13: -1769185862
+      White14: -1139756635
+      White15: 2004948951
+      White16: -1655644299
+      White17: 1663169593
+      White18: -415369352
+      White2: 1114644743
+      White3: 1299655882
+      White4: -1303200406
+      White5: -1157609504
+      White6: 800283450
+      White7: 726126741
+      White8: -923037735
+      White9: 1107541261
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

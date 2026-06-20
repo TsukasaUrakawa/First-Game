@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bef1f26f0b6840f4ab6e59fa3866e005
+guid: 0c3ad69eb2dfcc947864ec34a02ccfe2
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,9 +43,9 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -69,10 +69,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -95,12 +95,408 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Purple1
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 8
+        width: 154
+        height: 706
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e267527e1a28044aa1bf021efacc372
+      internalID: 2036135975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Purple2
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 8
+        width: 168
+        height: 706
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56c9865ac6a6e8248ad1a7440e2c982a
+      internalID: 312788013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Purple3
+      rect:
+        serializedVersion: 2
+        x: 328
+        y: 8
+        width: 169
+        height: 706
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b629aea4c0d02004d9c4eded60769372
+      internalID: 1259916244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Purple4
+      rect:
+        serializedVersion: 2
+        x: 497
+        y: 8
+        width: 172
+        height: 706
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2429042767a08b4e82c01c7199d42fb
+      internalID: -481025204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Purple5
+      rect:
+        serializedVersion: 2
+        x: 669
+        y: 8
+        width: 169
+        height: 706
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4491e44ade7ff7e4eb47c810e311b8f8
+      internalID: 237945345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Purple6
+      rect:
+        serializedVersion: 2
+        x: 838
+        y: 8
+        width: 170
+        height: 706
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8d6ccccce826eb48b43ca60eec9b11c
+      internalID: -901591459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Purple7
+      rect:
+        serializedVersion: 2
+        x: 1008
+        y: 8
+        width: 170
+        height: 706
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc6523cd271b9e84aa829dad083af066
+      internalID: 1661914737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Purple8
+      rect:
+        serializedVersion: 2
+        x: 1178
+        y: 8
+        width: 168
+        height: 706
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b6084d150c2c2041997f9b2189c79b5
+      internalID: 405860656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Purple9
+      rect:
+        serializedVersion: 2
+        x: 1346
+        y: 8
+        width: 171
+        height: 706
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8915fd57cde56414ba45108a0408331e
+      internalID: 1391948147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Purple10
+      rect:
+        serializedVersion: 2
+        x: 1517
+        y: 8
+        width: 170
+        height: 706
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc929561b9ae4394aad5f98bbcb6d157
+      internalID: 1264614621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Purple11
+      rect:
+        serializedVersion: 2
+        x: 1687
+        y: 8
+        width: 170
+        height: 706
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e38ac442a661e345a7c5eb1ab841b0b
+      internalID: -1104892332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Purple12
+      rect:
+        serializedVersion: 2
+        x: 1857
+        y: 8
+        width: 170
+        height: 706
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5377a4779188f44782444916a44cd3e
+      internalID: 1682381553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Purple13
+      rect:
+        serializedVersion: 2
+        x: 2027
+        y: 8
+        width: 172
+        height: 706
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 974cf691ef5ff424b87006fe65a4bdea
+      internalID: 1627740114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Purple14
+      rect:
+        serializedVersion: 2
+        x: 2199
+        y: 8
+        width: 170
+        height: 706
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4865c8ebabb35f645b8465d263d78949
+      internalID: 1518898065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Purple15
+      rect:
+        serializedVersion: 2
+        x: 2369
+        y: 9
+        width: 168
+        height: 706
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0555cd967deeab84f8fa7087aa0537aa
+      internalID: 787035054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Purple16
+      rect:
+        serializedVersion: 2
+        x: 2537
+        y: 9
+        width: 168
+        height: 706
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3a413c74a07dba47a6fae331129282c
+      internalID: -1087534537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Purple17
+      rect:
+        serializedVersion: 2
+        x: 2705
+        y: 9
+        width: 168
+        height: 706
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbfee1f395d8bdc4488e4b0849350e5e
+      internalID: -1712200842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Purple18
+      rect:
+        serializedVersion: 2
+        x: 2873
+        y: 9
+        width: 156
+        height: 706
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: afb7b70e7ecad7b4ba734def0c1a4279
+      internalID: 1162162930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: d0e15e14d94f5af49a43d6c02d486252
     internalID: 0
     vertices: []
     indices: 
@@ -109,7 +505,25 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Purple1: 2036135975
+      Purple10: 1264614621
+      Purple11: -1104892332
+      Purple12: 1682381553
+      Purple13: 1627740114
+      Purple14: 1518898065
+      Purple15: 787035054
+      Purple16: -1087534537
+      Purple17: -1712200842
+      Purple18: 1162162930
+      Purple2: 312788013
+      Purple3: 1259916244
+      Purple4: -481025204
+      Purple5: 237945345
+      Purple6: -901591459
+      Purple7: 1661914737
+      Purple8: 405860656
+      Purple9: 1391948147
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
