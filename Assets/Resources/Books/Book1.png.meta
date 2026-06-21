@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Green1
+      name: Green01
       rect:
         serializedVersion: 2
         x: 6
@@ -119,11 +119,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Green2
+      name: Green02
       rect:
         serializedVersion: 2
         x: 160
-        y: 8
+        y: 12
         width: 168
         height: 844
       alignment: 0
@@ -141,7 +141,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Green3
+      name: Green03
       rect:
         serializedVersion: 2
         x: 328
@@ -163,7 +163,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Green4
+      name: Green04
       rect:
         serializedVersion: 2
         x: 496
@@ -185,7 +185,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Green5
+      name: Green05
       rect:
         serializedVersion: 2
         x: 668
@@ -207,7 +207,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Green6
+      name: Green06
       rect:
         serializedVersion: 2
         x: 837
@@ -229,7 +229,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Green7
+      name: Green07
       rect:
         serializedVersion: 2
         x: 1008
@@ -251,7 +251,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Green8
+      name: Green08
       rect:
         serializedVersion: 2
         x: 1178
@@ -273,7 +273,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Green9
+      name: Green09
       rect:
         serializedVersion: 2
         x: 1344
@@ -506,7 +506,15 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Green1: -1804510595
+      Green01: -1804510595
+      Green02: -1105485433
+      Green03: 1839050717
+      Green04: 482398667
+      Green05: -1382217489
+      Green06: -1800458424
+      Green07: -2137703285
+      Green08: 552989796
+      Green09: -1988275432
       Green10: -803139728
       Green11: -540055061
       Green12: 1158891417
@@ -516,14 +524,6 @@ TextureImporter:
       Green16: -1436103712
       Green17: -914518212
       Green18: 1558837001
-      Green2: -1105485433
-      Green3: 1839050717
-      Green4: 482398667
-      Green5: -1382217489
-      Green6: -1800458424
-      Green7: -2137703285
-      Green8: 552989796
-      Green9: -1988275432
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

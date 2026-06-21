@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Red1
+      name: Red01
       rect:
         serializedVersion: 2
         x: 6
@@ -119,7 +119,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Red2
+      name: Red02
       rect:
         serializedVersion: 2
         x: 166
@@ -141,7 +141,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Red3
+      name: Red03
       rect:
         serializedVersion: 2
         x: 341
@@ -163,7 +163,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Red4
+      name: Red04
       rect:
         serializedVersion: 2
         x: 516
@@ -185,7 +185,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Red5
+      name: Red05
       rect:
         serializedVersion: 2
         x: 690
@@ -207,7 +207,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Red6
+      name: Red06
       rect:
         serializedVersion: 2
         x: 860
@@ -229,7 +229,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Red7
+      name: Red07
       rect:
         serializedVersion: 2
         x: 1039
@@ -251,7 +251,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Red8
+      name: Red08
       rect:
         serializedVersion: 2
         x: 1218
@@ -273,7 +273,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Red9
+      name: Red09
       rect:
         serializedVersion: 2
         x: 1394
@@ -484,7 +484,15 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Red1: 1925288026
+      Red01: 1925288026
+      Red02: 1347688541
+      Red03: -818546057
+      Red04: -584467597
+      Red05: -1855907672
+      Red06: -1611174893
+      Red07: 494460966
+      Red08: 303706182
+      Red09: 1878876913
       Red10: 131927824
       Red11: -192157419
       Red12: 774019734
@@ -493,14 +501,6 @@ TextureImporter:
       Red15: -79529591
       Red16: 122563131
       Red17: -122112218
-      Red2: 1347688541
-      Red3: -818546057
-      Red4: -584467597
-      Red5: -1855907672
-      Red6: -1611174893
-      Red7: 494460966
-      Red8: 303706182
-      Red9: 1878876913
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
