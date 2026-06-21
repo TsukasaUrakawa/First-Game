@@ -13,10 +13,24 @@ public class BookListUI : MonoBehaviour
 
     private void CreateBookButton()
     {
-        for (int i = 0; i < _bookManager._allBookSprites.Length; i++)
+        //元の配列をコピー
+        Sprite[]books = (Sprite[])_bookManager._allBookSprites.Clone();
+
+        // 本のシャッフル
+        for (int i = 0; i < books.Length; i++)
+        {
+            int randomIndex = Random.Range(i, books.Length);
+
+            Sprite temp = books[i];
+            books[i] = books[randomIndex];
+            books[randomIndex] = temp;
+        }
+
+        //本ボタンの生成
+        for (int i = 0; i < books.Length; i++)
         {
             BookButton button = Instantiate(_bookButtonPrefab, _content);
-            Sprite bookSprite = _bookManager._allBookSprites[i];
+            Sprite bookSprite = books[i];
             button.SetUp(bookSprite, _bookPopUpController);
         }
     }

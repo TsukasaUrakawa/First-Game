@@ -11,6 +11,7 @@ public class BookButton : MonoBehaviour
     {
         _bookImage = GetComponent<Image>();
     }
+    //ボタンに画像を配置
     public void SetUp(Sprite BookSprite,BookPopUpController Controller)
     {
         _bookSprite = BookSprite;
