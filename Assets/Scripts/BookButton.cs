@@ -24,6 +24,7 @@ public class BookButton : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
     //本の一覧に表示されている画像をUIManagerに渡す
     public void SendSprite()
     {
+        _bookPopUpController.PlayBookSelectSE();
         _bookPopUpController.ShowBookPopUp(_bookSprite);
     }
 

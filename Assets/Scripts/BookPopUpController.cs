@@ -7,6 +7,7 @@ public class BookPopUpController : MonoBehaviour
     [SerializeField] GameObject _bookPopUpUI;
     [SerializeField] Image _bookImage;
     [SerializeField] AudioClip _clickSound;
+    [SerializeField] AudioClip _bookSelectSound;
 
 
     private void Awake()
@@ -29,5 +30,10 @@ public class BookPopUpController : MonoBehaviour
     public void PlayClickSE()
     {
         _audioSource2.PlayOneShot(_clickSound);
+    }
+
+    public void PlayBookSelectSE()
+    {
+        _audioSource2.PlayOneShot(_bookSelectSound);
     }
 }
