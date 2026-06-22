@@ -6,7 +6,7 @@ public class BoxOpenAndClose : MonoBehaviour
     [SerializeField] AudioClip _openSE;
     [SerializeField] AudioClip _closeSE;
     private Animator _animator;
-    private AudioSource _audioSource;
+    private AudioSource _audioSource1;
 
     //Animationの遷移
     private void OnMouseDown()
@@ -16,7 +16,7 @@ public class BoxOpenAndClose : MonoBehaviour
     private void Start()
     {
         _animator = GetComponent<Animator>();
-        _audioSource = GetComponent<AudioSource>();
+        _audioSource1 = GetComponent<AudioSource>();
     }
 
     private void ShowBookList()
@@ -40,11 +40,11 @@ public class BoxOpenAndClose : MonoBehaviour
 
     private void PlayOpenSE()
     {
-        _audioSource.PlayOneShot(_openSE);
+        _audioSource1.PlayOneShot(_openSE);
     }
 
     private void PlayCloseSE()
     {
-        _audioSource.PlayOneShot(_closeSE);
+        _audioSource1.PlayOneShot(_closeSE);
     }
 }

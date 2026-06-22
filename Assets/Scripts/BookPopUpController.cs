@@ -3,9 +3,16 @@ using UnityEngine.UI;
 
 public class BookPopUpController : MonoBehaviour
 {
+    private AudioSource _audioSource2;
     [SerializeField] GameObject _bookPopUpUI;
     [SerializeField] Image _bookImage;
+    [SerializeField] AudioClip _clickSound;
 
+
+    private void Awake()
+    {
+        _audioSource2 = GetComponent<AudioSource>();
+    }
     //BookPopUpUIを表示する
     public void ShowBookPopUp(Sprite selectedBookSprite)
     {
@@ -17,5 +24,10 @@ public class BookPopUpController : MonoBehaviour
     public void CloseBookPopUp()
     {
         _bookPopUpUI.SetActive(false);
+    }
+
+    public void PlayClickSE()
+    {
+        _audioSource2.PlayOneShot(_clickSound);
     }
 }

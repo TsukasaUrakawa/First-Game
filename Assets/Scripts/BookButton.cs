@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class BookButton : MonoBehaviour
+public class BookButton : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
 {
+    [SerializeField] GameObject _frameImage;
     private Sprite _bookSprite;
     private BookPopUpController _bookPopUpController;
     private Image _bookImage;
@@ -23,5 +25,17 @@ public class BookButton : MonoBehaviour
     public void SendSprite()
     {
         _bookPopUpController.ShowBookPopUp(_bookSprite);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        _frameImage.SetActive(true);
+        _bookImage.color = new Color(0.8f, 0.8f, 0.8f, 1f);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        _frameImage.SetActive(false);
+        _bookImage.color = Color.white;
     }
 }
