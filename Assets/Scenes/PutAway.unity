@@ -1705,6 +1705,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1716211007}
+        m_TargetAssemblyTypeName: BookPopUpController, Assembly-CSharp
+        m_MethodName: TakeBook
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1626826820}
+        m_TargetAssemblyTypeName: BoxOpenAndClose, Assembly-CSharp
+        m_MethodName: CloseBookList
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1201164288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1860,6 +1884,37 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &1594965736
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1594965737}
+  m_Layer: 0
+  m_Name: BookSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1594965737
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1594965736}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.5, y: 2.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1600935404
 GameObject:
   m_ObjectHideFlags: 0
@@ -2117,6 +2172,9 @@ MonoBehaviour:
   _bookPopUpUI: {fileID: 120548369}
   _bookImage: {fileID: 434314215}
   _clickSound: {fileID: 8300000, guid: f01494148f8a453429510bf1e3eff2f5, type: 3}
+  _bookSelectSound: {fileID: 8300000, guid: 75feca03f1de1fd448d8ebc2af6ee3ce, type: 3}
+  _bookObjectPrefab: {fileID: 1676363265870821920, guid: 3272934aa69877246a6f7d265bb8ff40, type: 3}
+  _spawnPoint: {fileID: 1594965737}
 --- !u!82 &1716211008
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2678,3 +2736,4 @@ SceneRoots:
   - {fileID: 1973178348}
   - {fileID: 430685252}
   - {fileID: 1600935406}
+  - {fileID: 1594965737}
