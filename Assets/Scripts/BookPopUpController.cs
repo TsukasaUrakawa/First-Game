@@ -10,8 +10,8 @@ public class BookPopUpController : MonoBehaviour
     [SerializeField] Image _bookImage;
     [SerializeField] AudioClip _clickSound;
     [SerializeField] AudioClip _bookSelectSound;
-    [SerializeField] GameObject _bookObjectPrefab;
     [SerializeField] Transform _spawnPoint;
+    [SerializeField] private GameObject[] _bookPrefabs;
 
 
     private void Awake()
@@ -45,7 +45,40 @@ public class BookPopUpController : MonoBehaviour
 
     public void TakeBook()
     {
-        GameObject book = Instantiate(_bookObjectPrefab,_spawnPoint.position,Quaternion.identity);
+        GameObject prefab = null;
+        if (_selectedBookSprite.name.Contains("Green"))
+        {
+            prefab = _bookPrefabs[0];
+        }
+        else if (_selectedBookSprite.name.Contains("Blue"))
+        {
+            prefab = _bookPrefabs[1];
+        }
+        else if (_selectedBookSprite.name.Contains("Beige"))
+        {
+            prefab = _bookPrefabs[2];
+        }
+        else if (_selectedBookSprite.name.Contains("Red"))
+        {
+            prefab = _bookPrefabs[3];
+        }
+        else if (_selectedBookSprite.name.Contains("Purple"))
+        {
+            prefab = _bookPrefabs[4];
+        }
+        else if (_selectedBookSprite.name.Contains("Brown"))
+        {
+            prefab = _bookPrefabs[5];
+        }
+        else if (_selectedBookSprite.name.Contains("White"))
+        {
+            prefab = _bookPrefabs[6];
+        }
+        else if (_selectedBookSprite.name.Contains("Black"))
+        {
+            prefab = _bookPrefabs[7];
+        }
+        GameObject book = Instantiate(prefab,_spawnPoint.position,Quaternion.identity);
         BookObject bookObject = book.GetComponent<BookObject>();
         bookObject.SetSprite(_selectedBookSprite);
         _bookPopUpUI.SetActive(false);

@@ -2173,8 +2173,16 @@ MonoBehaviour:
   _bookImage: {fileID: 434314215}
   _clickSound: {fileID: 8300000, guid: f01494148f8a453429510bf1e3eff2f5, type: 3}
   _bookSelectSound: {fileID: 8300000, guid: 75feca03f1de1fd448d8ebc2af6ee3ce, type: 3}
-  _bookObjectPrefab: {fileID: 1676363265870821920, guid: 3272934aa69877246a6f7d265bb8ff40, type: 3}
   _spawnPoint: {fileID: 1594965737}
+  _bookPrefabs:
+  - {fileID: 1676363265870821920, guid: 3272934aa69877246a6f7d265bb8ff40, type: 3}
+  - {fileID: 1676363265870821920, guid: 6d58039e6d2137742a11e93e5817f3bb, type: 3}
+  - {fileID: 1676363265870821920, guid: 7e1a153893d7bc645bdf14a8f6c79ff0, type: 3}
+  - {fileID: 1676363265870821920, guid: ffa9251655a5ddd46a6bfc7d97a894db, type: 3}
+  - {fileID: 1676363265870821920, guid: b292201c540645444a8bbcb49ade15ff, type: 3}
+  - {fileID: 1676363265870821920, guid: 353a8b0dd85b8a347ac0dcb8bb40d9ed, type: 3}
+  - {fileID: 1676363265870821920, guid: 36fd1403840695d4d8d6ecfff06b9e83, type: 3}
+  - {fileID: 1676363265870821920, guid: 8df3b5e206dc5b24cb514e5ad04664f9, type: 3}
 --- !u!82 &1716211008
 AudioSource:
   m_ObjectHideFlags: 0
