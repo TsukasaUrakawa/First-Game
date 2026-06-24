@@ -25,7 +25,7 @@ public class BookButton : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
     public void SendSprite()
     {
         _bookPopUpController.PlayBookSelectSE();
-        _bookPopUpController.ShowBookPopUp(_bookSprite);
+        _bookPopUpController.ShowBookPopUp(_bookSprite,this.gameObject);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
