@@ -2183,6 +2183,7 @@ MonoBehaviour:
   - {fileID: 1676363265870821920, guid: 353a8b0dd85b8a347ac0dcb8bb40d9ed, type: 3}
   - {fileID: 1676363265870821920, guid: 36fd1403840695d4d8d6ecfff06b9e83, type: 3}
   - {fileID: 1676363265870821920, guid: 8df3b5e206dc5b24cb514e5ad04664f9, type: 3}
+  _effectPrefab: {fileID: 9157105887711914197, guid: c4f829cb7dd4b864caf8832ec5b1ee55, type: 3}
 --- !u!82 &1716211008
 AudioSource:
   m_ObjectHideFlags: 0

@@ -12,6 +12,8 @@ public class BookPopUpController : MonoBehaviour
     [SerializeField] AudioClip _bookSelectSound;
     [SerializeField] Transform _spawnPoint;
     [SerializeField] private GameObject[] _bookPrefabs;
+    [SerializeField] private GameObject _effectPrefab;
+    [SerializeField] AudioClip _takeBookSound;
 
 
     private void Awake()
@@ -79,6 +81,16 @@ public class BookPopUpController : MonoBehaviour
             prefab = _bookPrefabs[7];
         }
         GameObject book = Instantiate(prefab,_spawnPoint.position,Quaternion.identity);
+        //本取り出し音再生
+        if (_takeBookSound != null)
+        {
+            _audioSource2.PlayOneShot(_takeBookSound);
+        }
+        //エフェクト生成
+        if (_effectPrefab != null)
+        {
+            Instantiate(_effectPrefab, _spawnPoint.position, Quaternion.identity);
+        }
         BookObject bookObject = book.GetComponent<BookObject>();
         bookObject.SetSprite(_selectedBookSprite);
         _bookPopUpUI.SetActive(false);
