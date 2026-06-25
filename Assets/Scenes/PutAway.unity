@@ -290,6 +290,38 @@ MonoBehaviour:
   _bookPopUpController: {fileID: 1716211007}
   _bookButtonPrefab: {fileID: 927969194653634923, guid: 8c5d2846a85a3f64db99bf9d054f0895, type: 3}
   _content: {fileID: 1734815854}
+--- !u!1 &231255316
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 231255317}
+  m_Layer: 0
+  m_Name: BookSlot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &231255317
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231255316}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.6119654, y: 0.072762795, z: -0.004333841}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1249093257}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &250026650
 GameObject:
   m_ObjectHideFlags: 0
@@ -1767,6 +1799,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1201164285}
   m_CullTransparentMesh: 1
+--- !u!1 &1249093256
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1249093257}
+  - component: {fileID: 1249093258}
+  m_Layer: 0
+  m_Name: Slot1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1249093257
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249093256}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6.5, y: 7.63, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 231255317}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1249093258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249093256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da0be2cc73209864db4bdd87ce222396, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1255287787
 GameObject:
   m_ObjectHideFlags: 0
@@ -2184,6 +2260,7 @@ MonoBehaviour:
   - {fileID: 1676363265870821920, guid: 36fd1403840695d4d8d6ecfff06b9e83, type: 3}
   - {fileID: 1676363265870821920, guid: 8df3b5e206dc5b24cb514e5ad04664f9, type: 3}
   _effectPrefab: {fileID: 9157105887711914197, guid: c4f829cb7dd4b864caf8832ec5b1ee55, type: 3}
+  _takeBookSound: {fileID: 8300000, guid: d242089221b231f4d8affe05ff693977, type: 3}
 --- !u!82 &1716211008
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2746,3 +2823,4 @@ SceneRoots:
   - {fileID: 430685252}
   - {fileID: 1600935406}
   - {fileID: 1594965737}
+  - {fileID: 231255317}
