@@ -7,7 +7,9 @@ public class CameraController : MonoBehaviour
     private Vector3 _defaultPosition;
     private float _defaultSize;
 
-    private bool _isZoomed = false;
+    public bool IsZoomed { get; private set; }
+
+    private bool _canResetByRightClick = true;
 
     private void Awake()
     {
@@ -19,7 +21,12 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        if (_isZoomed && Input.GetMouseButtonDown(1))
+        if (!Input.GetMouseButton(1))
+        {
+            _canResetByRightClick = true;
+        }
+
+        if (IsZoomed && _canResetByRightClick && Input.GetMouseButtonDown(1))
         {
             ResetCamera();
         }
@@ -34,13 +41,16 @@ public class CameraController : MonoBehaviour
         );
 
         _camera.orthographicSize = zoomSize;
-        _isZoomed = true;
+        IsZoomed = true;
+
+        // 拡大に使った右クリックで、即リセットされないようにする
+        _canResetByRightClick = false;
     }
 
     public void ResetCamera()
     {
         transform.position = _defaultPosition;
         _camera.orthographicSize = _defaultSize;
-        _isZoomed = false;
+        IsZoomed = false;
     }
 }

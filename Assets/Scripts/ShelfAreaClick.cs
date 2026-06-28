@@ -6,13 +6,21 @@ public class ShelfAreaClick : MonoBehaviour
     [SerializeField] private CameraController _cameraController;
     [SerializeField] private float _zoomSize = 3f;
 
-    private void OnMouseDown()
+    private void OnMouseOver()
     {
+        if (_cameraController.IsZoomed)
+        {
+            return;
+        }
+
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
         {
             return;
         }
 
-        _cameraController.ZoomTo(transform.position, _zoomSize);
+        if (Input.GetMouseButtonDown(1))
+        {
+            _cameraController.ZoomTo(transform.position, _zoomSize);
+        }
     }
 }
