@@ -10,7 +10,6 @@ public class BookPopUpController : MonoBehaviour
     [SerializeField] Image _bookImage;
     [SerializeField] AudioClip _clickSound;
     [SerializeField] AudioClip _bookSelectSound;
-    [SerializeField] private GameObject[] _bookPrefabs;
     [SerializeField] AudioClip _takeBookSound;
     [SerializeField] private HandItemController _handItemController;
 
@@ -48,15 +47,20 @@ public class BookPopUpController : MonoBehaviour
 
     public void TakeBook()
     {
-        if (_handItemController.HasBook)
+        int slotIndex = GetSlotIndexFromSpriteName(
+    _selectedBookSprite.name
+);
+
+        bool added = _handItemController.TryAddBook(
+            _selectedBookSprite,
+            slotIndex
+        );
+
+        if (!added)
         {
-            Debug.Log("すでに本を持っています");
+            Debug.Log("手持ちがいっぱいです");
             return;
         }
-
-        int slotIndex = GetSlotIndexFromSpriteName(_selectedBookSprite.name);
-
-        _handItemController.SetHandBook(_selectedBookSprite, slotIndex);
 
         if (_takeBookSound != null)
         {

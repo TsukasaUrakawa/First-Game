@@ -449,7 +449,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Book17
+      name: Blue17
       rect:
         serializedVersion: 2
         x: 2790
@@ -500,7 +500,7 @@ TextureImporter:
       Blue14: -680401439
       Blue15: 1368352564
       Blue16: 1186186062
-      Book17: 2105589868
+      Blue17: 2105589868
       Book2_1: -687973529
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0

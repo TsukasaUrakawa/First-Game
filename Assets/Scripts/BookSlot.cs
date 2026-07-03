@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class BookSlot : MonoBehaviour
 {
@@ -6,38 +7,121 @@ public class BookSlot : MonoBehaviour
 
     [SerializeField] private int _slotIndex;
     public int SlotIndex => _slotIndex;
+    public BookObject PlacedBook => _placedBook;
+    public int ShelfColorIndex { get; private set; } = -1;
 
     private BookObject _placedBook;
+    private Collider2D _clickCollider;
+
+    private void Awake()
+    {
+        _clickCollider = GetComponent<Collider2D>();
+        UpdateSlotIndexFromName();
+        UpdateShelfColorIndex();
+    }
 
     private void OnValidate()
     {
-        //オブジェクトの名前にする
+        UpdateSlotIndexFromName();
+        UpdateShelfColorIndex();
+    }
+
+    private void UpdateSlotIndexFromName()
+    {
         string objectName = gameObject.name;
 
         if (objectName.StartsWith("Slot"))
         {
             string numberPart = objectName.Substring(4);
-            //int型に変換できるか確認→numberに代入
+
             if (int.TryParse(numberPart, out int number))
             {
-                //スロットの内部番号に変換
                 _slotIndex = number - 1;
             }
         }
     }
+
+    private void UpdateShelfColorIndex()
+    {
+        if (transform.parent == null)
+        {
+            ShelfColorIndex = -1;
+            return;
+        }
+
+        const string shelfNamePrefix = "BookShelf";
+        string shelfName = transform.parent.name;
+
+        if (!shelfName.StartsWith(shelfNamePrefix))
+        {
+            ShelfColorIndex = -1;
+            return;
+        }
+
+        string numberPart = shelfName.Substring(shelfNamePrefix.Length);
+
+        if (int.TryParse(numberPart, out int shelfNumber))
+        {
+            ShelfColorIndex = shelfNumber - 1;
+        }
+    }
+
+    private void OnMouseDown()
+    {
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
+        if (IsFilled || HandBookPlacementController.Instance == null)
+        {
+            return;
+        }
+
+        HandBookPlacementController.Instance.TryPlaceBook(this);
+    }
+
     public void PlaceBook(Transform bookTransform)
     {
-        //本の位置をスロットの位置にピッタリ吸着
+        if (bookTransform == null || IsFilled)
+        {
+            return;
+        }
+
+        BookObject bookObject = bookTransform.GetComponent<BookObject>();
+
+        if (bookObject == null)
+        {
+            Debug.LogWarning("配置しようとしたオブジェクトにBookObjectがありません");
+            return;
+        }
+
         bookTransform.position = transform.position;
         IsFilled = true;
-        //配置された本のBookObjectを保存
-        _placedBook = bookTransform.GetComponent<BookObject>();
+        _placedBook = bookObject;
+
+        if (_clickCollider != null)
+        {
+            _clickCollider.enabled = false;
+        }
+
+        PlacedBookClick bookClick = bookTransform.GetComponent<PlacedBookClick>();
+
+        if (bookClick != null)
+        {
+            bookClick.SetCurrentSlot(this);
+        }
     }
 
     public void ClearSlot()
     {
         IsFilled = false;
         _placedBook = null;
+
+        if (_clickCollider != null)
+        {
+            _clickCollider.enabled = true;
+        }
     }
 
     public bool IsCorrect()
@@ -46,7 +130,7 @@ public class BookSlot : MonoBehaviour
         {
             return false;
         }
-        //本が持っている正解のスロット番号と配置されたスロット番号が同じとき返す
+
         return _placedBook.CorrectSlotIndex == _slotIndex;
     }
 }
