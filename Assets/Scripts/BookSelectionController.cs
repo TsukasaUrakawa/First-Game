@@ -93,7 +93,6 @@ public class BookSelectionController : MonoBehaviour
         }
 
         _selectedBooks.Clear();
-        _bookPopUpController.PlayTakeBookSE();
         _bookPopUpController.CloseBookPopUp();
     }
 
