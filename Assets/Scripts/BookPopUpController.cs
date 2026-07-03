@@ -10,10 +10,9 @@ public class BookPopUpController : MonoBehaviour
     [SerializeField] Image _bookImage;
     [SerializeField] AudioClip _clickSound;
     [SerializeField] AudioClip _bookSelectSound;
-    [SerializeField] Transform _spawnPoint;
     [SerializeField] private GameObject[] _bookPrefabs;
-    [SerializeField] private GameObject _effectPrefab;
     [SerializeField] AudioClip _takeBookSound;
+    [SerializeField] private HandItemController _handItemController;
 
 
     private void Awake()
@@ -49,58 +48,20 @@ public class BookPopUpController : MonoBehaviour
 
     public void TakeBook()
     {
-        //本の色に対応したプレハブを生成
-        GameObject prefab = null;
-        if (_selectedBookSprite.name.Contains("Green"))
+        if (_handItemController.HasBook)
         {
-            prefab = _bookPrefabs[0];
+            Debug.Log("すでに本を持っています");
+            return;
         }
-        else if (_selectedBookSprite.name.Contains("Blue"))
-        {
-            prefab = _bookPrefabs[1];
-        }
-        else if (_selectedBookSprite.name.Contains("Beige"))
-        {
-            prefab = _bookPrefabs[2];
-        }
-        else if (_selectedBookSprite.name.Contains("Red"))
-        {
-            prefab = _bookPrefabs[3];
-        }
-        else if (_selectedBookSprite.name.Contains("Purple"))
-        {
-            prefab = _bookPrefabs[4];
-        }
-        else if (_selectedBookSprite.name.Contains("Brown"))
-        {
-            prefab = _bookPrefabs[5];
-        }
-        else if (_selectedBookSprite.name.Contains("White"))
-        {
-            prefab = _bookPrefabs[6];
-        }
-        else if (_selectedBookSprite.name.Contains("Black"))
-        {
-            prefab = _bookPrefabs[7];
-        }
-        GameObject book = Instantiate(prefab,_spawnPoint.position,Quaternion.identity);
-        //本取り出し音再生
+
+        int slotIndex = GetSlotIndexFromSpriteName(_selectedBookSprite.name);
+
+        _handItemController.SetHandBook(_selectedBookSprite, slotIndex);
+
         if (_takeBookSound != null)
         {
             _audioSource2.PlayOneShot(_takeBookSound);
         }
-        //エフェクト生成
-        if (_effectPrefab != null)
-        {
-            Instantiate(_effectPrefab, _spawnPoint.position, Quaternion.identity);
-        }
-        BookObject bookObject = book.GetComponent<BookObject>();
-        //生成した本に選ばれた本の画像をセット
-        bookObject.SetSprite(_selectedBookSprite);
-
-        int slotIndex = GetSlotIndexFromSpriteName(_selectedBookSprite.name);
-        bookObject.SetCorrectSlotIndex(slotIndex);
-
         _bookPopUpUI.SetActive(false);
         Destroy(_selectedBookButton);
     }
