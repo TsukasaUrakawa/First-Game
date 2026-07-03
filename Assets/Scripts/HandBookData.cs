@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HandBookData
+public sealed class HandBookData
 {
     public Sprite Sprite { get; }
     public int CorrectSlotIndex { get; }

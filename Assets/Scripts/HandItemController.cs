@@ -3,20 +3,27 @@ using UnityEngine;
 
 public class HandItemController : MonoBehaviour
 {
-    [SerializeField] private HandItemSlotUI[] _slots;
+    private const int MaxCapacity = 5;
 
-    private readonly List<HandBookData> _books = new();
+    [SerializeField] private HandItemSlotUI[] _slots = new HandItemSlotUI[MaxCapacity];
+
+    private readonly List<HandBookData> _books = new List<HandBookData>();
     private int _selectedIndex = -1;
 
-    public bool IsFull => _books.Count >= _slots.Length;
-    public bool HasSelectedBook =>
-        _selectedIndex >= 0 && _selectedIndex < _books.Count;
+    public int Capacity => Mathf.Min(MaxCapacity, _slots.Length);
+    public int BookCount => _books.Count;
+    public int AvailableSpace => Mathf.Max(0, Capacity - BookCount);
+    public bool IsFull => BookCount >= Capacity;
+    public bool HasSelectedBook => _selectedIndex >= 0 && _selectedIndex < BookCount;
 
     private void Awake()
     {
         for (int i = 0; i < _slots.Length; i++)
         {
-            _slots[i].Initialize(this, i);
+            if (_slots[i] != null)
+            {
+                _slots[i].Initialize(this, i);
+            }
         }
 
         RefreshUI();
@@ -24,7 +31,7 @@ public class HandItemController : MonoBehaviour
 
     public bool TryAddBook(Sprite sprite, int correctSlotIndex)
     {
-        if (IsFull)
+        if (sprite == null || IsFull)
         {
             return false;
         }
@@ -36,12 +43,11 @@ public class HandItemController : MonoBehaviour
 
     public void SelectBook(int index)
     {
-        if (index < 0 || index >= _books.Count)
+        if (index < 0 || index >= BookCount)
         {
             return;
         }
 
-        // 同じ本を再クリックすると選択解除
         _selectedIndex = _selectedIndex == index ? -1 : index;
         RefreshUI();
     }
@@ -75,10 +81,12 @@ public class HandItemController : MonoBehaviour
     {
         for (int i = 0; i < _slots.Length; i++)
         {
-            Sprite sprite = i < _books.Count
-                ? _books[i].Sprite
-                : null;
+            if (_slots[i] == null)
+            {
+                continue;
+            }
 
+            Sprite sprite = i < BookCount ? _books[i].Sprite : null;
             _slots[i].SetView(sprite, i == _selectedIndex);
         }
     }

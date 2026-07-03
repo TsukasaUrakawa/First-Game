@@ -1,30 +1,15 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
-public class HandBookPlacementController : MonoBehaviour, IPointerClickHandler
+public class HandBookPlacementController : MonoBehaviour
 {
     [SerializeField] private HandItemController _handItemController;
     [SerializeField] private GameObject[] _bookPrefabs;
-    [SerializeField] private Color _selectedColor = new Color(1f, 0.92f, 0.65f, 1f);
 
     public static HandBookPlacementController Instance { get; private set; }
-    public bool IsSelected { get; private set; }
-
-    private Image _bookImage;
-    private Color _normalColor = Color.white;
 
     private void Awake()
     {
-        _bookImage = GetComponent<Image>();
-
-        if (_bookImage != null)
-        {
-            _normalColor = _bookImage.color;
-        }
-
         Instance = this;
-        SetSelected(false);
     }
 
     private void OnDestroy()
@@ -35,32 +20,15 @@ public class HandBookPlacementController : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (eventData.button != PointerEventData.InputButton.Left)
-        {
-            return;
-        }
-
-        if (!_handItemController.HasBook)
-        {
-            SetSelected(false);
-            return;
-        }
-
-        SetSelected(!IsSelected);
-        Debug.Log(IsSelected ? "手持ち本を選択" : "手持ち本の選択を解除");
-    }
-
     public bool TryPlaceBook(BookSlot slot)
     {
-        if (!IsSelected || !_handItemController.HasBook || slot == null || slot.IsFilled)
+        if (slot == null || slot.IsFilled ||
+            !_handItemController.TryGetSelectedBook(out HandBookData handBook))
         {
             return false;
         }
 
-        Sprite sprite = _handItemController.CurrentBookSprite;
-        int correctSlotIndex = _handItemController.CurrentCorrectSlotIndex;
+        Sprite sprite = handBook.Sprite;
         int bookColorIndex = GetColorIndexFromSpriteName(sprite.name);
 
         if (bookColorIndex < 0 || bookColorIndex != slot.ShelfColorIndex)
@@ -69,7 +37,7 @@ public class HandBookPlacementController : MonoBehaviour, IPointerClickHandler
             return false;
         }
 
-        GameObject prefab = GetPrefabFromSpriteName(sprite.name);
+        GameObject prefab = GetPrefab(bookColorIndex);
 
         if (prefab == null)
         {
@@ -88,17 +56,15 @@ public class HandBookPlacementController : MonoBehaviour, IPointerClickHandler
         }
 
         bookObject.SetSprite(sprite);
-        bookObject.SetCorrectSlotIndex(correctSlotIndex);
+        bookObject.SetCorrectSlotIndex(handBook.CorrectSlotIndex);
         slot.PlaceBook(book.transform);
-
-        _handItemController.ClearHandBook();
-        SetSelected(false);
+        _handItemController.RemoveSelectedBook();
         return true;
     }
 
     public bool TryReturnBookToHand(BookSlot slot)
     {
-        if (_handItemController.HasBook || slot == null || !slot.IsFilled)
+        if (_handItemController.IsFull || slot == null || !slot.IsFilled)
         {
             return false;
         }
@@ -119,32 +85,16 @@ public class HandBookPlacementController : MonoBehaviour, IPointerClickHandler
             return false;
         }
 
-        _handItemController.SetHandBook(
-            spriteRenderer.sprite,
-            bookObject.CorrectSlotIndex
-        );
+        if (!_handItemController.TryAddBook(
+                spriteRenderer.sprite,
+                bookObject.CorrectSlotIndex))
+        {
+            return false;
+        }
 
         slot.ClearSlot();
         Destroy(bookObject.gameObject);
-        SetSelected(false);
         return true;
-    }
-
-    private void SetSelected(bool selected)
-    {
-        IsSelected = selected;
-
-        if (_bookImage != null)
-        {
-            _bookImage.color = selected
-                ? _selectedColor
-                : _normalColor;
-        }
-    }
-
-    private GameObject GetPrefabFromSpriteName(string spriteName)
-    {
-        return GetPrefab(GetColorIndexFromSpriteName(spriteName));
     }
 
     private int GetColorIndexFromSpriteName(string spriteName)
@@ -157,7 +107,6 @@ public class HandBookPlacementController : MonoBehaviour, IPointerClickHandler
         if (spriteName.Contains("Brown")) return 5;
         if (spriteName.Contains("White")) return 6;
         if (spriteName.Contains("Black")) return 7;
-
         return -1;
     }
 

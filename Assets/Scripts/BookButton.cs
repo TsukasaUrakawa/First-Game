@@ -3,56 +3,65 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
-/// 本一覧にあるそれぞれの本につく
+/// 本一覧に表示される、それぞれの本ボタン。
 /// </summary>
-public class BookButton : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
+public class BookButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] GameObject _frameImage;
+    [SerializeField] private GameObject _frameImage;
+
     private Sprite _bookSprite;
-    private BookPopUpController _bookPopUpController;
+    private BookSelectionController _selectionController;
     private Image _bookImage;
+
+    public Sprite BookSprite => _bookSprite;
+    public bool IsSelected { get; private set; }
 
     private void Awake()
     {
         _bookImage = GetComponent<Image>();
     }
-    /// <summary>
-    /// ボタンに画像を配置する
-    /// </summary>
-    /// <param name="BookSprite">本それぞれの画像</param>
-    /// <param name="Controller">ポップアップを表示するためのオブジェクト</param>
-    public void SetUp(Sprite BookSprite,BookPopUpController Controller)
+
+    public void SetUp(Sprite bookSprite, BookSelectionController selectionController)
     {
-        _bookSprite = BookSprite;
-        _bookPopUpController = Controller;
-        _bookImage.sprite = _bookSprite;
+        _bookSprite = bookSprite;
+        _selectionController = selectionController;
+        _bookImage.sprite = bookSprite;
+        SetSelected(false);
     }
 
-    /// <summary>
-    /// 本一覧に表示されている画像をUIManagerに渡す
-    /// </summary>
+    // 既存のButton OnClickからそのまま呼べるよう、メソッド名を維持する。
     public void SendSprite()
     {
-        _bookPopUpController.PlayBookSelectSE();
-        _bookPopUpController.ShowBookPopUp(_bookSprite,this.gameObject);
+        _selectionController.ToggleSelection(this);
     }
 
-    /// <summary>
-    /// マウスカーソルが本の画像に乗ったときに起動
-    /// </summary>
-    /// <param name="eventData"></param>
+    public void SetSelected(bool selected)
+    {
+        IsSelected = selected;
+
+        if (_frameImage != null)
+        {
+            _frameImage.SetActive(selected);
+        }
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _frameImage.SetActive(true);
+        if (_frameImage != null)
+        {
+            _frameImage.SetActive(true);
+        }
+
         _bookImage.color = new Color(0.8f, 0.8f, 0.8f, 1f);
     }
-    /// <summary>
-    /// マウスカーソルが本の画像から外れた時に軌道
-    /// </summary>
-    /// <param name="eventData"></param>
+
     public void OnPointerExit(PointerEventData eventData)
     {
-        _frameImage.SetActive(false);
+        if (_frameImage != null)
+        {
+            _frameImage.SetActive(IsSelected);
+        }
+
         _bookImage.color = Color.white;
     }
 }

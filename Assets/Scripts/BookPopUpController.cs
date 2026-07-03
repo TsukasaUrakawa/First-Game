@@ -1,33 +1,39 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BookPopUpController : MonoBehaviour
 {
-    private AudioSource _audioSource2;
-    private Sprite _selectedBookSprite;
-    private GameObject _selectedBookButton;
-    [SerializeField] GameObject _bookPopUpUI;
-    [SerializeField] Image _bookImage;
-    [SerializeField] AudioClip _clickSound;
-    [SerializeField] AudioClip _bookSelectSound;
-    [SerializeField] AudioClip _takeBookSound;
-    [SerializeField] private HandItemController _handItemController;
+    [SerializeField] private GameObject _bookPopUpUI;
+    [SerializeField] private Image[] _bookImages = new Image[5];
+    [SerializeField] private AudioClip _clickSound;
+    [SerializeField] private AudioClip _bookSelectSound;
+    [SerializeField] private AudioClip _takeBookSound;
 
+    private AudioSource _audioSource;
+
+    public bool IsOpen => _bookPopUpUI != null && _bookPopUpUI.activeSelf;
 
     private void Awake()
     {
-        _audioSource2 = GetComponent<AudioSource>();
+        _audioSource = GetComponent<AudioSource>();
     }
-    //BookPopUpUIを表示する
-    public void ShowBookPopUp(Sprite selectedBookSprite,GameObject selectedBookButton)
+
+    public void ShowSelectedBooks(IReadOnlyList<BookButton> selectedBooks)
     {
-        //Imageコンポーネントに画像をセット
-        _bookImage.sprite = selectedBookSprite;
+        for (int i = 0; i < _bookImages.Length; i++)
+        {
+            if (_bookImages[i] == null)
+            {
+                continue;
+            }
+
+            bool hasBook = i < selectedBooks.Count;
+            _bookImages[i].gameObject.SetActive(hasBook);
+            _bookImages[i].sprite = hasBook ? selectedBooks[i].BookSprite : null;
+        }
+
         _bookPopUpUI.SetActive(true);
-        //選ばれた本の画像を保存
-        _selectedBookSprite = selectedBookSprite;
-        //選ばれた本のボタンを保存
-        _selectedBookButton = selectedBookButton;
     }
 
     public void CloseBookPopUp()
@@ -37,79 +43,24 @@ public class BookPopUpController : MonoBehaviour
 
     public void PlayClickSE()
     {
-        _audioSource2.PlayOneShot(_clickSound);
+        PlaySound(_clickSound);
     }
 
     public void PlayBookSelectSE()
     {
-        _audioSource2.PlayOneShot(_bookSelectSound);
+        PlaySound(_bookSelectSound);
     }
 
-    public void TakeBook()
+    public void PlayTakeBookSE()
     {
-        int slotIndex = GetSlotIndexFromSpriteName(
-    _selectedBookSprite.name
-);
-
-        bool added = _handItemController.TryAddBook(
-            _selectedBookSprite,
-            slotIndex
-        );
-
-        if (!added)
-        {
-            Debug.Log("手持ちがいっぱいです");
-            return;
-        }
-
-        if (_takeBookSound != null)
-        {
-            _audioSource2.PlayOneShot(_takeBookSound);
-        }
-        _bookPopUpUI.SetActive(false);
-        Destroy(_selectedBookButton);
+        PlaySound(_takeBookSound);
     }
-    private int GetSlotIndexFromSpriteName(string spriteName)
+
+    private void PlaySound(AudioClip clip)
     {
-        //数字の部分だけ取り出す
-        string numberPart = spriteName.Substring(spriteName.Length - 2);
-        int number = int.Parse(numberPart);
-
-        int offset = 0;
-
-        if (spriteName.Contains("Green"))
+        if (_audioSource != null && clip != null)
         {
-            offset = 0;
+            _audioSource.PlayOneShot(clip);
         }
-        else if (spriteName.Contains("Blue"))
-        {
-            offset = 18;
-        }
-        else if (spriteName.Contains("Beige"))
-        {
-            offset = 35;
-        }
-        else if (spriteName.Contains("Red"))
-        {
-            offset = 53;
-        }
-        else if (spriteName.Contains("Purple"))
-        {
-            offset = 70;
-        }
-        else if (spriteName.Contains("Brown"))
-        {
-            offset = 88;
-        }
-        else if (spriteName.Contains("White"))
-        {
-            offset = 105;
-        }
-        else if (spriteName.Contains("Black"))
-        {
-            offset = 123;
-        }
-
-        return offset + number - 1;
     }
 }
