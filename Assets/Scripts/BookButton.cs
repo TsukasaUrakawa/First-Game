@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
-/// 本一覧に表示される、それぞれの本ボタン。
+/// 本一覧に表示されるそれぞれの本ボタン。
 /// </summary>
 public class BookButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -20,21 +20,31 @@ public class BookButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         _bookImage = GetComponent<Image>();
     }
-
+    /// <summary>
+    /// 本一覧の本一冊ずつに画像をセット
+    /// </summary>
+    /// <param name="bookSprite">本画像</param>
+    /// <param name="selectionController"></param>
     public void SetUp(Sprite bookSprite, BookSelectionController selectionController)
     {
         _bookSprite = bookSprite;
         _selectionController = selectionController;
+        //spriteコンポーネントに画像をセット
         _bookImage.sprite = bookSprite;
         SetSelected(false);
     }
-
-    // 既存のButton OnClickからそのまま呼べるよう、メソッド名を維持する。
+    /// <summary>
+    /// ボタンをクリックすると呼ばれる
+    /// </summary>
     public void SendSprite()
     {
-        _selectionController.ToggleSelection(this);
+        _selectionController.ToggleSelection(this); //押したボタンの情報をスクリプトに送る
     }
 
+    /// <summary>
+    /// 選択状態を変更する
+    /// </summary>
+    /// <param name="selected">選択されているか否か</param>
     public void SetSelected(bool selected)
     {
         IsSelected = selected;
@@ -44,24 +54,30 @@ public class BookButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             _frameImage.SetActive(selected);
         }
     }
-
+    /// <summary>
+    /// カーソルが乗った時の処理
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (_frameImage != null)
         {
             _frameImage.SetActive(true);
         }
-
+        //暗くする
         _bookImage.color = new Color(0.8f, 0.8f, 0.8f, 1f);
     }
-
+    /// <summary>
+    /// カーソルが離れた時の処理
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnPointerExit(PointerEventData eventData)
     {
         if (_frameImage != null)
         {
             _frameImage.SetActive(IsSelected);
         }
-
+        //明度をマックスにする
         _bookImage.color = Color.white;
     }
 }

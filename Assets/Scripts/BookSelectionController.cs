@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 本の選択を管理
+/// </summary>
 public class BookSelectionController : MonoBehaviour
 {
     private const int MaxSelection = 5;
@@ -25,6 +28,7 @@ public class BookSelectionController : MonoBehaviour
             return;
         }
 
+        //マウスの右クリックで選択した本のポップアップを表示
         if (Input.GetMouseButtonDown(1))
         {
             _bookPopUpController.ShowSelectedBooks(_selectedBooks);
@@ -59,6 +63,9 @@ public class BookSelectionController : MonoBehaviour
         _bookPopUpController.PlayBookSelectSE();
     }
 
+    /// <summary>
+    /// 選択した本を手持ちに追加
+    /// </summary>
     public void TakeSelectedBooks()
     {
         if (_selectedBooks.Count == 0)
@@ -96,6 +103,9 @@ public class BookSelectionController : MonoBehaviour
         _bookPopUpController.CloseBookPopUp();
     }
 
+    /// <summary>
+    /// キャンセルボタンを押したときの処理
+    /// </summary>
     public void CancelSelection()
     {
         foreach (BookButton button in _selectedBooks)
@@ -111,6 +121,11 @@ public class BookSelectionController : MonoBehaviour
         _bookPopUpController.CloseBookPopUp();
     }
 
+    /// <summary>
+    /// 本画像の名前から正解スロットを計算
+    /// </summary>
+    /// <param name="spriteName"></param>
+    /// <returns></returns>
     private int GetSlotIndexFromSpriteName(string spriteName)
     {
         if (string.IsNullOrEmpty(spriteName) || spriteName.Length < 2)
@@ -118,6 +133,7 @@ public class BookSelectionController : MonoBehaviour
             return -1;
         }
 
+        //最後の２文字だけ取り出す
         string numberPart = spriteName.Substring(spriteName.Length - 2);
 
         if (!int.TryParse(numberPart, out int number))
