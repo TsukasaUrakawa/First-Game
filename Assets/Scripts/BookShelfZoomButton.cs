@@ -33,6 +33,18 @@ public class BookShelfZoomButton : MonoBehaviour,
         UpdateVisual();
     }
 
+    // ShelfButtonのOnClickから呼ぶ。
+    public void OpenActionMenu()
+    {
+        if (ShelfActionMenuController.Instance == null)
+        {
+            Debug.LogWarning("ShelfActionMenuControllerが見つかりません");
+            return;
+        }
+
+        ShelfActionMenuController.Instance.Open(this);
+    }
+
     public void ZoomShelf()
     {
         if (_cameraController == null || _bookShelf == null)
@@ -41,7 +53,6 @@ public class BookShelfZoomButton : MonoBehaviour,
             return;
         }
 
-        // ズーム中にボタンが隠れても、再表示時は通常色に戻す。
         _isPointerOver = false;
         UpdateVisual();
 
@@ -49,6 +60,25 @@ public class BookShelfZoomButton : MonoBehaviour,
             _bookShelf.transform.position,
             _zoomSize
         );
+    }
+
+    public bool JudgeShelf()
+    {
+        if (_bookShelf == null)
+        {
+            Debug.LogWarning("判定対象の本棚が設定されていません");
+            return false;
+        }
+
+        BookShelfJudge shelfJudge = _bookShelf.GetComponent<BookShelfJudge>();
+
+        if (shelfJudge == null)
+        {
+            Debug.LogWarning($"{_bookShelf.name}にBookShelfJudgeがありません");
+            return false;
+        }
+
+        return shelfJudge.CheckShelf();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
