@@ -4,6 +4,7 @@ public class BoxOpenAndClose : MonoBehaviour
 {
     [SerializeField] private GameObject _bookListPanel;
     [SerializeField] private CanvasGroup _handItemCanvasGroup;
+    [SerializeField] private CanvasGroup _shelfButtonCanvasGroup;
 
     [SerializeField] private AudioClip _openSE;
     [SerializeField] private AudioClip _closeSE;
@@ -17,7 +18,7 @@ public class BoxOpenAndClose : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
 
         // 本一覧が閉じているなら手持ち欄を表示する
-        SetHandItemPanelVisible(!_bookListPanel.activeSelf);
+        SetGameplayUIVisible(!_bookListPanel.activeSelf);
     }
 
     private void OnMouseDown()
@@ -29,13 +30,13 @@ public class BoxOpenAndClose : MonoBehaviour
     private void ShowBookList()
     {
         _bookListPanel.SetActive(true);
-        SetHandItemPanelVisible(false);
+        SetGameplayUIVisible(false);
     }
 
     public void CloseBookList()
     {
         _bookListPanel.SetActive(false);
-        SetHandItemPanelVisible(true);
+        SetGameplayUIVisible(true);
 
         _animator.SetBool("IsOpen", false);
     }
@@ -49,16 +50,22 @@ public class BoxOpenAndClose : MonoBehaviour
         }
     }
 
-    private void SetHandItemPanelVisible(bool visible)
+    private void SetGameplayUIVisible(bool visible)
     {
-        if (_handItemCanvasGroup == null)
+        SetCanvasGroupVisible(_handItemCanvasGroup, visible);
+        SetCanvasGroupVisible(_shelfButtonCanvasGroup, visible);
+    }
+
+    private void SetCanvasGroupVisible(CanvasGroup canvasGroup, bool visible)
+    {
+        if (canvasGroup == null)
         {
             return;
         }
 
-        _handItemCanvasGroup.alpha = visible ? 1f : 0f;
-        _handItemCanvasGroup.interactable = visible;
-        _handItemCanvasGroup.blocksRaycasts = visible;
+        canvasGroup.alpha = visible ? 1f : 0f;
+        canvasGroup.interactable = visible;
+        canvasGroup.blocksRaycasts = visible;
     }
 
     private void PlayOpenSE()

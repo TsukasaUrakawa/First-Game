@@ -3,6 +3,9 @@ using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
 {
+    [SerializeField] private CanvasGroup _shelfButtonCanvasGroup;
+    [SerializeField] private GameObject _bookListPanel;
+
     private Camera _camera;
     private Vector3 _defaultPosition;
     private float _defaultSize;
@@ -46,6 +49,8 @@ public class CameraController : MonoBehaviour
         _camera.orthographicSize = zoomSize;
         IsZoomed = true;
         _canResetByRightClick = false;
+
+        SetShelfButtonsVisible(false);
     }
 
     public void ResetCamera()
@@ -53,5 +58,23 @@ public class CameraController : MonoBehaviour
         transform.position = _defaultPosition;
         _camera.orthographicSize = _defaultSize;
         IsZoomed = false;
+
+        bool bookListIsClosed =
+            _bookListPanel == null ||
+            !_bookListPanel.activeInHierarchy;
+
+        SetShelfButtonsVisible(bookListIsClosed);
+    }
+
+    private void SetShelfButtonsVisible(bool visible)
+    {
+        if (_shelfButtonCanvasGroup == null)
+        {
+            return;
+        }
+
+        _shelfButtonCanvasGroup.alpha = visible ? 1f : 0f;
+        _shelfButtonCanvasGroup.interactable = visible;
+        _shelfButtonCanvasGroup.blocksRaycasts = visible;
     }
 }

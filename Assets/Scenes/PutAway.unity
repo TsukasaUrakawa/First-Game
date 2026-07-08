@@ -413,6 +413,7 @@ GameObject:
   - component: {fileID: 35923978}
   - component: {fileID: 35923977}
   - component: {fileID: 35923979}
+  - component: {fileID: 35923980}
   m_Layer: 5
   m_Name: ShelfButtonPanel
   m_TagString: Untagged
@@ -509,6 +510,18 @@ MonoBehaviour:
   m_Spacing: {x: 20, y: 20}
   m_Constraint: 1
   m_ConstraintCount: 2
+--- !u!225 &35923980
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 35923975}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &37923841
 GameObject:
   m_ObjectHideFlags: 0
@@ -3594,6 +3607,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc8bf3d9f8adad443a91cfe90a41eff0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _shelfButtonCanvasGroup: {fileID: 35923980}
+  _bookListPanel: {fileID: 178882826}
 --- !u!1001 &337080809
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11997,7 +12012,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -150, y: -430}
+  m_AnchoredPosition: {x: 0, y: -430}
   m_SizeDelta: {x: 750, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1496516717
@@ -13342,6 +13357,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bookListPanel: {fileID: 178882826}
   _handItemCanvasGroup: {fileID: 1496516722}
+  _shelfButtonCanvasGroup: {fileID: 35923980}
   _openSE: {fileID: 8300000, guid: 2c9b678a028500a468e6810893a75078, type: 3}
   _closeSE: {fileID: 8300000, guid: 2c9b678a028500a468e6810893a75078, type: 3}
 --- !u!82 &1626826822
