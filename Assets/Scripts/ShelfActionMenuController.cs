@@ -3,15 +3,18 @@ using UnityEngine;
 public class ShelfActionMenuController : MonoBehaviour
 {
     [SerializeField] private GameObject _actionPanel;
+    [SerializeField] private AudioClip _shelfButtonClickSound;
 
     public static ShelfActionMenuController Instance { get; private set; }
     public bool IsOpen => _actionPanel != null && _actionPanel.activeSelf;
 
     private BookShelfZoomButton _selectedShelfButton;
+    private AudioSource _audioSource;
 
     private void Awake()
     {
         Instance = this;
+        _audioSource = GetComponent<AudioSource>();
 
         if (_actionPanel != null)
         {
@@ -36,6 +39,11 @@ public class ShelfActionMenuController : MonoBehaviour
 
         _selectedShelfButton = shelfButton;
         _actionPanel.SetActive(true);
+
+        if (_audioSource != null && _shelfButtonClickSound != null)
+        {
+            _audioSource.PlayOneShot(_shelfButtonClickSound);
+        }
     }
 
     public void ZoomSelectedShelf()
