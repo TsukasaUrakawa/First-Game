@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class BookShelfHighlight : MonoBehaviour
@@ -6,7 +7,12 @@ public class BookShelfHighlight : MonoBehaviour
     [SerializeField] private int _shelfColorIndex = -1;
     [SerializeField] private GameObject _highlightObject;
     [SerializeField] private SpriteRenderer _highlightRenderer;
-    [SerializeField] private Color _highlightColor = new Color(1f, 0.9f, 0.25f, 0.35f);
+    [SerializeField] private Color _highlightColor = new Color(1f, 0.9f, 0.25f, 0.45f);
+    [SerializeField, Min(1)] private int _blinkCount = 2;
+    [SerializeField, Min(0.01f)] private float _blinkOnTime = 0.18f;
+    [SerializeField, Min(0.01f)] private float _blinkOffTime = 0.12f;
+
+    private Coroutine _blinkCoroutine;
 
     private void Awake()
     {
@@ -49,6 +55,8 @@ public class BookShelfHighlight : MonoBehaviour
         {
             _handItemController.SelectedBookChanged -= OnSelectedBookChanged;
         }
+
+        StopBlink();
     }
 
     private void OnSelectedBookChanged(HandBookData selectedBook)
@@ -58,7 +66,7 @@ public class BookShelfHighlight : MonoBehaviour
 
     private void RefreshHighlight(HandBookData selectedBook)
     {
-        bool shouldHighlight = false;
+        bool shouldBlink = false;
 
         if (selectedBook?.Sprite != null)
         {
@@ -67,12 +75,59 @@ public class BookShelfHighlight : MonoBehaviour
                     selectedBook.Sprite.name
                 );
 
-            shouldHighlight =
+            shouldBlink =
                 selectedColorIndex >= 0 &&
                 selectedColorIndex == _shelfColorIndex;
         }
 
-        SetHighlightVisible(shouldHighlight);
+        if (shouldBlink)
+        {
+            StartBlink();
+        }
+        else
+        {
+            StopBlink();
+        }
+    }
+
+    private void StartBlink()
+    {
+        StopBlink();
+        _blinkCoroutine = StartCoroutine(BlinkRoutine());
+    }
+
+    private void StopBlink()
+    {
+        if (_blinkCoroutine != null)
+        {
+            StopCoroutine(_blinkCoroutine);
+            _blinkCoroutine = null;
+        }
+
+        SetHighlightVisible(false);
+    }
+
+    private IEnumerator BlinkRoutine()
+    {
+        if (_highlightRenderer != null)
+        {
+            _highlightRenderer.color = _highlightColor;
+        }
+
+        for (int i = 0; i < _blinkCount; i++)
+        {
+            SetHighlightVisible(true);
+            yield return new WaitForSeconds(_blinkOnTime);
+
+            SetHighlightVisible(false);
+
+            if (i < _blinkCount - 1)
+            {
+                yield return new WaitForSeconds(_blinkOffTime);
+            }
+        }
+
+        _blinkCoroutine = null;
     }
 
     private void SetHighlightVisible(bool visible)
