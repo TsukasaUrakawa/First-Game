@@ -15,6 +15,9 @@ public class BookShelfZoomButton : MonoBehaviour,
     [SerializeField] private GameObject _frameImage;
     [SerializeField, Range(0f, 1f)] private float _hoverBrightness = 0.8f;
 
+    [Header("Answer")]
+    [SerializeField] private Sprite _completedImageSprite;
+
     private Color _normalColor = Color.white;
     private bool _isPointerOver;
 
@@ -33,12 +36,12 @@ public class BookShelfZoomButton : MonoBehaviour,
         UpdateVisual();
     }
 
-    // ShelfButtonのOnClickから呼ぶ。
+    // ShelfButton の OnClick から呼ぶ
     public void OpenActionMenu()
     {
         if (ShelfActionMenuController.Instance == null)
         {
-            Debug.LogWarning("ShelfActionMenuControllerが見つかりません");
+            Debug.LogWarning("ShelfActionMenuController が見つかりません");
             return;
         }
 
@@ -49,7 +52,7 @@ public class BookShelfZoomButton : MonoBehaviour,
     {
         if (_cameraController == null || _bookShelf == null)
         {
-            Debug.LogWarning("CameraControllerまたは本棚が設定されていません");
+            Debug.LogWarning("CameraController または本棚が設定されていません");
             return;
         }
 
@@ -74,11 +77,22 @@ public class BookShelfZoomButton : MonoBehaviour,
 
         if (shelfJudge == null)
         {
-            Debug.LogWarning($"{_bookShelf.name}にBookShelfJudgeがありません");
+            Debug.LogWarning($"{_bookShelf.name} に BookShelfJudge がありません");
             return false;
         }
 
         return shelfJudge.CheckShelf();
+    }
+
+    public void ShowCompletedImage()
+    {
+        if (ShelfAnswerPanelController.Instance == null)
+        {
+            Debug.LogWarning("ShelfAnswerPanelController が見つかりません");
+            return;
+        }
+
+        ShelfAnswerPanelController.Instance.Open(_completedImageSprite);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

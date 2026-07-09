@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -9,6 +10,22 @@ public class BookManager : MonoBehaviour
 
     private void Awake()
     {
-        _allBookSprites = Resources.LoadAll<Sprite>("Books");
+        Sprite[] loadedSprites = Resources.LoadAll<Sprite>("Books");
+        List<Sprite> bookSprites = new List<Sprite>();
+
+        foreach (Sprite sprite in loadedSprites)
+        {
+            if (sprite == null)
+            {
+                continue;
+            }
+
+            if (BookColorUtility.GetColorIndexFromSpriteName(sprite.name) >= 0)
+            {
+                bookSprites.Add(sprite);
+            }
+        }
+
+        _allBookSprites = bookSprites.ToArray();
     }
 }

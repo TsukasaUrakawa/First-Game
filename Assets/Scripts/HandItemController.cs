@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +16,9 @@ public class HandItemController : MonoBehaviour
     public int AvailableSpace => Mathf.Max(0, Capacity - BookCount);
     public bool IsFull => BookCount >= Capacity;
     public bool HasSelectedBook => _selectedIndex >= 0 && _selectedIndex < BookCount;
+    public HandBookData SelectedBook => HasSelectedBook ? _books[_selectedIndex] : null;
+
+    public event Action<HandBookData> SelectedBookChanged;
 
     private void Awake()
     {
@@ -50,6 +54,7 @@ public class HandItemController : MonoBehaviour
 
         _selectedIndex = _selectedIndex == index ? -1 : index;
         RefreshUI();
+        NotifySelectedBookChanged();
     }
 
     public bool TryGetSelectedBook(out HandBookData book)
@@ -74,6 +79,7 @@ public class HandItemController : MonoBehaviour
         _books.RemoveAt(_selectedIndex);
         _selectedIndex = -1;
         RefreshUI();
+        NotifySelectedBookChanged();
         return true;
     }
 
@@ -89,5 +95,10 @@ public class HandItemController : MonoBehaviour
             Sprite sprite = i < BookCount ? _books[i].Sprite : null;
             _slots[i].SetView(sprite, i == _selectedIndex);
         }
+    }
+
+    private void NotifySelectedBookChanged()
+    {
+        SelectedBookChanged?.Invoke(SelectedBook);
     }
 }

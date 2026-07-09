@@ -37,13 +37,16 @@ public class ShelfActionMenuController : MonoBehaviour
             return;
         }
 
+        PlayShelfButtonClickSound();
+
+        if (IsOpen && _selectedShelfButton == shelfButton)
+        {
+            Close();
+            return;
+        }
+
         _selectedShelfButton = shelfButton;
         _actionPanel.SetActive(true);
-
-        if (_audioSource != null && _shelfButtonClickSound != null)
-        {
-            _audioSource.PlayOneShot(_shelfButtonClickSound);
-        }
     }
 
     public void ZoomSelectedShelf()
@@ -69,6 +72,17 @@ public class ShelfActionMenuController : MonoBehaviour
         }
     }
 
+    public void ShowSelectedShelfAnswer()
+    {
+        BookShelfZoomButton selectedButton = _selectedShelfButton;
+        Close();
+
+        if (selectedButton != null)
+        {
+            selectedButton.ShowCompletedImage();
+        }
+    }
+
     public void Close()
     {
         _selectedShelfButton = null;
@@ -76,6 +90,14 @@ public class ShelfActionMenuController : MonoBehaviour
         if (_actionPanel != null)
         {
             _actionPanel.SetActive(false);
+        }
+    }
+
+    private void PlayShelfButtonClickSound()
+    {
+        if (_audioSource != null && _shelfButtonClickSound != null)
+        {
+            _audioSource.PlayOneShot(_shelfButtonClickSound);
         }
     }
 }

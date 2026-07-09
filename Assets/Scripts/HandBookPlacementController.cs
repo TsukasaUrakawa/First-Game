@@ -23,13 +23,21 @@ public class HandBookPlacementController : MonoBehaviour
     public bool TryPlaceBook(BookSlot slot)
     {
         if (slot == null || slot.IsFilled ||
+            _handItemController == null ||
             !_handItemController.TryGetSelectedBook(out HandBookData handBook))
         {
             return false;
         }
 
         Sprite sprite = handBook.Sprite;
-        int bookColorIndex = GetColorIndexFromSpriteName(sprite.name);
+
+        if (sprite == null)
+        {
+            return false;
+        }
+
+        int bookColorIndex =
+            BookColorUtility.GetColorIndexFromSpriteName(sprite.name);
 
         if (bookColorIndex < 0 || bookColorIndex != slot.ShelfColorIndex)
         {
@@ -62,9 +70,38 @@ public class HandBookPlacementController : MonoBehaviour
         return true;
     }
 
+    public bool CanPlaceSelectedBookOnSlot(
+        BookSlot slot,
+        out HandBookData handBook)
+    {
+        handBook = null;
+
+        if (slot == null || slot.IsFilled || _handItemController == null)
+        {
+            return false;
+        }
+
+        if (!_handItemController.TryGetSelectedBook(out handBook) ||
+            handBook?.Sprite == null)
+        {
+            return false;
+        }
+
+        int bookColorIndex =
+            BookColorUtility.GetColorIndexFromSpriteName(
+                handBook.Sprite.name
+            );
+
+        return bookColorIndex >= 0 &&
+               bookColorIndex == slot.ShelfColorIndex;
+    }
+
     public bool TryReturnBookToHand(BookSlot slot)
     {
-        if (_handItemController.IsFull || slot == null || !slot.IsFilled)
+        if (_handItemController == null ||
+            _handItemController.IsFull ||
+            slot == null ||
+            !slot.IsFilled)
         {
             return false;
         }
@@ -95,19 +132,6 @@ public class HandBookPlacementController : MonoBehaviour
         slot.ClearSlot();
         Destroy(bookObject.gameObject);
         return true;
-    }
-
-    private int GetColorIndexFromSpriteName(string spriteName)
-    {
-        if (spriteName.Contains("Green")) return 0;
-        if (spriteName.Contains("Blue")) return 1;
-        if (spriteName.Contains("Beige")) return 2;
-        if (spriteName.Contains("Red")) return 3;
-        if (spriteName.Contains("Purple")) return 4;
-        if (spriteName.Contains("Brown")) return 5;
-        if (spriteName.Contains("White")) return 6;
-        if (spriteName.Contains("Black")) return 7;
-        return -1;
     }
 
     private GameObject GetPrefab(int index)
