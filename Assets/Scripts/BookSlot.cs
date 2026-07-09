@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 public class BookSlot : MonoBehaviour
 {
     public bool IsFilled { get; private set; }
+    public bool IsLocked { get; private set; }
 
     [SerializeField] private int _slotIndex;
     [Header("Ghost Preview")]
@@ -71,7 +72,7 @@ public class BookSlot : MonoBehaviour
             return;
         }
 
-        if (IsFilled || HandBookPlacementController.Instance == null)
+        if (IsLocked || IsFilled || HandBookPlacementController.Instance == null)
         {
             return;
         }
@@ -151,7 +152,30 @@ public class BookSlot : MonoBehaviour
 
         if (_clickCollider != null)
         {
-            _clickCollider.enabled = true;
+            _clickCollider.enabled = !IsLocked;
+        }
+    }
+
+    public void SetLocked(bool locked)
+    {
+        IsLocked = locked;
+        HideGhostPreview();
+
+        if (_clickCollider != null)
+        {
+            _clickCollider.enabled = !locked && !IsFilled;
+        }
+
+        if (_placedBook == null)
+        {
+            return;
+        }
+
+        Collider2D placedBookCollider = _placedBook.GetComponent<Collider2D>();
+
+        if (placedBookCollider != null)
+        {
+            placedBookCollider.enabled = !locked;
         }
     }
 
@@ -184,7 +208,8 @@ public class BookSlot : MonoBehaviour
 
     private void UpdateGhostPreview()
     {
-        if (IsFilled ||
+        if (IsLocked ||
+            IsFilled ||
             HandBookPlacementController.Instance == null ||
             !HandBookPlacementController.Instance.CanPlaceSelectedBookOnSlot(
                 this,

@@ -17,7 +17,9 @@ public class PlacedBookClick : MonoBehaviour
             return;
         }
 
-        if (_currentSlot == null || HandBookPlacementController.Instance == null)
+        if (_currentSlot == null ||
+            _currentSlot.IsLocked ||
+            HandBookPlacementController.Instance == null)
         {
             return;
         }
