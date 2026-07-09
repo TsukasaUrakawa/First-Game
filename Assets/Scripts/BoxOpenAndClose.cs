@@ -29,6 +29,11 @@ public class BoxOpenAndClose : MonoBehaviour
     // 箱を開くAnimation Eventから呼ばれる
     private void ShowBookList()
     {
+        if (ShelfAnswerPanelController.Instance != null)
+        {
+            ShelfAnswerPanelController.Instance.Close();
+        }
+
         _bookListPanel.SetActive(true);
         SetGameplayUIVisible(false);
     }
