@@ -4,12 +4,27 @@ public class HandBookPlacementController : MonoBehaviour
 {
     [SerializeField] private HandItemController _handItemController;
     [SerializeField] private GameObject[] _bookPrefabs;
+    [Header("Sound")]
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _placeSound;
+    [SerializeField, Range(0f, 1f)] private float _placeSoundVolume = 1f;
 
     public static HandBookPlacementController Instance { get; private set; }
 
     private void Awake()
     {
         Instance = this;
+
+        if (_audioSource == null)
+        {
+            _audioSource = GetComponent<AudioSource>();
+        }
+
+        if (_audioSource == null && _placeSound != null)
+        {
+            _audioSource = gameObject.AddComponent<AudioSource>();
+            _audioSource.playOnAwake = false;
+        }
     }
 
     private void OnDestroy()
@@ -66,6 +81,7 @@ public class HandBookPlacementController : MonoBehaviour
         bookObject.SetSprite(sprite);
         bookObject.SetCorrectSlotIndex(handBook.CorrectSlotIndex);
         slot.PlaceBook(book.transform);
+        PlayPlaceSound();
         _handItemController.RemoveSelectedBook();
         return true;
     }
@@ -142,5 +158,13 @@ public class HandBookPlacementController : MonoBehaviour
         }
 
         return _bookPrefabs[index];
+    }
+
+    private void PlayPlaceSound()
+    {
+        if (_audioSource != null && _placeSound != null)
+        {
+            _audioSource.PlayOneShot(_placeSound, _placeSoundVolume);
+        }
     }
 }
