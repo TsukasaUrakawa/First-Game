@@ -7,7 +7,9 @@ public class HandBookPlacementController : MonoBehaviour
     [Header("Sound")]
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _placeSound;
+    [SerializeField] private AudioClip _returnSound;
     [SerializeField, Range(0f, 1f)] private float _placeSoundVolume = 1f;
+    [SerializeField, Range(0f, 1f)] private float _returnSoundVolume = 1f;
 
     public static HandBookPlacementController Instance { get; private set; }
 
@@ -20,7 +22,7 @@ public class HandBookPlacementController : MonoBehaviour
             _audioSource = GetComponent<AudioSource>();
         }
 
-        if (_audioSource == null && _placeSound != null)
+        if (_audioSource == null && (_placeSound != null || _returnSound != null))
         {
             _audioSource = gameObject.AddComponent<AudioSource>();
             _audioSource.playOnAwake = false;
@@ -147,6 +149,7 @@ public class HandBookPlacementController : MonoBehaviour
 
         slot.ClearSlot();
         Destroy(bookObject.gameObject);
+        PlayReturnSound();
         return true;
     }
 
@@ -165,6 +168,14 @@ public class HandBookPlacementController : MonoBehaviour
         if (_audioSource != null && _placeSound != null)
         {
             _audioSource.PlayOneShot(_placeSound, _placeSoundVolume);
+        }
+    }
+
+    private void PlayReturnSound()
+    {
+        if (_audioSource != null && _returnSound != null)
+        {
+            _audioSource.PlayOneShot(_returnSound, _returnSoundVolume);
         }
     }
 }
