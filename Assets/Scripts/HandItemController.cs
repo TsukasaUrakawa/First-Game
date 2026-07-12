@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +7,11 @@ public class HandItemController : MonoBehaviour
 
     [SerializeField] private HandItemSlotUI[] _slots = new HandItemSlotUI[MaxCapacity];
 
+    [Header("Sound")]
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _itemClickSound;
+    [SerializeField, Range(0f, 1f)] private float _itemClickVolume = 1f;
+
     private readonly List<HandBookData> _books = new List<HandBookData>();
     private int _selectedIndex = -1;
 
@@ -16,12 +20,20 @@ public class HandItemController : MonoBehaviour
     public int AvailableSpace => Mathf.Max(0, Capacity - BookCount);
     public bool IsFull => BookCount >= Capacity;
     public bool HasSelectedBook => _selectedIndex >= 0 && _selectedIndex < BookCount;
-    public HandBookData SelectedBook => HasSelectedBook ? _books[_selectedIndex] : null;
-
-    public event Action<HandBookData> SelectedBookChanged;
 
     private void Awake()
     {
+        if (_audioSource == null)
+        {
+            _audioSource = GetComponent<AudioSource>();
+        }
+
+        if (_audioSource == null && _itemClickSound != null)
+        {
+            _audioSource = gameObject.AddComponent<AudioSource>();
+            _audioSource.playOnAwake = false;
+        }
+
         for (int i = 0; i < _slots.Length; i++)
         {
             if (_slots[i] != null)
@@ -54,7 +66,7 @@ public class HandItemController : MonoBehaviour
 
         _selectedIndex = _selectedIndex == index ? -1 : index;
         RefreshUI();
-        NotifySelectedBookChanged();
+        PlayItemClickSound();
     }
 
     public bool TryGetSelectedBook(out HandBookData book)
@@ -79,7 +91,6 @@ public class HandItemController : MonoBehaviour
         _books.RemoveAt(_selectedIndex);
         _selectedIndex = -1;
         RefreshUI();
-        NotifySelectedBookChanged();
         return true;
     }
 
@@ -97,8 +108,11 @@ public class HandItemController : MonoBehaviour
         }
     }
 
-    private void NotifySelectedBookChanged()
+    private void PlayItemClickSound()
     {
-        SelectedBookChanged?.Invoke(SelectedBook);
+        if (_audioSource != null && _itemClickSound != null)
+        {
+            _audioSource.PlayOneShot(_itemClickSound, _itemClickVolume);
+        }
     }
 }

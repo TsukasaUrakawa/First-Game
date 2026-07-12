@@ -3628,7 +3628,7 @@ GameObject:
   - component: {fileID: 313684649}
   - component: {fileID: 313684648}
   m_Layer: 5
-  m_Name: CloseButton
+  m_Name: CrossButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3700,6 +3700,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1716211011}
         m_TargetAssemblyTypeName: ShelfAnswerPanelController, Assembly-CSharp
         m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1716211007}
+        m_TargetAssemblyTypeName: BookPopUpController, Assembly-CSharp
+        m_MethodName: PlayClickSE
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10631,6 +10643,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1716211007}
+        m_TargetAssemblyTypeName: BookPopUpController, Assembly-CSharp
+        m_MethodName: PlayClickSE
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1126528891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13653,6 +13677,9 @@ MonoBehaviour:
   - {fileID: 1914139655}
   - {fileID: 1530635827}
   - {fileID: 206082719}
+  _audioSource: {fileID: 0}
+  _itemClickSound: {fileID: 8300000, guid: a80f80cb8af524c4ba769928c94cb66b, type: 3}
+  _itemClickVolume: 1
 --- !u!114 &1496516719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13849,7 +13876,19 @@ MonoBehaviour:
   _hideClearPanelOnStart: 1
   _onGameClear:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1716211012}
+        m_TargetAssemblyTypeName: GameClearEffectController, Assembly-CSharp
+        m_MethodName: PlayClearEffect
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &1505613660
 Transform:
   m_ObjectHideFlags: 0
@@ -17216,18 +17255,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1716211007}
-        m_TargetAssemblyTypeName: BookPopUpController, Assembly-CSharp
-        m_MethodName: PlayClickSE
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1831354410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18597,7 +18624,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -450, y: 100}
+  m_AnchoredPosition: {x: -400, y: 100}
   m_SizeDelta: {x: 580, y: 190}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1987695037
@@ -20420,22 +20447,6 @@ PrefabInstance:
       propertyPath: _spline
       value: 
       objectReference: {fileID: 2116857774}
-    - target: {fileID: 6265954700798163775, guid: 28c0d6cfa782955448c964c967046472, type: 3}
-      propertyPath: _highlightColor.a
-      value: 0.11764706
-      objectReference: {fileID: 0}
-    - target: {fileID: 6265954700798163775, guid: 28c0d6cfa782955448c964c967046472, type: 3}
-      propertyPath: _highlightColor.b
-      value: 0.2509804
-      objectReference: {fileID: 0}
-    - target: {fileID: 6265954700798163775, guid: 28c0d6cfa782955448c964c967046472, type: 3}
-      propertyPath: _highlightColor.g
-      value: 0.9019608
-      objectReference: {fileID: 0}
-    - target: {fileID: 6265954700798163775, guid: 28c0d6cfa782955448c964c967046472, type: 3}
-      propertyPath: _highlightColor.r
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7841766224898330406, guid: 28c0d6cfa782955448c964c967046472, type: 3}
       propertyPath: m_LocalScale.x
       value: 12.3
