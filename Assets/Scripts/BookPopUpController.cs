@@ -9,6 +9,7 @@ public class BookPopUpController : MonoBehaviour
     [SerializeField] private AudioClip _clickSound;
     [SerializeField] private AudioClip _bookSelectSound;
     [SerializeField] private AudioClip _bookDeselectSound;
+    [SerializeField] private AudioClip _bookLimitSound;
 
     [SerializeField]private AudioSource _audioSource;
 
@@ -54,6 +55,11 @@ public class BookPopUpController : MonoBehaviour
     public void PlayBookDeselectSE()
     {
         PlaySound(_bookDeselectSound);
+    }
+
+    public void PlayBookLimitSE()
+    {
+        PlaySound(_bookLimitSound);
     }
 
     private void PlaySound(AudioClip clip)

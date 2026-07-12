@@ -3,9 +3,12 @@ using UnityEngine;
 
 public class HandItemController : MonoBehaviour
 {
-    private const int MaxCapacity = 5;
+    private const int MaxCapacity = 6;
 
     [SerializeField] private HandItemSlotUI[] _slots = new HandItemSlotUI[MaxCapacity];
+
+    [Header("UI")]
+    [SerializeField] private GameObject _handItemPanel;
 
     [Header("Sound")]
     [SerializeField] private AudioSource _audioSource;
@@ -117,6 +120,11 @@ public class HandItemController : MonoBehaviour
 
             Sprite sprite = i < BookCount ? _books[i].Sprite : null;
             _slots[i].SetView(sprite, i == _selectedIndex);
+        }
+
+        if (_handItemPanel != null)
+        {
+            _handItemPanel.SetActive(BookCount > 0);
         }
     }
 

@@ -47,8 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _slotIndex: 0
   _ghostBookRenderer: {fileID: 0}
-  _ghostTargetWorldWidth: 0.55
-  _ghostTargetWorldHeight: 3.3
+  _ghostTargetWorldWidth: 0.6
+  _ghostTargetWorldHeight: 3
   _ghostAlpha: 0.35
   _ghostSortingOrder: 9
 --- !u!61 &6285143274961058221

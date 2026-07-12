@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class BookSelectionController : MonoBehaviour
 {
-    private const int MaxSelection = 5;
+    private const int MaxSelection = 6;
 
     [SerializeField] private HandItemController _handItemController;
     [SerializeField] private BookPopUpController _bookPopUpController;
@@ -55,6 +55,7 @@ public class BookSelectionController : MonoBehaviour
         if (_selectedBooks.Count >= selectableCount)
         {
             Debug.Log("これ以上本を選択できません");
+            _bookPopUpController.PlayBookLimitSE();
             return;
         }
 

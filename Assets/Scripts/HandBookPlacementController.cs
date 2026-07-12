@@ -8,8 +8,10 @@ public class HandBookPlacementController : MonoBehaviour
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _placeSound;
     [SerializeField] private AudioClip _returnSound;
+    [SerializeField] private AudioClip _wrongShelfSound;
     [SerializeField, Range(0f, 1f)] private float _placeSoundVolume = 1f;
     [SerializeField, Range(0f, 1f)] private float _returnSoundVolume = 1f;
+    [SerializeField, Range(0f, 1f)] private float _wrongShelfSoundVolume = 1f;
 
     public static HandBookPlacementController Instance { get; private set; }
 
@@ -22,7 +24,7 @@ public class HandBookPlacementController : MonoBehaviour
             _audioSource = GetComponent<AudioSource>();
         }
 
-        if (_audioSource == null && (_placeSound != null || _returnSound != null))
+        if (_audioSource == null && (_placeSound != null || _returnSound != null || _wrongShelfSound != null))
         {
             _audioSource = gameObject.AddComponent<AudioSource>();
             _audioSource.playOnAwake = false;
@@ -59,6 +61,7 @@ public class HandBookPlacementController : MonoBehaviour
         if (bookColorIndex < 0 || bookColorIndex != slot.ShelfColorIndex)
         {
             Debug.Log("この本は別の色の棚には配置できません");
+            PlayWrongShelfSound();
             return false;
         }
 
@@ -176,6 +179,14 @@ public class HandBookPlacementController : MonoBehaviour
         if (_audioSource != null && _returnSound != null)
         {
             _audioSource.PlayOneShot(_returnSound, _returnSoundVolume);
+        }
+    }
+
+    private void PlayWrongShelfSound()
+    {
+        if (_audioSource != null && _wrongShelfSound != null)
+        {
+            _audioSource.PlayOneShot(_wrongShelfSound, _wrongShelfSoundVolume);
         }
     }
 }
