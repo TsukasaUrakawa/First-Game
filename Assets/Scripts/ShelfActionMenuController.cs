@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShelfActionMenuController : MonoBehaviour
 {
     [SerializeField] private GameObject _actionPanel;
+    [SerializeField] private Image _actionPanelImage;
     [SerializeField] private AudioClip _shelfButtonClickSound;
 
     public static ShelfActionMenuController Instance { get; private set; }
@@ -15,6 +17,11 @@ public class ShelfActionMenuController : MonoBehaviour
     {
         Instance = this;
         _audioSource = GetComponent<AudioSource>();
+
+        if (_actionPanelImage == null && _actionPanel != null)
+        {
+            _actionPanelImage = _actionPanel.GetComponent<Image>();
+        }
 
         if (_actionPanel != null)
         {
@@ -46,6 +53,7 @@ public class ShelfActionMenuController : MonoBehaviour
         }
 
         _selectedShelfButton = shelfButton;
+        UpdateActionPanelSprite(shelfButton);
         _actionPanel.SetActive(true);
     }
 
@@ -98,6 +106,21 @@ public class ShelfActionMenuController : MonoBehaviour
         if (_audioSource != null && _shelfButtonClickSound != null)
         {
             _audioSource.PlayOneShot(_shelfButtonClickSound);
+        }
+    }
+
+    private void UpdateActionPanelSprite(BookShelfZoomButton shelfButton)
+    {
+        if (_actionPanelImage == null || shelfButton == null)
+        {
+            return;
+        }
+
+        Sprite sprite = shelfButton.ActionPanelSprite;
+
+        if (sprite != null)
+        {
+            _actionPanelImage.sprite = sprite;
         }
     }
 }

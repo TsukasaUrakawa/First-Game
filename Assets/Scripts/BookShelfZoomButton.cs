@@ -18,6 +18,22 @@ public class BookShelfZoomButton : MonoBehaviour,
     [Header("Answer")]
     [SerializeField] private Sprite _completedImageSprite;
 
+    [Header("Action Menu")]
+    [SerializeField] private Sprite _actionPanelSprite;
+
+    public Sprite ActionPanelSprite
+    {
+        get
+        {
+            if (_actionPanelSprite != null)
+            {
+                return _actionPanelSprite;
+            }
+
+            return _buttonImage != null ? _buttonImage.sprite : null;
+        }
+    }
+
     private Color _normalColor = Color.white;
     private bool _isPointerOver;
 

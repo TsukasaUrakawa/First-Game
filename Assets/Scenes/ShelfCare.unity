@@ -408,6 +408,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 330585548}
     - target: {fileID: 9060335290681986763, guid: 1a744813dc722ae48bc4b09953aff4d0, type: 3}
+      propertyPath: _actionPanelSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 11a4e1d7faa96a24481e41c19b448d3e, type: 3}
+    - target: {fileID: 9060335290681986763, guid: 1a744813dc722ae48bc4b09953aff4d0, type: 3}
       propertyPath: _completedImageSprite
       value: 
       objectReference: {fileID: 21300000, guid: f40f6add7415d5441944045e41db9c97, type: 3}
@@ -481,7 +485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.6}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1333,6 +1337,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 330585548}
     - target: {fileID: 9060335290681986763, guid: 1a744813dc722ae48bc4b09953aff4d0, type: 3}
+      propertyPath: _actionPanelSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5b6de2245cf07974c8bc0356060452ec, type: 3}
+    - target: {fileID: 9060335290681986763, guid: 1a744813dc722ae48bc4b09953aff4d0, type: 3}
       propertyPath: _completedImageSprite
       value: 
       objectReference: {fileID: 21300000, guid: c866a19930b0e8f479914d7b0b0b6ad2, type: 3}
@@ -1943,6 +1951,10 @@ PrefabInstance:
       propertyPath: _cameraController
       value: 
       objectReference: {fileID: 330585548}
+    - target: {fileID: 9060335290681986763, guid: 1a744813dc722ae48bc4b09953aff4d0, type: 3}
+      propertyPath: _actionPanelSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b67b9f3d83105a44088b17ce8c1eec8f, type: 3}
     - target: {fileID: 9060335290681986763, guid: 1a744813dc722ae48bc4b09953aff4d0, type: 3}
       propertyPath: _completedImageSprite
       value: 
@@ -9625,6 +9637,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 330585548}
     - target: {fileID: 9060335290681986763, guid: 1a744813dc722ae48bc4b09953aff4d0, type: 3}
+      propertyPath: _actionPanelSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 175e7762d205d794884172fc3838f7d2, type: 3}
+    - target: {fileID: 9060335290681986763, guid: 1a744813dc722ae48bc4b09953aff4d0, type: 3}
       propertyPath: _completedImageSprite
       value: 
       objectReference: {fileID: 21300000, guid: 32cba172276e1174faa392d7d56dc943, type: 3}
@@ -10194,6 +10210,10 @@ PrefabInstance:
       propertyPath: _cameraController
       value: 
       objectReference: {fileID: 330585548}
+    - target: {fileID: 9060335290681986763, guid: 1a744813dc722ae48bc4b09953aff4d0, type: 3}
+      propertyPath: _actionPanelSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 738e4605e734bc64caebfd348fa9531a, type: 3}
     - target: {fileID: 9060335290681986763, guid: 1a744813dc722ae48bc4b09953aff4d0, type: 3}
       propertyPath: _completedImageSprite
       value: 
@@ -12240,6 +12260,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 330585548}
     - target: {fileID: 9060335290681986763, guid: 1a744813dc722ae48bc4b09953aff4d0, type: 3}
+      propertyPath: _actionPanelSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 4ccc531d363bc6144a63268f35b0fa1c, type: 3}
+    - target: {fileID: 9060335290681986763, guid: 1a744813dc722ae48bc4b09953aff4d0, type: 3}
       propertyPath: _completedImageSprite
       value: 
       objectReference: {fileID: 21300000, guid: cac66cb9a9774b4419dcfbe60fc62676, type: 3}
@@ -14014,7 +14038,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.49019608}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.69803923}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -15716,6 +15740,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 330585548}
     - target: {fileID: 9060335290681986763, guid: 1a744813dc722ae48bc4b09953aff4d0, type: 3}
+      propertyPath: _actionPanelSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2637f989ca83f3549ba3c38502495ac1, type: 3}
+    - target: {fileID: 9060335290681986763, guid: 1a744813dc722ae48bc4b09953aff4d0, type: 3}
       propertyPath: _completedImageSprite
       value: 
       objectReference: {fileID: 21300000, guid: 22317ca496ec47f43bd29185bafad4b9, type: 3}
@@ -16347,6 +16375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _actionPanel: {fileID: 1729335317}
+  _actionPanelImage: {fileID: 1729335319}
   _shelfButtonClickSound: {fileID: 8300000, guid: 1b2ab1e5e9f11de4fa7b669c38aa1b76, type: 3}
   _audioSource: {fileID: 1716211008}
 --- !u!114 &1716211011
@@ -16566,7 +16595,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 175e7762d205d794884172fc3838f7d2, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -20987,6 +21016,10 @@ PrefabInstance:
       propertyPath: _cameraController
       value: 
       objectReference: {fileID: 330585548}
+    - target: {fileID: 9060335290681986763, guid: 1a744813dc722ae48bc4b09953aff4d0, type: 3}
+      propertyPath: _actionPanelSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2c1e6ba672e2f0f4486c519ae0a071d4, type: 3}
     - target: {fileID: 9060335290681986763, guid: 1a744813dc722ae48bc4b09953aff4d0, type: 3}
       propertyPath: _completedImageSprite
       value: 
