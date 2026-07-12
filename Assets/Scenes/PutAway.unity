@@ -13632,7 +13632,9 @@ MonoBehaviour:
   - {fileID: 1676363265870821920, guid: 8df3b5e206dc5b24cb514e5ad04664f9, type: 3}
   _audioSource: {fileID: 0}
   _placeSound: {fileID: 8300000, guid: 7b9478fd810604e45be1f484a3f045d9, type: 3}
+  _returnSound: {fileID: 8300000, guid: 167aa5e768f40c2469a03c41ee386ee9, type: 3}
   _placeSoundVolume: 1
+  _returnSoundVolume: 1
 --- !u!114 &1496516718
 MonoBehaviour:
   m_ObjectHideFlags: 0
