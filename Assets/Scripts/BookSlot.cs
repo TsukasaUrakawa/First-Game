@@ -85,23 +85,20 @@ public class BookSlot : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if (EventSystem.current != null &&
-            EventSystem.current.IsPointerOverGameObject())
-        {
-            return;
-        }
-
         _isPointerOver = true;
         UpdateGhostPreview();
     }
 
     private void OnMouseOver()
     {
-        if (!_isPointerOver)
+        if (EventSystem.current != null &&
+            EventSystem.current.IsPointerOverGameObject())
         {
+            HideGhostPreview();
             return;
         }
 
+        _isPointerOver = true;
         UpdateGhostPreview();
     }
 
