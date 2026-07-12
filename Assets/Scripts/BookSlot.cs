@@ -20,7 +20,6 @@ public class BookSlot : MonoBehaviour
 
     private BookObject _placedBook;
     private Collider2D _clickCollider;
-    private bool _isPointerOver;
 
     private void Awake()
     {
@@ -85,7 +84,6 @@ public class BookSlot : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        _isPointerOver = true;
         UpdateGhostPreview();
     }
 
@@ -98,13 +96,11 @@ public class BookSlot : MonoBehaviour
             return;
         }
 
-        _isPointerOver = true;
         UpdateGhostPreview();
     }
 
     private void OnMouseExit()
     {
-        _isPointerOver = false;
         HideGhostPreview();
     }
 
