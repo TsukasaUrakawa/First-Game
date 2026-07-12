@@ -46,7 +46,7 @@ public class BookSelectionController : MonoBehaviour
         {
             _selectedBooks.Remove(bookButton);
             bookButton.SetSelected(false);
-            _bookPopUpController.PlayBookSelectSE();
+            _bookPopUpController.PlayBookDeselectSE();
             return;
         }
 

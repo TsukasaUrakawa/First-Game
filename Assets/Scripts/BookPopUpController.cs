@@ -8,6 +8,7 @@ public class BookPopUpController : MonoBehaviour
     [SerializeField] private Image[] _bookImages = new Image[5];
     [SerializeField] private AudioClip _clickSound;
     [SerializeField] private AudioClip _bookSelectSound;
+    [SerializeField] private AudioClip _bookDeselectSound;
 
     private AudioSource _audioSource;
 
@@ -48,6 +49,11 @@ public class BookPopUpController : MonoBehaviour
     public void PlayBookSelectSE()
     {
         PlaySound(_bookSelectSound);
+    }
+
+    public void PlayBookDeselectSE()
+    {
+        PlaySound(_bookDeselectSound);
     }
 
     private void PlaySound(AudioClip clip)

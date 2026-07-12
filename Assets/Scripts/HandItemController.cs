@@ -10,7 +10,9 @@ public class HandItemController : MonoBehaviour
     [Header("Sound")]
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _itemClickSound;
+    [SerializeField] private AudioClip _itemCancelSound;
     [SerializeField, Range(0f, 1f)] private float _itemClickVolume = 1f;
+    [SerializeField, Range(0f, 1f)] private float _itemCancelVolume = 1f;
 
     private readonly List<HandBookData> _books = new List<HandBookData>();
     private int _selectedIndex = -1;
@@ -28,7 +30,7 @@ public class HandItemController : MonoBehaviour
             _audioSource = GetComponent<AudioSource>();
         }
 
-        if (_audioSource == null && _itemClickSound != null)
+        if (_audioSource == null && (_itemClickSound != null || _itemCancelSound != null))
         {
             _audioSource = gameObject.AddComponent<AudioSource>();
             _audioSource.playOnAwake = false;
@@ -64,9 +66,19 @@ public class HandItemController : MonoBehaviour
             return;
         }
 
-        _selectedIndex = _selectedIndex == index ? -1 : index;
+        bool isDeselecting = _selectedIndex == index;
+
+        _selectedIndex = isDeselecting ? -1 : index;
         RefreshUI();
-        PlayItemClickSound();
+
+        if (isDeselecting)
+        {
+            PlayItemDeselectSound();
+        }
+        else
+        {
+            PlayItemClickSound();
+        }
     }
 
     public bool TryGetSelectedBook(out HandBookData book)
@@ -113,6 +125,14 @@ public class HandItemController : MonoBehaviour
         if (_audioSource != null && _itemClickSound != null)
         {
             _audioSource.PlayOneShot(_itemClickSound, _itemClickVolume);
+        }
+    }
+
+    private void PlayItemDeselectSound()
+    {
+        if (_audioSource != null && _itemCancelSound != null)
+        {
+            _audioSource.PlayOneShot(_itemCancelSound, _itemCancelVolume);
         }
     }
 }
