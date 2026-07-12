@@ -10,7 +10,7 @@ public class BookPopUpController : MonoBehaviour
     [SerializeField] private AudioClip _bookSelectSound;
     [SerializeField] private AudioClip _bookDeselectSound;
 
-    private AudioSource _audioSource;
+    [SerializeField]private AudioSource _audioSource;
 
     public bool IsOpen => _bookPopUpUI != null && _bookPopUpUI.activeSelf;
 

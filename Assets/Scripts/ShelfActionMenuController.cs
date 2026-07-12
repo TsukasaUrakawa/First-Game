@@ -9,7 +9,7 @@ public class ShelfActionMenuController : MonoBehaviour
     public bool IsOpen => _actionPanel != null && _actionPanel.activeSelf;
 
     private BookShelfZoomButton _selectedShelfButton;
-    private AudioSource _audioSource;
+    [SerializeField] private AudioSource _audioSource;
 
     private void Awake()
     {

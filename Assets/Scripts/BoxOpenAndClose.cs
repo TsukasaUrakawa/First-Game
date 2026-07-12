@@ -10,7 +10,7 @@ public class BoxOpenAndClose : MonoBehaviour
     [SerializeField] private AudioClip _closeSE;
 
     private Animator _animator;
-    private AudioSource _audioSource;
+    [SerializeField] private AudioSource _audioSource;
 
     private void Start()
     {
