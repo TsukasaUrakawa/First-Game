@@ -1,4 +1,4 @@
-using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,6 +12,11 @@ public class TitleSceneController : MonoBehaviour
     [SerializeField] private AudioClip _quitButtonSound;
     [SerializeField, Range(0f, 1f)] private float _buttonSoundVolume = 1f;
     [SerializeField, Min(0f)] private float _sceneChangeDelay = 0.15f;
+
+    [Header("Fade")]
+    [SerializeField] private CanvasGroup _fadeCanvasGroup;
+    [SerializeField, Min(0f)] private float _fadeDuration = 0.6f;
+    [SerializeField] private Ease _fadeEase = Ease.InOutQuad;
 
     private bool _isProcessing;
 
@@ -27,6 +32,17 @@ public class TitleSceneController : MonoBehaviour
             _audioSource = gameObject.AddComponent<AudioSource>();
             _audioSource.playOnAwake = false;
         }
+
+        if (_fadeCanvasGroup != null)
+        {
+            _fadeCanvasGroup.alpha = 0f;
+            _fadeCanvasGroup.blocksRaycasts = false;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        DOTween.Kill(this);
     }
 
     public void StartGame()
@@ -36,7 +52,17 @@ public class TitleSceneController : MonoBehaviour
             return;
         }
 
-        StartCoroutine(StartGameRoutine());
+        _isProcessing = true;
+        PlaySound(_startButtonSound);
+
+        DOTween.Sequence()
+            .SetId(this)
+            .AppendInterval(_sceneChangeDelay)
+            .Append(FadeOut())
+            .OnComplete(() =>
+            {
+                SceneManager.LoadScene(_gameSceneName);
+            });
     }
 
     public void QuitGame()
@@ -46,35 +72,36 @@ public class TitleSceneController : MonoBehaviour
             return;
         }
 
-        StartCoroutine(QuitGameRoutine());
-    }
-
-    private IEnumerator StartGameRoutine()
-    {
         _isProcessing = true;
-
-        PlaySound(_startButtonSound);
-
-        yield return new WaitForSeconds(_sceneChangeDelay);
-
-        SceneManager.LoadScene(_gameSceneName);
-    }
-
-    private IEnumerator QuitGameRoutine()
-    {
-        _isProcessing = true;
-
         PlaySound(_quitButtonSound);
 
-        yield return new WaitForSeconds(_sceneChangeDelay);
-
+        DOTween.Sequence()
+            .SetId(this)
+            .AppendInterval(_sceneChangeDelay)
+            .Append(FadeOut())
+            .OnComplete(() =>
+            {
 #if UNITY_EDITOR
-        Debug.Log("ゲーム終了");
+                Debug.Log("ゲーム終了");
+                _isProcessing = false;
 #else
-        Application.Quit();
+                Application.Quit();
 #endif
+            });
+    }
 
-        _isProcessing = false;
+    private Tween FadeOut()
+    {
+        if (_fadeCanvasGroup == null || _fadeDuration <= 0f)
+        {
+            return DOVirtual.DelayedCall(0f, () => { });
+        }
+
+        _fadeCanvasGroup.blocksRaycasts = true;
+
+        return _fadeCanvasGroup
+            .DOFade(1f, _fadeDuration)
+            .SetEase(_fadeEase);
     }
 
     private void PlaySound(AudioClip clip)
