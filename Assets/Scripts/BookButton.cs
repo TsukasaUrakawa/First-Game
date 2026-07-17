@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
-/// 本一覧に表示されるそれぞれの本ボタン。
+/// 本一覧に表示される1冊分のUIボタン
 /// </summary>
 public class BookButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -34,7 +34,7 @@ public class BookButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         SetSelected(false);
     }
     /// <summary>
-    /// ボタンをクリックすると呼ばれる
+    /// BookButtonのOnClickで呼ばれる
     /// </summary>
     public void SendSprite()
     {
@@ -64,7 +64,7 @@ public class BookButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             _frameImage.SetActive(true);
         }
-        //暗くする
+        //本画像を暗くする
         _bookImage.color = new Color(0.8f, 0.8f, 0.8f, 1f);
     }
     /// <summary>
@@ -77,7 +77,7 @@ public class BookButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             _frameImage.SetActive(IsSelected);
         }
-        //明度をマックスにする
+        //明度を1にする
         _bookImage.color = Color.white;
     }
 }
