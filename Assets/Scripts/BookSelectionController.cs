@@ -54,7 +54,6 @@ public class BookSelectionController : MonoBehaviour
 
         if (_selectedBooks.Count >= selectableCount)
         {
-            Debug.Log("これ以上本を選択できません");
             _bookPopUpController.PlayBookLimitSE();
             return;
         }
@@ -76,7 +75,7 @@ public class BookSelectionController : MonoBehaviour
 
         if (_selectedBooks.Count > _handItemController.AvailableSpace)
         {
-            Debug.Log("手持ちアイテム欄の空きが足りません");
+            _bookPopUpController.PlayBookLimitSE();
             return;
         }
 
@@ -134,7 +133,7 @@ public class BookSelectionController : MonoBehaviour
             return -1;
         }
 
-        //最後の２文字だけ取り出す
+        //Sprite名最後の２文字だけ取り出す
         string numberPart = spriteName.Substring(spriteName.Length - 2);
 
         if (!int.TryParse(numberPart, out int number))

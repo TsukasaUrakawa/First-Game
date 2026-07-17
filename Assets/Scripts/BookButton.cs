@@ -10,7 +10,7 @@ public class BookButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     [SerializeField] private GameObject _frameImage;
 
     private Sprite _bookSprite;
-    private BookSelectionController _selectionController;
+    private BookSelectionController _bookSelectionController;
     private Image _bookImage;
 
     public Sprite BookSprite => _bookSprite;
@@ -24,11 +24,11 @@ public class BookButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     /// 本一覧の本一冊ずつに画像をセット
     /// </summary>
     /// <param name="bookSprite">本画像</param>
-    /// <param name="selectionController"></param>
-    public void SetUp(Sprite bookSprite, BookSelectionController selectionController)
+    /// <param name="bookSelectionController"></param>
+    public void SetUp(Sprite bookSprite, BookSelectionController bookSelectionController)
     {
         _bookSprite = bookSprite;
-        _selectionController = selectionController;
+        _bookSelectionController = bookSelectionController;
         //spriteコンポーネントに画像をセット
         _bookImage.sprite = bookSprite;
         SetSelected(false);
@@ -38,7 +38,7 @@ public class BookButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     /// </summary>
     public void SendSprite()
     {
-        _selectionController.ToggleSelection(this); //押したボタンの情報をスクリプトに送る
+        _bookSelectionController.ToggleSelection(this); //押したボタンの情報をスクリプトに送る
     }
 
     /// <summary>
@@ -75,6 +75,7 @@ public class BookButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         if (_frameImage != null)
         {
+            //選択中なら枠を残す、選択中でないなら枠を消す
             _frameImage.SetActive(IsSelected);
         }
         //明度を1にする
