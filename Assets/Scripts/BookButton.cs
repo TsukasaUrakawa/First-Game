@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
-/// 本一覧に表示される1冊分のUIボタン
+/// 本一覧に表示される1冊分のUIボタン用スクリプト
 /// </summary>
 public class BookButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -29,7 +29,6 @@ public class BookButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         _bookSprite = bookSprite;
         _bookSelectionController = bookSelectionController;
-        //spriteコンポーネントに画像をセット
         _bookImage.sprite = bookSprite;
         SetSelected(false);
     }
@@ -38,7 +37,7 @@ public class BookButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     /// </summary>
     public void SendSprite()
     {
-        _bookSelectionController.ToggleSelection(this); //押したボタンの情報をスクリプトに送る
+        _bookSelectionController.ToggleSelection(this); //押したボタンの情報をBookSelectionControllerに送る
     }
 
     /// <summary>
