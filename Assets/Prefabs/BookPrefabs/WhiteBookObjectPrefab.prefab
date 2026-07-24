@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38b0dbd788a298f419d2def23981af5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetWorldWidth: 0.6
+  _targetWorldWidth: 0.68
   _targetWorldHeight: 2.8
 --- !u!61 &-3435207812050054833
 BoxCollider2D:
