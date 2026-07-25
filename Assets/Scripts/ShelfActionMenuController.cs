@@ -11,6 +11,7 @@ public class ShelfActionMenuController : MonoBehaviour
     public bool IsOpen => _actionPanel != null && _actionPanel.activeSelf;
 
     private BookShelfZoomButton _selectedShelfButton;
+    private RectTransform _actionPanelRect;
     [SerializeField] private AudioSource _audioSource;
 
     private void Awake()
@@ -25,6 +26,7 @@ public class ShelfActionMenuController : MonoBehaviour
 
         if (_actionPanel != null)
         {
+            _actionPanelRect = _actionPanel.GetComponent<RectTransform>();
             _actionPanel.SetActive(false);
         }
     }
@@ -53,7 +55,7 @@ public class ShelfActionMenuController : MonoBehaviour
         }
 
         _selectedShelfButton = shelfButton;
-        UpdateActionPanelSprite(shelfButton);
+        UpdateActionPanel(shelfButton);
         _actionPanel.SetActive(true);
     }
 
@@ -109,18 +111,30 @@ public class ShelfActionMenuController : MonoBehaviour
         }
     }
 
-    private void UpdateActionPanelSprite(BookShelfZoomButton shelfButton)
+    private void UpdateActionPanel(BookShelfZoomButton shelfButton)
     {
-        if (_actionPanelImage == null || shelfButton == null)
+        if (shelfButton == null)
         {
             return;
         }
 
-        Sprite sprite = shelfButton.ActionPanelSprite;
-
-        if (sprite != null)
+        // 背景画像を変更
+        if (_actionPanelImage != null)
         {
-            _actionPanelImage.sprite = sprite;
+            Sprite sprite = shelfButton.ActionPanelSprite;
+
+            if (sprite != null)
+            {
+                _actionPanelImage.sprite = sprite;
+            }
+        }
+
+        // 表示位置を変更
+        if (_actionPanelRect != null &&
+            shelfButton.ActionMenuPoint != null)
+        {
+            _actionPanelRect.position =
+                shelfButton.ActionMenuPoint.position;
         }
     }
 }

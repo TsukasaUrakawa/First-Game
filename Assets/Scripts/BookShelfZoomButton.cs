@@ -20,6 +20,7 @@ public class BookShelfZoomButton : MonoBehaviour,
 
     [Header("Action Menu")]
     [SerializeField] private Sprite _actionPanelSprite;
+    [SerializeField] private RectTransform _actionMenuPoint;
 
     public Sprite ActionPanelSprite
     {
@@ -31,6 +32,14 @@ public class BookShelfZoomButton : MonoBehaviour,
             }
 
             return _buttonImage != null ? _buttonImage.sprite : null;
+        }
+    }
+
+    public RectTransform ActionMenuPoint
+    {
+        get
+        {
+            return _actionMenuPoint;
         }
     }
 
