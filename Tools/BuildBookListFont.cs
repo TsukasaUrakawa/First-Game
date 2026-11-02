@@ -19,6 +19,9 @@ serializedFont.FindProperty("m_ClearDynamicDataOnBuild").boolValue = false;
 serializedFont.ApplyModifiedPropertiesWithoutUndo();
 font.atlasTextures[0].name = "BookListJapanese Atlas";
 font.material.name = "BookListJapanese Material";
+// Bake the same padding ratios TMP computes on first display so using the
+// generated font does not dirty its material after it has been committed.
+TMPro.ShaderUtilities.UpdateShaderRatios(font.material);
 
 // Preserve the existing GUID and subasset references when rebuilding.
 var existing = UnityEditor.AssetDatabase.LoadAssetAtPath<TMPro.TMP_FontAsset>(assetPath);
