@@ -23,6 +23,18 @@ save Play mode changes. No Pipeline dependency is needed in a player build.
 
 5. Stop Play mode to discard the test inventory and game-clear state.
 
+For the fixed Japanese book-list controls, repeat steps 1–3 in another fresh Play
+session, then run:
+
+```powershell
+unity command script eval_file --file Tests/BookListControlsSmoke.cs --json
+```
+
+This checks selection counters and limits, the new confirmation/clear buttons,
+full and partial hand capacity, fixed controls while scrolling, reachability of
+the last row, reopening, and coverage of the static Japanese font atlas. Stop
+Play mode afterwards to discard the test inventory.
+
 For visual/input verification, start another fresh session and check:
 
 - Click the box, choose books, right-click to confirm, then press Escape: only
