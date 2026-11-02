@@ -48,3 +48,27 @@ For visual/input verification, start another fresh session and check:
 
 The smoke check calls the same `Back` action as Escape/right-click, but does not
 synthesize OS keyboard or mouse events. WebGL/browser input is a separate check.
+
+## Shelf layout checks
+
+With ShelfCare open in Edit mode:
+
+```powershell
+unity command script eval_file --file Tests/ShelfLayoutEditSmoke.cs --json
+```
+
+This checks the saved shelf endpoints, heights, slot identities, uniform spacing,
+empty/single/inactive slots, numbered order after hierarchy changes, local-space
+rotation/scaling, and the Editor action's Undo. Temporary objects are removed
+from a separate test scene afterwards.
+
+In another fresh ShelfCare Play session, keep the book list closed and run:
+
+```powershell
+unity command script eval_file --file Tests/ShelfLayoutPlaySmoke.cs --json
+```
+
+This places all 140 books through the gameplay controller, exercises wrong color
+and wrong order, returns/replaces endpoint books, checks colliders and completed
+shelf locks, and verifies game clear. It silences test audio for that Play session.
+Stop Play mode afterwards to discard books, completion state, and audio changes.
