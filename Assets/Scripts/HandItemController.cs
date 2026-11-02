@@ -25,6 +25,7 @@ public class HandItemController : MonoBehaviour
     public int AvailableSpace => Mathf.Max(0, Capacity - BookCount);
     public bool IsFull => BookCount >= Capacity;
     public bool HasSelectedBook => _selectedIndex >= 0 && _selectedIndex < BookCount;
+    public event System.Action InventoryChanged;
 
     private void Awake()
     {
@@ -59,6 +60,7 @@ public class HandItemController : MonoBehaviour
 
         _books.Add(new HandBookData(sprite, correctSlotIndex));
         RefreshUI();
+        InventoryChanged?.Invoke();
         return true;
     }
 
@@ -106,6 +108,7 @@ public class HandItemController : MonoBehaviour
         _books.RemoveAt(_selectedIndex);
         _selectedIndex = -1;
         RefreshUI();
+        InventoryChanged?.Invoke();
         return true;
     }
 

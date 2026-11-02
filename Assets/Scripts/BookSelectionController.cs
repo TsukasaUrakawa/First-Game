@@ -16,6 +16,8 @@ public class BookSelectionController : MonoBehaviour
     private readonly List<BookButton> _selectedBooks = new List<BookButton>();
 
     public int SelectedCount => _selectedBooks.Count;
+    public int SelectionLimit => Mathf.Min(MaxSelection, _handItemController.AvailableSpace);
+    public event System.Action SelectionChanged;
 
     private void Update()
     {
@@ -41,6 +43,7 @@ public class BookSelectionController : MonoBehaviour
         if (_selectedBooks.Count > 0 && _bookListPanel.activeInHierarchy && !_bookPopUpController.IsOpen)
         {
             _bookPopUpController.ShowSelectedBooks(_selectedBooks);
+            _bookPopUpController.PlayClickSE();
         }
     }
 
@@ -56,12 +59,11 @@ public class BookSelectionController : MonoBehaviour
             _selectedBooks.Remove(bookButton);
             bookButton.SetSelected(false);
             _bookPopUpController.PlayBookDeselectSE();
+            SelectionChanged?.Invoke();
             return;
         }
 
-        int selectableCount = Mathf.Min(MaxSelection, _handItemController.AvailableSpace);
-
-        if (_selectedBooks.Count >= selectableCount)
+        if (_selectedBooks.Count >= SelectionLimit)
         {
             _bookPopUpController.PlayBookLimitSE();
             return;
@@ -70,6 +72,7 @@ public class BookSelectionController : MonoBehaviour
         _selectedBooks.Add(bookButton);
         bookButton.SetSelected(true);
         _bookPopUpController.PlayBookSelectSE();
+        SelectionChanged?.Invoke();
     }
 
     /// <summary>
@@ -134,6 +137,7 @@ public class BookSelectionController : MonoBehaviour
 
         _selectedBooks.Clear();
         _bookPopUpController.CloseBookPopUp();
+        SelectionChanged?.Invoke();
     }
 
     /// <summary>
