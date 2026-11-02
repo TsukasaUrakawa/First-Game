@@ -49,6 +49,8 @@ for (int color = 0; color < shelves.Length; color++)
     }
     Check(shelves[color].IsShelfCorrect(), shelves[color].name + " judges the complete order correctly");
     Check(shelves[color].CheckShelf() && shelves[color].IsCompleted, shelves[color].name + " completes successfully");
+    var card = UnityEngine.Object.FindObjectsByType<BookShelfZoomButton>(UnityEngine.FindObjectsInactive.Include, UnityEngine.FindObjectsSortMode.None).Single(c => c.ShelfJudge == shelves[color]);
+    Check(card.transform.Find("ShelfProgressLabel").GetComponent<TMPro.TMP_Text>().text == "完成" && card.transform.Find("ProgressTrack/ProgressFill").GetComponent<UnityEngine.UI.Image>().fillAmount == 1, shelves[color].name + " immediately shows completed navigation progress");
     Check(row.All(s => s.IsLocked && !s.PlacedBook.GetComponent<UnityEngine.Collider2D>().enabled), shelves[color].name + " locks the completed books");
 }
 Check(placed == 140 && GameplayUIController.Instance.IsGameCleared && GameplayUIController.IsWorldInputBlocked, "All 140 books still lead to game clear");

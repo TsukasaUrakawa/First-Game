@@ -48,6 +48,7 @@ else
     UnityEngine.Object.DestroyImmediate(font);
     font = existing;
 }
+font.ReadFontAssetDefinition();
 UnityEditor.EditorUtility.SetDirty(font);
 UnityEditor.EditorUtility.SetDirty(font.material);
 UnityEditor.EditorUtility.SetDirty(font.atlasTextures[0]);

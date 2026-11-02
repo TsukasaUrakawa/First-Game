@@ -53,7 +53,8 @@ books.Last().GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
 confirm.onClick.Invoke();
 Check(popup.IsOpen && selection.SelectedCount == 1, "Visible confirmation button opens the selected-book popup");
 ui.Back();
-Check(!popup.IsOpen && ui.IsBookListOpen && selection.SelectedCount == 0, "Cancelling confirmation restores an empty selection in the list");
+Check(!popup.IsOpen && ui.IsBookListOpen && selection.SelectedCount == 1 && books.Last().IsSelected, "Cancelling confirmation preserves selection in the list");
+clear.onClick.Invoke();
 
 foreach (var book in books.Take(6)) book.GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
 confirm.onClick.Invoke();

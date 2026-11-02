@@ -125,6 +125,12 @@ public class BookSelectionController : MonoBehaviour
         _bookPopUpController.PlayClickSE();
     }
 
+    public void ReturnToSelection()
+    {
+        _bookPopUpController.CloseBookPopUp();
+        _bookPopUpController.PlayClickSE();
+    }
+
     public void ClearSelection()
     {
         foreach (BookButton button in _selectedBooks)

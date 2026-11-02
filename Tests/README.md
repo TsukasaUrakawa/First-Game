@@ -38,7 +38,11 @@ Play mode afterwards to discard the test inventory.
 For visual/input verification, start another fresh session and check:
 
 - Click the box, choose books, right-click to confirm, then press Escape: only
-  confirmation closes. Press Escape again: the list closes.
+  confirmation closes and the books remain selected. Press Escape again: the
+  list closes and selection clears.
+- Click a shelf card: it directly zooms that shelf. The fixed toolbar shows its
+  name, storage count, completion-image and check actions. It does not block
+  placement; opening the list or completion image temporarily hides it.
 - Zoom a shelf, use its upper-left Close button, then repeat with Escape and with
   right-click outside the UI. Each returns to the room.
 - While the answer panel is open, clicking outside its graphic must not place or
@@ -48,6 +52,32 @@ For visual/input verification, start another fresh session and check:
 
 The smoke check calls the same `Back` action as Escape/right-click, but does not
 synthesize OS keyboard or mouse events. WebGL/browser input is a separate check.
+
+## Shelf navigation and confirmation
+
+Repeat steps 1–3 in a fresh Play session, then run:
+
+```powershell
+unity command script eval_file --file Tests/ShelfNavigationDialogSmoke.cs --json
+```
+
+This checks the physical shelf order, one-click zoom, toolbar context and
+visibility, immediate progress after actual placement/return, 1/3/6-book preview
+alignment, preserving selection on Back/Cancel, inventory capacity and duplicate
+Take calls, and Japanese glyph coverage. Repeat at 1366×768 to check the scaled
+layout as well as 1920×1080.
+
+For the rendered raycast check, start a fresh session, open the list, select any
+book and open confirmation. Let a frame render, then run:
+
+```powershell
+unity command script eval_file --file Tests/ConfirmationRaycastSmoke.cs --json
+```
+
+This verifies the backdrop intercepts the underlying list Close and all four
+screen corners, while both dialog actions remain reachable. Canvas raycast depth
+is assigned during rendering, so run this separately from the call that opens
+confirmation. Stop Play mode afterwards to discard test changes.
 
 ## Shelf layout checks
 

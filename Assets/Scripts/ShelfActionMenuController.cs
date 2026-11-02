@@ -1,144 +1,94 @@
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
+/// <summary>Contextual actions for the zoomed shelf; does not block book placement.</summary>
 public class ShelfActionMenuController : MonoBehaviour
 {
     [SerializeField] private GameObject _actionPanel;
-    [SerializeField] private Image _actionPanelImage;
+    [SerializeField] private TMP_Text _shelfTitleLabel;
+    [SerializeField] private TMP_Text _shelfStatusLabel;
     [SerializeField] private AudioClip _shelfButtonClickSound;
     [SerializeField] private GameplayUIController _gameplayUI;
+    [SerializeField] private AudioSource _audioSource;
 
     public static ShelfActionMenuController Instance { get; private set; }
     public bool IsOpen => _actionPanel != null && _actionPanel.activeSelf;
-
     private BookShelfZoomButton _selectedShelfButton;
-    private RectTransform _actionPanelRect;
-    [SerializeField] private AudioSource _audioSource;
 
     private void Awake()
     {
         Instance = this;
-        _audioSource = GetComponent<AudioSource>();
-
-        if (_actionPanelImage == null && _actionPanel != null)
-        {
-            _actionPanelImage = _actionPanel.GetComponent<Image>();
-        }
-
-        if (_actionPanel != null)
-        {
-            _actionPanelRect = _actionPanel.GetComponent<RectTransform>();
-            _actionPanel.SetActive(false);
-        }
+        if (_audioSource == null) _audioSource = GetComponent<AudioSource>();
+        _actionPanel.SetActive(false);
     }
 
     private void OnDestroy()
     {
-        if (Instance == this)
-        {
-            Instance = null;
-        }
+        Unsubscribe();
+        if (Instance == this) Instance = null;
     }
 
     public void Open(BookShelfZoomButton shelfButton)
     {
-        if (shelfButton == null || _actionPanel == null || _gameplayUI.HasModal)
-        {
-            return;
-        }
-
-        PlayShelfButtonClickSound();
-
-        if (IsOpen && _selectedShelfButton == shelfButton)
-        {
-            Close();
-            return;
-        }
-
-        _selectedShelfButton = shelfButton;
-        UpdateActionPanel(shelfButton);
-        _actionPanel.SetActive(true);
-        _gameplayUI.RefreshVisibility();
+        if (shelfButton == null || _gameplayUI.HasModal) return;
+        if (_audioSource != null && _shelfButtonClickSound != null)
+            _audioSource.PlayOneShot(_shelfButtonClickSound);
+        shelfButton.ZoomShelf();
     }
 
-    public void ZoomSelectedShelf()
+    public void SetShelfContext(BookShelfZoomButton shelfButton)
     {
-        BookShelfZoomButton selectedButton = _selectedShelfButton;
-        Close();
-
-        if (selectedButton != null)
+        Unsubscribe();
+        _selectedShelfButton = shelfButton;
+        if (shelfButton != null)
         {
-            selectedButton.ZoomShelf();
+            shelfButton.SetSelected(true);
+            if (shelfButton.ShelfJudge != null)
+                shelfButton.ShelfJudge.StateChanged += RefreshStatus;
         }
+        RefreshStatus();
+    }
+
+    public void SetVisible(bool visible)
+    {
+        _actionPanel.SetActive(visible && _selectedShelfButton != null);
     }
 
     public void JudgeSelectedShelf()
     {
-        BookShelfZoomButton selectedButton = _selectedShelfButton;
-        Close();
-
-        if (selectedButton != null)
-        {
-            bool isCorrect = selectedButton.JudgeShelf();
-            Debug.Log(isCorrect ? "この本棚は正解です" : "この本棚は未完成または不正解です");
-        }
+        if (_selectedShelfButton == null) return;
+        bool correct = _selectedShelfButton.JudgeShelf();
+        if (_selectedShelfButton != null && _shelfStatusLabel != null)
+            _shelfStatusLabel.text = correct ? "この棚は完成です！" : "まだ並びが違うようです";
     }
 
     public void ShowSelectedShelfAnswer()
     {
-        BookShelfZoomButton selectedButton = _selectedShelfButton;
-        Close();
-
-        if (selectedButton != null)
-        {
-            selectedButton.ShowCompletedImage();
-        }
+        if (_selectedShelfButton != null) _selectedShelfButton.ShowCompletedImage();
     }
 
     public void Close()
     {
+        Unsubscribe();
         _selectedShelfButton = null;
-
-        if (_actionPanel != null)
-        {
-            _actionPanel.SetActive(false);
-        }
-
+        _actionPanel.SetActive(false);
         _gameplayUI.RefreshVisibility();
     }
 
-    private void PlayShelfButtonClickSound()
+    private void Unsubscribe()
     {
-        if (_audioSource != null && _shelfButtonClickSound != null)
-        {
-            _audioSource.PlayOneShot(_shelfButtonClickSound);
-        }
+        if (_selectedShelfButton == null) return;
+        _selectedShelfButton.SetSelected(false);
+        if (_selectedShelfButton.ShelfJudge != null)
+            _selectedShelfButton.ShelfJudge.StateChanged -= RefreshStatus;
     }
 
-    private void UpdateActionPanel(BookShelfZoomButton shelfButton)
+    private void RefreshStatus()
     {
-        if (shelfButton == null)
-        {
-            return;
-        }
-
-        // 背景画像を変更
-        if (_actionPanelImage != null)
-        {
-            Sprite sprite = shelfButton.ActionPanelSprite;
-
-            if (sprite != null)
-            {
-                _actionPanelImage.sprite = sprite;
-            }
-        }
-
-        // 表示位置を変更
-        if (_actionPanelRect != null &&
-            shelfButton.ActionMenuPoint != null)
-        {
-            _actionPanelRect.position =
-                shelfButton.ActionMenuPoint.position;
-        }
+        if (_selectedShelfButton == null) return;
+        if (_shelfTitleLabel != null) _shelfTitleLabel.text = _selectedShelfButton.DisplayName;
+        BookShelfJudge shelf = _selectedShelfButton.ShelfJudge;
+        if (_shelfStatusLabel != null && shelf != null)
+            _shelfStatusLabel.text = shelf.IsCompleted ? "この棚は完成です！" : $"収納 {shelf.PlacedCount} / {shelf.SlotCount} 冊";
     }
 }
