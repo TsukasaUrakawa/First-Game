@@ -5,6 +5,10 @@
 `unity command script eval_file --file Tools/BuildBookListFont.cs` in Edit mode
 to rebuild without changing the font asset GUID.
 
+The builder also saves TMP's calculated material ratios before first display.
+Keep the generated asset in Unity's serialized format so an Editor save does
+not introduce formatting-only changes.
+
 Source: Zen Maru Gothic Medium, Copyright 2021 The Zen Maru Gothic Project Authors,
 from https://github.com/google/fonts/tree/main/ofl/zenmarugothic.
 SHA-256: `3CFDB98A13571EDE17FCC769F5093A97C38B80A7B9B2AB754A26B4D822092B3B`.
