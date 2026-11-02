@@ -155,4 +155,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbf792b4facc12641a5a8e8c18cbf3a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spline: {fileID: 0}
+  _startLocalPosition: {x: -5.607534, y: -0.2426529, z: 0.008027723}
+  _slotSpacing: 0.6735294
