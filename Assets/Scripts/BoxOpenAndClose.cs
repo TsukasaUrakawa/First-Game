@@ -1,10 +1,9 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class BoxOpenAndClose : MonoBehaviour
 {
-    [SerializeField] private GameObject _bookListPanel;
-    [SerializeField] private CanvasGroup _handItemCanvasGroup;
-    [SerializeField] private CanvasGroup _shelfButtonCanvasGroup;
+    [SerializeField] private GameplayUIController _gameplayUI;
 
     [SerializeField] private AudioClip _openSE;
     [SerializeField] private AudioClip _closeSE;
@@ -12,65 +11,37 @@ public class BoxOpenAndClose : MonoBehaviour
     private Animator _animator;
     [SerializeField] private AudioSource _audioSource;
 
-    private void Start()
+    private void Awake()
     {
         _animator = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
-
-        // 本一覧が閉じているなら手持ち欄を表示する
-        SetGameplayUIVisible(!_bookListPanel.activeSelf);
     }
 
     private void OnMouseDown()
     {
+        if (GameplayUIController.IsWorldInputBlocked ||
+            (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()))
+        {
+            return;
+        }
+
         _animator.SetBool("IsOpen", true);
     }
 
     // 箱を開くAnimation Eventから呼ばれる
     private void ShowBookList()
     {
-        if (ShelfAnswerPanelController.Instance != null)
-        {
-            ShelfAnswerPanelController.Instance.Close();
-        }
-
-        _bookListPanel.SetActive(true);
-        SetGameplayUIVisible(false);
+        _gameplayUI.OpenBookList();
     }
 
     public void CloseBookList()
     {
-        _bookListPanel.SetActive(false);
-        SetGameplayUIVisible(true);
+        _gameplayUI.CloseBookList();
+    }
 
+    public void CloseLid()
+    {
         _animator.SetBool("IsOpen", false);
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape) &&
-            _bookListPanel.activeSelf)
-        {
-            CloseBookList();
-        }
-    }
-
-    private void SetGameplayUIVisible(bool visible)
-    {
-        SetCanvasGroupVisible(_handItemCanvasGroup, visible);
-        SetCanvasGroupVisible(_shelfButtonCanvasGroup, visible);
-    }
-
-    private void SetCanvasGroupVisible(CanvasGroup canvasGroup, bool visible)
-    {
-        if (canvasGroup == null)
-        {
-            return;
-        }
-
-        canvasGroup.alpha = visible ? 1f : 0f;
-        canvasGroup.interactable = visible;
-        canvasGroup.blocksRaycasts = visible;
     }
 
     private void PlayOpenSE()

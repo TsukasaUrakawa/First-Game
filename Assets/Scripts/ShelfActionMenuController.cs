@@ -6,6 +6,7 @@ public class ShelfActionMenuController : MonoBehaviour
     [SerializeField] private GameObject _actionPanel;
     [SerializeField] private Image _actionPanelImage;
     [SerializeField] private AudioClip _shelfButtonClickSound;
+    [SerializeField] private GameplayUIController _gameplayUI;
 
     public static ShelfActionMenuController Instance { get; private set; }
     public bool IsOpen => _actionPanel != null && _actionPanel.activeSelf;
@@ -41,7 +42,7 @@ public class ShelfActionMenuController : MonoBehaviour
 
     public void Open(BookShelfZoomButton shelfButton)
     {
-        if (shelfButton == null || _actionPanel == null)
+        if (shelfButton == null || _actionPanel == null || _gameplayUI.HasModal)
         {
             return;
         }
@@ -57,6 +58,7 @@ public class ShelfActionMenuController : MonoBehaviour
         _selectedShelfButton = shelfButton;
         UpdateActionPanel(shelfButton);
         _actionPanel.SetActive(true);
+        _gameplayUI.RefreshVisibility();
     }
 
     public void ZoomSelectedShelf()
@@ -101,6 +103,8 @@ public class ShelfActionMenuController : MonoBehaviour
         {
             _actionPanel.SetActive(false);
         }
+
+        _gameplayUI.RefreshVisibility();
     }
 
     private void PlayShelfButtonClickSound()

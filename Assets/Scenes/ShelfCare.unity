@@ -2541,7 +2541,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &178882827
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4453,8 +4453,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc8bf3d9f8adad443a91cfe90a41eff0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shelfButtonCanvasGroup: {fileID: 35923980}
-  _bookListPanel: {fileID: 178882826}
+  _gameplayUI: {fileID: 1716211015}
 --- !u!1001 &337080809
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12737,18 +12736,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1626826820}
-        m_TargetAssemblyTypeName: BoxOpenAndClose, Assembly-CSharp
-        m_MethodName: CloseBookList
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1716211009}
         m_TargetAssemblyTypeName: BookSelectionController, Assembly-CSharp
         m_MethodName: TakeSelectedBooks
@@ -16484,9 +16471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6e040fa63cdcea48a3cf8aacc8baaf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bookListPanel: {fileID: 178882826}
-  _handItemCanvasGroup: {fileID: 1496516722}
-  _shelfButtonCanvasGroup: {fileID: 35923980}
+  _gameplayUI: {fileID: 1716211015}
   _openSE: {fileID: 8300000, guid: 2c9b678a028500a468e6810893a75078, type: 3}
   _closeSE: {fileID: 8300000, guid: 2c9b678a028500a468e6810893a75078, type: 3}
   _audioSource: {fileID: 1626826822}
@@ -17331,6 +17316,7 @@ GameObject:
   - component: {fileID: 1716211012}
   - component: {fileID: 1716211013}
   - component: {fileID: 1716211014}
+  - component: {fileID: 1716211015}
   m_Layer: 5
   m_Name: UIManager
   m_TagString: Untagged
@@ -17494,6 +17480,7 @@ MonoBehaviour:
   _handItemController: {fileID: 1716211013}
   _bookPopUpController: {fileID: 1716211007}
   _bookListPanel: {fileID: 178882826}
+  _gameplayUI: {fileID: 1716211015}
 --- !u!114 &1716211010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17509,6 +17496,7 @@ MonoBehaviour:
   _actionPanel: {fileID: 1729335317}
   _actionPanelImage: {fileID: 1729335319}
   _shelfButtonClickSound: {fileID: 8300000, guid: 1b2ab1e5e9f11de4fa7b669c38aa1b76, type: 3}
+  _gameplayUI: {fileID: 1716211015}
   _audioSource: {fileID: 1716211008}
 --- !u!114 &1716211011
 MonoBehaviour:
@@ -17525,6 +17513,7 @@ MonoBehaviour:
   _answerPanel: {fileID: 1987695035}
   _answerImage: {fileID: 2051789810}
   _hideOnStart: 1
+  _gameplayUI: {fileID: 1716211015}
 --- !u!114 &1716211012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17555,6 +17544,7 @@ MonoBehaviour:
   - {fileID: 1729335317}
   _objectsToShowAfterFade:
   - {fileID: 271413207}
+  _gameplayUI: {fileID: 1716211015}
   _useUnscaledTime: 1
 --- !u!114 &1716211013
 MonoBehaviour:
@@ -17596,6 +17586,28 @@ MonoBehaviour:
   _fadeCanvasGroup: {fileID: 1412445154}
   _fadeDuration: 0.4
   _fadeEase: 7
+--- !u!114 &1716211015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1716211005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4776e644aeb362e41b07cc3e42619f43, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  _bookListPanel: {fileID: 178882826}
+  _handItemCanvasGroup: {fileID: 1496516722}
+  _shelfButtonCanvasGroup: {fileID: 35923980}
+  _zoomBackButton: {fileID: 1825780185}
+  _cameraController: {fileID: 330585548}
+  _boxController: {fileID: 1626826820}
+  _bookSelectionController: {fileID: 1716211009}
+  _bookPopUpController: {fileID: 1716211007}
+  _answerController: {fileID: 1716211011}
+  _actionMenuController: {fileID: 1716211010}
 --- !u!114 &1721733858 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9060335290681986763, guid: 1a744813dc722ae48bc4b09953aff4d0, type: 3}
@@ -17706,7 +17718,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1729335318
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18811,6 +18823,171 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8152398550976256469, guid: 098fad83a60b62040b260b0992e4a89c, type: 3}
   m_PrefabInstance: {fileID: 1820886233}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1825780185
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1825780186}
+  - component: {fileID: 1825780190}
+  - component: {fileID: 1825780189}
+  - component: {fileID: 1825780188}
+  - component: {fileID: 1825780187}
+  m_Layer: 5
+  m_Name: BackToRoomButton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1825780186
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1825780185}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1973178348}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 24, y: -24}
+  m_SizeDelta: {x: 280, y: 120}
+  m_Pivot: {x: 0, y: 1}
+--- !u!114 &1825780187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1825780185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  m_IgnoreLayout: 1
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
+--- !u!114 &1825780188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1825780185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1825780189}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1716211015}
+        m_TargetAssemblyTypeName: GameplayUIController, Assembly-CSharp
+        m_MethodName: Back
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName:
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument:
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1716211007}
+        m_TargetAssemblyTypeName: BookPopUpController, Assembly-CSharp
+        m_MethodName: PlayClickSE
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName:
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument:
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1825780189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1825780185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: eff22ea2c4f0b2840927bea3111642e9, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1825780190
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1825780185}
+  m_CullTransparentMesh: 1
 --- !u!1001 &1827273978
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19981,6 +20158,7 @@ RectTransform:
   - {fileID: 1729335318}
   - {fileID: 1987695036}
   - {fileID: 271413208}
+  - {fileID: 1825780186}
   - {fileID: 1412445153}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -20567,7 +20745,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1987695036
 RectTransform:
   m_ObjectHideFlags: 0

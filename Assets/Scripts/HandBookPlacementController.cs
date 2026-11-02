@@ -41,7 +41,7 @@ public class HandBookPlacementController : MonoBehaviour
 
     public bool TryPlaceBook(BookSlot slot)
     {
-        if (slot == null || slot.IsFilled ||
+        if (GameplayUIController.IsWorldInputBlocked || slot == null || slot.IsFilled ||
             _handItemController == null ||
             !_handItemController.TryGetSelectedBook(out HandBookData handBook))
         {
@@ -97,7 +97,7 @@ public class HandBookPlacementController : MonoBehaviour
     {
         handBook = null;
 
-        if (slot == null || slot.IsFilled || _handItemController == null)
+        if (GameplayUIController.IsWorldInputBlocked || slot == null || slot.IsFilled || _handItemController == null)
         {
             return false;
         }
@@ -119,7 +119,7 @@ public class HandBookPlacementController : MonoBehaviour
 
     public bool TryReturnBookToHand(BookSlot slot)
     {
-        if (_handItemController == null ||
+        if (GameplayUIController.IsWorldInputBlocked || _handItemController == null ||
             _handItemController.IsFull ||
             slot == null ||
             !slot.IsFilled)
