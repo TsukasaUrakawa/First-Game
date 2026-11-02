@@ -22,6 +22,7 @@ public class GameClearEffectController : MonoBehaviour
     [Header("UI Control")]
     [SerializeField] private GameObject[] _objectsToHideOnClear;
     [SerializeField] private GameObject[] _objectsToShowAfterFade;
+    [SerializeField] private GameplayUIController _gameplayUI;
 
     [Header("Time")]
     [SerializeField] private bool _useUnscaledTime = true;
@@ -55,6 +56,7 @@ public class GameClearEffectController : MonoBehaviour
         }
 
         _hasPlayed = true;
+        _gameplayUI.OnGameClear();
         HideClearPanel();
 
         if (_clearRoutine != null)

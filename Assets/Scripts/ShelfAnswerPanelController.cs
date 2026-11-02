@@ -6,8 +6,10 @@ public class ShelfAnswerPanelController : MonoBehaviour
     [SerializeField] private GameObject _answerPanel;
     [SerializeField] private Image _answerImage;
     [SerializeField] private bool _hideOnStart = true;
+    [SerializeField] private GameplayUIController _gameplayUI;
 
     public static ShelfAnswerPanelController Instance { get; private set; }
+    public bool IsOpen => _answerPanel != null && _answerPanel.activeSelf;
 
     private void Awake()
     {
@@ -29,6 +31,11 @@ public class ShelfAnswerPanelController : MonoBehaviour
 
     public void Open(Sprite answerSprite)
     {
+        if (_gameplayUI.IsGameCleared)
+        {
+            return;
+        }
+
         if (_answerPanel == null || _answerImage == null)
         {
             Debug.LogWarning("完成図パネルまたは完成図Imageが設定されていません");
@@ -44,6 +51,7 @@ public class ShelfAnswerPanelController : MonoBehaviour
         _answerImage.sprite = answerSprite;
         _answerImage.preserveAspect = true;
         _answerPanel.SetActive(true);
+        _gameplayUI.OnAnswerOpened();
     }
 
     public void Close()
@@ -52,5 +60,7 @@ public class ShelfAnswerPanelController : MonoBehaviour
         {
             _answerPanel.SetActive(false);
         }
+
+        _gameplayUI.RefreshVisibility();
     }
 }

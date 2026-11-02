@@ -11,6 +11,7 @@ public class BookSelectionController : MonoBehaviour
     [SerializeField] private HandItemController _handItemController;
     [SerializeField] private BookPopUpController _bookPopUpController;
     [SerializeField] private GameObject _bookListPanel;
+    [SerializeField] private GameplayUIController _gameplayUI;
 
     private readonly List<BookButton> _selectedBooks = new List<BookButton>();
 
@@ -18,7 +19,7 @@ public class BookSelectionController : MonoBehaviour
 
     private void Update()
     {
-        if (_selectedBooks.Count == 0 || _bookPopUpController.IsOpen)
+        if (_selectedBooks.Count == 0 || _bookPopUpController.IsOpen || Input.GetKeyDown(KeyCode.Escape))
         {
             return;
         }
@@ -30,6 +31,14 @@ public class BookSelectionController : MonoBehaviour
 
         //マウスの右クリックで選択した本のポップアップを表示
         if (Input.GetMouseButtonDown(1))
+        {
+            ShowSelectionConfirmation();
+        }
+    }
+
+    public void ShowSelectionConfirmation()
+    {
+        if (_selectedBooks.Count > 0 && _bookListPanel.activeInHierarchy && !_bookPopUpController.IsOpen)
         {
             _bookPopUpController.ShowSelectedBooks(_selectedBooks);
         }
@@ -101,12 +110,19 @@ public class BookSelectionController : MonoBehaviour
 
         _selectedBooks.Clear();
         _bookPopUpController.CloseBookPopUp();
+        _gameplayUI.CloseBookList();
     }
 
     /// <summary>
     /// キャンセルボタンを押したときの処理
     /// </summary>
     public void CancelSelection()
+    {
+        ClearSelection();
+        _bookPopUpController.PlayClickSE();
+    }
+
+    public void ClearSelection()
     {
         foreach (BookButton button in _selectedBooks)
         {
@@ -117,7 +133,6 @@ public class BookSelectionController : MonoBehaviour
         }
 
         _selectedBooks.Clear();
-        _bookPopUpController.PlayClickSE();
         _bookPopUpController.CloseBookPopUp();
     }
 
