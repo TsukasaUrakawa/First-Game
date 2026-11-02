@@ -39,8 +39,7 @@ books[0].GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
 selection.ShowSelectionConfirmation();
 Check(popup.IsOpen && selection.SelectedCount == 1, "Selected book opens confirmation");
 ui.Back();
-Check(ui.IsBookListOpen && !popup.IsOpen && selection.SelectedCount == 0 && !books[0].IsSelected, "Back cancels only confirmation and clears highlights");
-books[0].GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
+Check(ui.IsBookListOpen && !popup.IsOpen && selection.SelectedCount == 1 && books[0].IsSelected, "Back closes only confirmation and preserves selection for editing");
 selection.ShowSelectionConfirmation();
 Button("CloseButton").onClick.Invoke();
 Check(!ui.IsBookListOpen && !popup.IsOpen && selection.SelectedCount == 0 && !books[0].IsSelected, "Close list also closes confirmation and clears selection");
@@ -92,13 +91,13 @@ Check(!camera.IsZoomed && !back.activeSelf, "Visible Close button returns to roo
 Visible(shelfHud, true, "Returning to room restores shelf navigation");
 
 Button("GreenShelfButton").onClick.Invoke();
-Check(action.IsOpen && GameplayUIController.IsWorldInputBlocked, "Shelf menu blocks world input");
+Check(action.IsOpen && camera.IsZoomed && !GameplayUIController.IsWorldInputBlocked, "Shelf card directly zooms and shows nonblocking toolbar");
 ui.Back();
-Check(!action.IsOpen && !GameplayUIController.IsWorldInputBlocked, "Back dismisses shelf menu");
+Check(!action.IsOpen && !camera.IsZoomed && !GameplayUIController.IsWorldInputBlocked, "Back dismisses toolbar and returns to room together");
 greenShelf.ZoomShelf();
 greenShelf.ShowCompletedImage();
 ui.Back();
-Check(!answer.IsOpen && camera.IsZoomed && back.activeInHierarchy, "Closing answer preserves underlying zoom");
+Check(!answer.IsOpen && camera.IsZoomed && action.IsOpen && back.activeInHierarchy, "Closing answer restores shelf toolbar and underlying zoom");
 
 // Clear locks immediately, before the delayed clear panel is displayed.
 Find<GameClearEffectController>().PlayClearEffect();

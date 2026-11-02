@@ -24,7 +24,7 @@ public class GameplayUIController : MonoBehaviour
     public bool IsBookListOpen => _bookListPanel.activeSelf;
     public bool IsGameCleared { get; private set; }
     public bool HasModal => IsGameCleared || IsBookListOpen || _answerController.IsOpen;
-    public bool BlocksWorldInput => HasModal || _actionMenuController.IsOpen;
+    public bool BlocksWorldInput => HasModal;
 
     private void Awake()
     {
@@ -70,7 +70,6 @@ public class GameplayUIController : MonoBehaviour
         }
 
         _answerController.Close();
-        _actionMenuController.Close();
         _bookSelectionController.ClearSelection();
         _bookListPanel.SetActive(true);
         RefreshVisibility();
@@ -87,7 +86,6 @@ public class GameplayUIController : MonoBehaviour
     public void OnAnswerOpened()
     {
         CloseBookList();
-        _actionMenuController.Close();
         RefreshVisibility();
     }
 
@@ -111,7 +109,7 @@ public class GameplayUIController : MonoBehaviour
         // One input closes only the topmost layer.
         if (_bookPopUpController.IsOpen)
         {
-            _bookSelectionController.CancelSelection();
+            _bookSelectionController.ReturnToSelection();
         }
         else if (IsBookListOpen)
         {
@@ -121,12 +119,9 @@ public class GameplayUIController : MonoBehaviour
         {
             _answerController.Close();
         }
-        else if (_actionMenuController.IsOpen)
-        {
-            _actionMenuController.Close();
-        }
         else if (_cameraController.IsZoomed)
         {
+            _actionMenuController.Close();
             _cameraController.ResetCamera();
         }
     }
@@ -136,6 +131,7 @@ public class GameplayUIController : MonoBehaviour
         SetVisible(_handItemCanvasGroup, !BlocksWorldInput);
         SetVisible(_shelfButtonCanvasGroup, !HasModal && !_cameraController.IsZoomed);
         _zoomBackButton.SetActive(_cameraController.IsZoomed && !BlocksWorldInput);
+        _actionMenuController.SetVisible(_cameraController.IsZoomed && !HasModal);
     }
 
     private static void SetVisible(CanvasGroup group, bool visible)

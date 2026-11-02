@@ -20,10 +20,12 @@ public class BookSlot : MonoBehaviour
 
     private BookObject _placedBook;
     private Collider2D _clickCollider;
+    private BookShelfJudge _shelfJudge;
 
     private void Awake()
     {
         _clickCollider = GetComponent<Collider2D>();
+        _shelfJudge = GetComponentInParent<BookShelfJudge>();
         UpdateSlotIndexFromName();
         UpdateShelfColorIndex();
         PrepareGhostRenderer();
@@ -136,6 +138,7 @@ public class BookSlot : MonoBehaviour
         {
             bookClick.SetCurrentSlot(this);
         }
+        _shelfJudge?.NotifyBookChanged();
     }
 
     public void ClearSlot()
@@ -147,6 +150,7 @@ public class BookSlot : MonoBehaviour
         {
             _clickCollider.enabled = !IsLocked;
         }
+        _shelfJudge?.NotifyBookChanged();
     }
 
     public void SetLocked(bool locked)

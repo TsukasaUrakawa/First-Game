@@ -20,6 +20,22 @@ public class BookShelfJudge : MonoBehaviour
     [SerializeField] private BookJudgeManager _judgeManager;
 
     public bool IsCompleted { get; private set; }
+    public event System.Action StateChanged;
+    private BookSlot[] _slots;
+    private BookSlot[] Slots => _slots ?? (_slots = GetComponentsInChildren<BookSlot>(true));
+    public int SlotCount => Slots.Length;
+    public int PlacedCount
+    {
+        get
+        {
+            int count = 0;
+            foreach (BookSlot slot in Slots) if (slot.IsFilled) count++;
+            return count;
+        }
+    }
+
+    private void OnTransformChildrenChanged() => _slots = null;
+    public void NotifyBookChanged() => StateChanged?.Invoke();
 
     private void Awake()
     {
@@ -58,6 +74,9 @@ public class BookShelfJudge : MonoBehaviour
             PlayJudgeSound(false);
         }
 
+        // Publish this shelf's state before a game-clear transition hides the HUD.
+        StateChanged?.Invoke();
+
         if (_judgeManager == null)
         {
             _judgeManager = FindFirstObjectByType<BookJudgeManager>();
@@ -76,7 +95,7 @@ public class BookShelfJudge : MonoBehaviour
     /// </summary>
     public bool IsShelfCorrect()
     {
-        BookSlot[] slots = GetComponentsInChildren<BookSlot>();
+        BookSlot[] slots = Slots;
 
         if (slots.Length == 0)
         {
@@ -98,6 +117,7 @@ public class BookShelfJudge : MonoBehaviour
     {
         IsCompleted = false;
         SetShelfLocked(false);
+        StateChanged?.Invoke();
     }
 
     private void CompleteShelf()
@@ -144,7 +164,7 @@ public class BookShelfJudge : MonoBehaviour
 
     private void SetShelfLocked(bool locked)
     {
-        BookSlot[] slots = GetComponentsInChildren<BookSlot>();
+        BookSlot[] slots = Slots;
 
         foreach (BookSlot slot in slots)
         {
