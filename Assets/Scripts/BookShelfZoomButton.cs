@@ -131,7 +131,7 @@ public class BookShelfZoomButton : MonoBehaviour,
             return;
         }
 
-        ShelfAnswerPanelController.Instance.Open(_completedImageSprite);
+        ShelfAnswerPanelController.Instance.Open(_completedImageSprite, DisplayName);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

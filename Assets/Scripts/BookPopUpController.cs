@@ -23,6 +23,7 @@ public class BookPopUpController : MonoBehaviour
     [SerializeField]private AudioSource _audioSource;
 
     public bool IsOpen => _bookPopUpUI != null && _bookPopUpUI.activeSelf;
+    public event System.Action VisibilityChanged;
 
     private void Awake()
     {
@@ -59,14 +60,17 @@ public class BookPopUpController : MonoBehaviour
                 .Join(_dialogCanvasGroup.DOFade(1, .16f))
                 .Join(_dialogCard.DOScale(1, .16f).SetEase(Ease.OutCubic));
         }
+        VisibilityChanged?.Invoke();
     }
 
     public void CloseBookPopUp()
     {
+        bool wasOpen = IsOpen;
         DOTween.Kill(this);
         if (_dialogCard != null) _dialogCard.localScale = Vector3.one;
         if (_dialogCanvasGroup != null) _dialogCanvasGroup.alpha = 1;
         _bookPopUpUI.SetActive(false);
+        if (wasOpen) VisibilityChanged?.Invoke();
     }
 
     private void OnDestroy() => DOTween.Kill(this);

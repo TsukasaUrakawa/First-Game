@@ -25,6 +25,7 @@ public class GameplayUIController : MonoBehaviour
     public bool IsGameCleared { get; private set; }
     public bool HasModal => IsGameCleared || IsBookListOpen || _answerController.IsOpen;
     public bool BlocksWorldInput => HasModal;
+    public event System.Action StateChanged;
 
     private void Awake()
     {
@@ -132,6 +133,7 @@ public class GameplayUIController : MonoBehaviour
         SetVisible(_shelfButtonCanvasGroup, !HasModal && !_cameraController.IsZoomed);
         _zoomBackButton.SetActive(_cameraController.IsZoomed && !BlocksWorldInput);
         _actionMenuController.SetVisible(_cameraController.IsZoomed && !HasModal);
+        StateChanged?.Invoke();
     }
 
     private static void SetVisible(CanvasGroup group, bool visible)
