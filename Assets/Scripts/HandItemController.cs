@@ -3,12 +3,9 @@ using UnityEngine;
 
 public class HandItemController : MonoBehaviour
 {
-    private const int MaxCapacity = 6;
+    public const int MaxCapacity = 9;
 
     [SerializeField] private HandItemSlotUI[] _slots = new HandItemSlotUI[MaxCapacity];
-
-    [Header("UI")]
-    [SerializeField] private GameObject _handItemPanel;
 
     [Header("Sound")]
     [SerializeField] private AudioSource _audioSource;
@@ -25,7 +22,9 @@ public class HandItemController : MonoBehaviour
     public int AvailableSpace => Mathf.Max(0, Capacity - BookCount);
     public bool IsFull => BookCount >= Capacity;
     public bool HasSelectedBook => _selectedIndex >= 0 && _selectedIndex < BookCount;
+    public int SelectedIndex => HasSelectedBook ? _selectedIndex : -1;
     public event System.Action InventoryChanged;
+    public event System.Action SelectionChanged;
 
     private void Awake()
     {
@@ -75,6 +74,7 @@ public class HandItemController : MonoBehaviour
 
         _selectedIndex = isDeselecting ? -1 : index;
         RefreshUI();
+        SelectionChanged?.Invoke();
 
         if (isDeselecting)
         {
@@ -123,11 +123,6 @@ public class HandItemController : MonoBehaviour
 
             Sprite sprite = i < BookCount ? _books[i].Sprite : null;
             _slots[i].SetView(sprite, i == _selectedIndex);
-        }
-
-        if (_handItemPanel != null)
-        {
-            _handItemPanel.SetActive(BookCount > 0);
         }
     }
 

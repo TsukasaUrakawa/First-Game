@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class HandItemSlotUI : MonoBehaviour,
     IPointerClickHandler,
@@ -10,14 +11,12 @@ public class HandItemSlotUI : MonoBehaviour,
     [SerializeField] private Image _bookImage;
     [SerializeField] private GameObject _frameImage;
 
-    [SerializeField, Range(0f, 1f)]
-    private float _hoverBrightness = 0.8f;
+    [SerializeField] private Graphic _background;
+    [SerializeField] private TMP_Text _stateLabel;
+    [SerializeField] private GameObject _emptyLabel;
 
     private HandItemController _controller;
     private int _index;
-
-    private Color _normalColor = Color.white;
-    private bool _hasCachedNormalColor;
 
     private bool _hasBook;
     private bool _isSelected;
@@ -30,7 +29,6 @@ public class HandItemSlotUI : MonoBehaviour,
         _controller = controller;
         _index = index;
 
-        CacheNormalColor();
         UpdateVisual();
     }
 
@@ -40,8 +38,6 @@ public class HandItemSlotUI : MonoBehaviour,
         {
             return;
         }
-
-        CacheNormalColor();
 
         _hasBook = sprite != null;
         _isSelected = selected;
@@ -59,7 +55,7 @@ public class HandItemSlotUI : MonoBehaviour,
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!_hasBook)
+        if (!_hasBook || GameplayUIController.IsWorldInputBlocked)
         {
             return;
         }
@@ -92,40 +88,23 @@ public class HandItemSlotUI : MonoBehaviour,
     {
         if (_frameImage != null)
         {
-            _frameImage.SetActive(
-                _hasBook && _isSelected
-            );
+            _frameImage.SetActive(_hasBook && (_isSelected || _isPointerOver));
         }
 
-        if (_bookImage == null || !_hasBook)
+        if (_emptyLabel != null) _emptyLabel.SetActive(!_hasBook);
+        if (_stateLabel != null)
         {
-            return;
+            _stateLabel.text = _isSelected && _hasBook ? "選択中" : (_index + 1).ToString();
+            _stateLabel.color = _isSelected ? new Color(.22f, .39f, .25f) : new Color(.60f, .50f, .38f);
         }
-
-        if (_isPointerOver)
-        {
-            _bookImage.color = new Color(
-                _normalColor.r * _hoverBrightness,
-                _normalColor.g * _hoverBrightness,
-                _normalColor.b * _hoverBrightness,
-                _normalColor.a
-            );
-        }
-        else
-        {
-            _bookImage.color = _normalColor;
-        }
+        if (_background != null)
+            _background.color = _isSelected ? new Color(.88f, .94f, .87f)
+                : _hasBook ? new Color(1, .99f, .96f) : new Color(.92f, .87f, .78f);
     }
 
-    private void CacheNormalColor()
+    private void OnDisable()
     {
-        if (_hasCachedNormalColor ||
-            _bookImage == null)
-        {
-            return;
-        }
-
-        _normalColor = _bookImage.color;
-        _hasCachedNormalColor = true;
+        _isPointerOver = false;
+        UpdateVisual();
     }
 }

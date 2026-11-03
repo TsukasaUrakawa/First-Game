@@ -35,15 +35,17 @@ Check(UnityEngine.Object.FindObjectsByType<RoundedPanelGraphic>(UnityEngine.Find
 
 var dialog = Named("BookConfirmationCard").GetComponent<UnityEngine.RectTransform>();
 var row = Named("SelectedBookRow").GetComponent<UnityEngine.RectTransform>();
-foreach (int count in new[] { 1, 3, 6 })
+foreach (int count in new[] { 1, 3, 6, 9 })
 {
     selection.ClearSelection();
     foreach (var book in books.Take(count)) book.GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
     Button("ConfirmSelectionButton").onClick.Invoke();
     UnityEngine.Canvas.ForceUpdateCanvases();
+    foreach (var label in dialog.GetComponentsInChildren<TMPro.TMP_Text>(true)) label.ForceMeshUpdate(true);
+    Check(dialog.GetComponentsInChildren<TMPro.TMP_Text>().All(t => !t.isTextOverflowing), count + " book confirmation labels fit without overflow");
     var previews = row.GetComponentsInChildren<UnityEngine.RectTransform>().Where(t => t.parent == row).ToArray();
     Check(popup.IsOpen && previews.Length == count, count + " selected books show exactly that many cards");
-    Check(Label("ConfirmationSelectionCount").text.Contains(count.ToString()) && Label("ConfirmationCapacity").text.Contains(count + " / 6"), count + " selected books show correct counts and capacity");
+    Check(Label("ConfirmationSelectionCount").text.Contains(count.ToString()) && Label("ConfirmationCapacity").text.Contains(count + " / 9"), count + " selected books show correct counts and capacity");
     Check(previews.All(t => Inside(t, dialog)) && Inside(Button("TakeButton").GetComponent<UnityEngine.RectTransform>(), dialog) && Inside(Button("CancelButton").GetComponent<UnityEngine.RectTransform>(), dialog), count + " preview cards and both actions fit inside the dialog");
     var left = new UnityEngine.Vector3[4]; var right = new UnityEngine.Vector3[4];
     previews.First().GetWorldCorners(left); previews.Last().GetWorldCorners(right);
@@ -55,7 +57,7 @@ foreach (int count in new[] { 1, 3, 6 })
     Check(!popup.IsOpen && selection.SelectedCount == count && books.Take(count).All(b => b.IsSelected), count + " Cancel or Back preserves selected books and highlights");
 }
 Button("CloseButton").onClick.Invoke();
-Check(selection.SelectedCount == 0 && books.Take(6).All(b => !b.IsSelected), "Closing the list still clears selection");
+Check(selection.SelectedCount == 0 && books.Take(9).All(b => !b.IsSelected), "Closing the list still clears selection");
 
 cards[0].GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
 Check(camera.IsZoomed && action.IsOpen && !GameplayUIController.IsWorldInputBlocked, "One shelf click zooms with a nonblocking toolbar");
@@ -90,12 +92,12 @@ ui.Back();
 
 // With one book already held, the projected inventory must include it.
 ui.OpenBookList();
-foreach (var book in books.Take(5)) book.GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
+foreach (var book in books.Take(8)) book.GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
 Button("ConfirmSelectionButton").onClick.Invoke();
-Check(Label("ConfirmationCapacity").text.Contains("6 / 6") && Button("TakeButton").interactable, "Projected hand count includes existing inventory");
+Check(Label("ConfirmationCapacity").text.Contains("9 / 9") && Button("TakeButton").interactable, "Projected hand count includes existing inventory");
 Button("TakeButton").onClick.Invoke();
 Button("TakeButton").onClick.Invoke();
-Check(hand.BookCount == 6 && selection.SelectedCount == 0 && !popup.IsOpen && !ui.IsBookListOpen, "Taking books transfers once even if invoked twice");
+Check(hand.BookCount == 9 && selection.SelectedCount == 0 && !popup.IsOpen && !ui.IsBookListOpen, "Taking books transfers once even if invoked twice");
 foreach (var label in Named("ShelfButtonPanel").GetComponentsInChildren<TMPro.TMP_Text>(true)
     .Concat(Named("ShelfActionPanel").GetComponentsInChildren<TMPro.TMP_Text>(true))
     .Concat(dialog.GetComponentsInChildren<TMPro.TMP_Text>(true)))
