@@ -11,14 +11,14 @@ public class BookButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     private Sprite _bookSprite;
     private BookSelectionController _bookSelectionController;
-    private Image _bookImage;
+    [SerializeField] private Image _bookImage;
 
     public Sprite BookSprite => _bookSprite;
     public bool IsSelected { get; private set; }
 
     private void Awake()
     {
-        _bookImage = GetComponent<Image>();
+        if (_bookImage == null) _bookImage = GetComponent<Image>();
     }
     /// <summary>
     /// 本一覧の本一冊ずつに画像をセット

@@ -19,6 +19,7 @@ public class SceneFadeInController : MonoBehaviour
 
         _fadeCanvasGroup
             .DOFade(0f, _fadeDuration)
+            .SetUpdate(true)
             .SetEase(_fadeEase)
             .OnComplete(() =>
             {
