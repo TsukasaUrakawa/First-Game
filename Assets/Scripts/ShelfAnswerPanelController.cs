@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ShelfAnswerPanelController : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class ShelfAnswerPanelController : MonoBehaviour
     [SerializeField] private Image _answerImage;
     [SerializeField] private bool _hideOnStart = true;
     [SerializeField] private GameplayUIController _gameplayUI;
+    [SerializeField] private TMP_Text _shelfTitle;
 
     public static ShelfAnswerPanelController Instance { get; private set; }
     public bool IsOpen => _answerPanel != null && _answerPanel.activeSelf;
@@ -29,7 +31,7 @@ public class ShelfAnswerPanelController : MonoBehaviour
         }
     }
 
-    public void Open(Sprite answerSprite)
+    public void Open(Sprite answerSprite, string shelfName = null)
     {
         if (_gameplayUI.IsGameCleared)
         {
@@ -50,6 +52,7 @@ public class ShelfAnswerPanelController : MonoBehaviour
 
         _answerImage.sprite = answerSprite;
         _answerImage.preserveAspect = true;
+        _shelfTitle.text = string.IsNullOrEmpty(shelfName) ? "完成図" : shelfName + "の完成図";
         _answerPanel.SetActive(true);
         _gameplayUI.OnAnswerOpened();
     }

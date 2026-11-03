@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 8192
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -93,6 +93,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -100,10 +113,10 @@ TextureImporter:
       name: Red01
       rect:
         serializedVersion: 2
-        x: 6
-        y: 8
-        width: 160
-        height: 787
+        x: 4
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -122,10 +135,10 @@ TextureImporter:
       name: Red02
       rect:
         serializedVersion: 2
-        x: 166
-        y: 8
-        width: 175
-        height: 787
+        x: 152
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -144,10 +157,10 @@ TextureImporter:
       name: Red03
       rect:
         serializedVersion: 2
-        x: 341
-        y: 8
-        width: 175
-        height: 787
+        x: 300
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,10 +179,10 @@ TextureImporter:
       name: Red04
       rect:
         serializedVersion: 2
-        x: 516
-        y: 8
-        width: 174
-        height: 787
+        x: 448
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -188,10 +201,10 @@ TextureImporter:
       name: Red05
       rect:
         serializedVersion: 2
-        x: 690
-        y: 8
-        width: 170
-        height: 787
+        x: 596
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -210,10 +223,10 @@ TextureImporter:
       name: Red06
       rect:
         serializedVersion: 2
-        x: 860
-        y: 8
-        width: 179
-        height: 787
+        x: 744
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -232,10 +245,10 @@ TextureImporter:
       name: Red07
       rect:
         serializedVersion: 2
-        x: 1039
-        y: 8
-        width: 179
-        height: 787
+        x: 892
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -254,10 +267,10 @@ TextureImporter:
       name: Red08
       rect:
         serializedVersion: 2
-        x: 1218
-        y: 8
-        width: 176
-        height: 787
+        x: 1040
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -276,10 +289,10 @@ TextureImporter:
       name: Red09
       rect:
         serializedVersion: 2
-        x: 1394
-        y: 8
-        width: 172
-        height: 787
+        x: 1188
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -298,10 +311,10 @@ TextureImporter:
       name: Red10
       rect:
         serializedVersion: 2
-        x: 1566
-        y: 8
-        width: 182
-        height: 787
+        x: 1336
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -320,10 +333,10 @@ TextureImporter:
       name: Red11
       rect:
         serializedVersion: 2
-        x: 1748
-        y: 8
-        width: 180
-        height: 787
+        x: 1484
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -342,10 +355,10 @@ TextureImporter:
       name: Red12
       rect:
         serializedVersion: 2
-        x: 1928
-        y: 8
-        width: 172
-        height: 787
+        x: 1632
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -364,10 +377,10 @@ TextureImporter:
       name: Red13
       rect:
         serializedVersion: 2
-        x: 2100
-        y: 8
-        width: 171
-        height: 787
+        x: 1780
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -386,10 +399,10 @@ TextureImporter:
       name: Red14
       rect:
         serializedVersion: 2
-        x: 2271
-        y: 8
-        width: 176
-        height: 787
+        x: 1928
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -408,10 +421,10 @@ TextureImporter:
       name: Red15
       rect:
         serializedVersion: 2
-        x: 2447
-        y: 8
-        width: 174
-        height: 787
+        x: 2076
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -430,10 +443,10 @@ TextureImporter:
       name: Red16
       rect:
         serializedVersion: 2
-        x: 2621
-        y: 8
-        width: 168
-        height: 787
+        x: 2224
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -452,10 +465,10 @@ TextureImporter:
       name: Red17
       rect:
         serializedVersion: 2
-        x: 2789
-        y: 8
-        width: 167
-        height: 787
+        x: 2372
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

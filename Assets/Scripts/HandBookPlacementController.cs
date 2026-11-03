@@ -14,6 +14,8 @@ public class HandBookPlacementController : MonoBehaviour
     [SerializeField, Range(0f, 1f)] private float _wrongShelfSoundVolume = 1f;
 
     public static HandBookPlacementController Instance { get; private set; }
+    public event System.Action<BookSlot> BookPlaced;
+    public event System.Action<BookSlot> BookReturned;
 
     private void Awake()
     {
@@ -88,6 +90,7 @@ public class HandBookPlacementController : MonoBehaviour
         slot.PlaceBook(book.transform);
         PlayPlaceSound();
         _handItemController.RemoveSelectedBook();
+        BookPlaced?.Invoke(slot);
         return true;
     }
 
@@ -153,6 +156,7 @@ public class HandBookPlacementController : MonoBehaviour
         slot.ClearSlot();
         Destroy(bookObject.gameObject);
         PlayReturnSound();
+        BookReturned?.Invoke(slot);
         return true;
     }
 

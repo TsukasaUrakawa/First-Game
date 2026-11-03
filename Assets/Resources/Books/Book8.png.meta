@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 8192
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -93,6 +93,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -100,10 +113,10 @@ TextureImporter:
       name: Black01
       rect:
         serializedVersion: 2
-        x: 7
-        y: 7
-        width: 160
-        height: 741
+        x: 4
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -122,10 +135,10 @@ TextureImporter:
       name: Black02
       rect:
         serializedVersion: 2
-        x: 167
-        y: 7
-        width: 173
-        height: 741
+        x: 152
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -144,10 +157,10 @@ TextureImporter:
       name: Black03
       rect:
         serializedVersion: 2
-        x: 340
-        y: 7
-        width: 176
-        height: 741
+        x: 300
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,10 +179,10 @@ TextureImporter:
       name: Black04
       rect:
         serializedVersion: 2
-        x: 516
-        y: 7
-        width: 174
-        height: 741
+        x: 448
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -188,10 +201,10 @@ TextureImporter:
       name: Black05
       rect:
         serializedVersion: 2
-        x: 690
-        y: 7
-        width: 171
-        height: 741
+        x: 596
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -210,10 +223,10 @@ TextureImporter:
       name: Black06
       rect:
         serializedVersion: 2
-        x: 861
-        y: 7
-        width: 178
-        height: 741
+        x: 744
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -232,10 +245,10 @@ TextureImporter:
       name: Black07
       rect:
         serializedVersion: 2
-        x: 1039
-        y: 7
-        width: 180
-        height: 741
+        x: 892
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -254,10 +267,10 @@ TextureImporter:
       name: Black08
       rect:
         serializedVersion: 2
-        x: 1219
-        y: 7
-        width: 177
-        height: 741
+        x: 1040
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -276,10 +289,10 @@ TextureImporter:
       name: Black09
       rect:
         serializedVersion: 2
-        x: 1396
-        y: 7
-        width: 173
-        height: 741
+        x: 1188
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -298,10 +311,10 @@ TextureImporter:
       name: Black10
       rect:
         serializedVersion: 2
-        x: 1569
-        y: 7
-        width: 180
-        height: 741
+        x: 1336
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -320,10 +333,10 @@ TextureImporter:
       name: Black11
       rect:
         serializedVersion: 2
-        x: 1749
-        y: 7
-        width: 180
-        height: 741
+        x: 1484
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -342,10 +355,10 @@ TextureImporter:
       name: Black12
       rect:
         serializedVersion: 2
-        x: 1929
-        y: 7
-        width: 172
-        height: 741
+        x: 1632
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -364,10 +377,10 @@ TextureImporter:
       name: Black13
       rect:
         serializedVersion: 2
-        x: 2101
-        y: 7
-        width: 171
-        height: 741
+        x: 1780
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -386,10 +399,10 @@ TextureImporter:
       name: Black14
       rect:
         serializedVersion: 2
-        x: 2272
-        y: 7
-        width: 176
-        height: 741
+        x: 1928
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -408,10 +421,10 @@ TextureImporter:
       name: Black15
       rect:
         serializedVersion: 2
-        x: 2448
-        y: 7
-        width: 172
-        height: 741
+        x: 2076
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -430,10 +443,10 @@ TextureImporter:
       name: Black16
       rect:
         serializedVersion: 2
-        x: 2620
-        y: 7
-        width: 169
-        height: 741
+        x: 2224
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -452,10 +465,10 @@ TextureImporter:
       name: Black17
       rect:
         serializedVersion: 2
-        x: 2789
-        y: 7
-        width: 169
-        height: 741
+        x: 2372
+        y: 4
+        width: 144
+        height: 576
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

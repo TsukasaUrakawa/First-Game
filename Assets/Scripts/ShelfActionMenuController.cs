@@ -13,6 +13,7 @@ public class ShelfActionMenuController : MonoBehaviour
 
     public static ShelfActionMenuController Instance { get; private set; }
     public bool IsOpen => _actionPanel != null && _actionPanel.activeSelf;
+    public BookShelfZoomButton SelectedShelf => _selectedShelfButton;
     private BookShelfZoomButton _selectedShelfButton;
 
     private void Awake()
