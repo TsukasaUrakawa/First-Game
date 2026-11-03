@@ -6,8 +6,6 @@ using UnityEngine;
 /// </summary>
 public class BookSelectionController : MonoBehaviour
 {
-    private const int MaxSelection = 6;
-
     [SerializeField] private HandItemController _handItemController;
     [SerializeField] private BookPopUpController _bookPopUpController;
     [SerializeField] private GameObject _bookListPanel;
@@ -16,7 +14,7 @@ public class BookSelectionController : MonoBehaviour
     private readonly List<BookButton> _selectedBooks = new List<BookButton>();
 
     public int SelectedCount => _selectedBooks.Count;
-    public int SelectionLimit => Mathf.Min(MaxSelection, _handItemController.AvailableSpace);
+    public int SelectionLimit => _handItemController.AvailableSpace;
     public event System.Action SelectionChanged;
 
     private void Update()

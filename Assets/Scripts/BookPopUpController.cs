@@ -7,8 +7,8 @@ using DG.Tweening;
 public class BookPopUpController : MonoBehaviour
 {
     [SerializeField] private GameObject _bookPopUpUI;
-    [SerializeField] private Image[] _bookImages = new Image[6];
-    [SerializeField] private GameObject[] _bookCards = new GameObject[6];
+    [SerializeField] private Image[] _bookImages = new Image[HandItemController.MaxCapacity];
+    [SerializeField] private GameObject[] _bookCards = new GameObject[HandItemController.MaxCapacity];
     [SerializeField] private HandItemController _handItemController;
     [SerializeField] private TMP_Text _selectionCountLabel;
     [SerializeField] private TMP_Text _capacityLabel;

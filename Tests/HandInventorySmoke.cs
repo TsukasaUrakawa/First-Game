@@ -1,0 +1,70 @@
+// Run after opening the list in a fresh ShelfCare Play session (see README).
+if (!UnityEditor.EditorApplication.isPlaying) throw new System.Exception("Run in Play mode.");
+var checks = new System.Collections.Generic.List<string>();
+void Check(bool condition, string message) { if (!condition) throw new System.Exception("FAIL: " + message); checks.Add(message); }
+T Find<T>() where T : UnityEngine.Object => UnityEngine.Object.FindFirstObjectByType<T>(UnityEngine.FindObjectsInactive.Include);
+UnityEngine.GameObject Named(string name) => UnityEngine.Object.FindObjectsByType<UnityEngine.Transform>(UnityEngine.FindObjectsInactive.Include, UnityEngine.FindObjectsSortMode.None).Single(t => t.name == name).gameObject;
+TMPro.TMP_Text Label(string name) => Named(name).GetComponent<TMPro.TMP_Text>();
+bool Fits(UnityEngine.RectTransform child, UnityEngine.RectTransform parent)
+{
+    var corners = new UnityEngine.Vector3[4]; child.GetWorldCorners(corners);
+    return corners.All(c => parent.rect.Contains(parent.InverseTransformPoint(c)));
+}
+var ui = Find<GameplayUIController>();
+var hand = Find<HandItemController>();
+var selection = Find<BookSelectionController>();
+var placement = Find<HandBookPlacementController>();
+var popup = Find<BookPopUpController>();
+var slots = Named("HandBookRow").GetComponentsInChildren<HandItemSlotUI>(true).OrderBy(s => s.transform.GetSiblingIndex()).ToArray();
+var books = UnityEngine.Object.FindObjectsByType<BookButton>(UnityEngine.FindObjectsSortMode.None).Where(b => b.BookSprite.name.Contains("Green")).OrderBy(b => b.BookSprite.name).Take(10).ToArray();
+Check(ui.IsBookListOpen && hand.BookCount == 0 && hand.Capacity == 9 && slots.Length == 9, "Fresh inventory has nine slots");
+Check(Label("HandCountLabel").text == "0 / 9 冊" && Label("HandHintLabel").text.Contains("箱"), "Empty inventory gives box guidance and zero count");
+Check(slots.All(s => s.GetComponentInChildren<TMPro.TMP_Text>().text == "空き"), "Empty pockets are visible");
+foreach (var book in books) book.GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
+Check(selection.SelectedCount == 9 && !books[9].IsSelected, "A tenth book cannot be selected");
+selection.ShowSelectionConfirmation();
+UnityEngine.Canvas.ForceUpdateCanvases();
+var previews = Named("SelectedBookRow").transform.Cast<UnityEngine.Transform>().Where(t => t.gameObject.activeSelf).ToArray();
+Check(popup.IsOpen && previews.Length == 9 && Label("ConfirmationCapacity").text.Contains("9 / 9"), "All nine selected books appear before taking");
+Check(previews.All(p => Fits(p.GetComponent<UnityEngine.RectTransform>(), Named("BookConfirmationCard").GetComponent<UnityEngine.RectTransform>())), "Nine confirmation cards fit without clipping");
+Named("TakeButton").GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
+Check(hand.IsFull && hand.BookCount == 9 && !ui.IsBookListOpen && !popup.IsOpen, "Take transfers all nine books and closes the list");
+Check(Label("HandCountLabel").text == "9 / 9 冊" && Label("HandHintLabel").text.Contains("手持ち"), "Taking updates count and next action immediately");
+Check(slots.All(s => !s.GetComponentInChildren<TMPro.TMP_Text>(true).gameObject.activeSelf), "Occupied pockets hide empty placeholders");
+Check(slots.All(s => s.GetComponentInChildren<UnityEngine.UI.Image>(true).gameObject.activeSelf), "Nine hand thumbnails are visible");
+Check(!hand.TryAddBook(books[9].BookSprite, 9) && hand.BookCount == 9, "A full hand rejects a tenth book");
+var pointer = new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current) { button = UnityEngine.EventSystems.PointerEventData.InputButton.Left };
+slots[8].OnPointerClick(pointer);
+Check(hand.TryGetSelectedBook(out var selected) && hand.SelectedIndex == 8 && selected.Sprite == books[8].BookSprite, "Ninth pocket selects its actual book");
+Check(Label("HandStateLabel8").text == "選択中" && Label("HandSelectedLabel").text.Contains("9番") && Label("HandHintLabel").text.Contains("選択解除"), "Selection immediately updates frame, label and placement guidance");
+Check(Named("HandSelectionFrame8").activeSelf && Enumerable.Range(0, 8).All(i => !Named("HandSelectionFrame" + i).activeSelf), "Only the selected pocket is outlined");
+slots[8].OnPointerClick(pointer);
+Check(!hand.HasSelectedBook && Label("HandStateLabel8").text == "9" && !Named("HandSelectionFrame8").activeSelf, "Clicking again cancels selection and restores the pocket number");
+slots[8].OnPointerEnter(pointer);
+Check(Named("HandSelectionFrame8").activeSelf && !hand.HasSelectedBook, "Hover identifies a pocket without selecting it");
+slots[8].OnPointerExit(pointer);
+Check(!Named("HandSelectionFrame8").activeSelf, "Pointer exit removes hover highlighting");
+slots[8].OnPointerClick(pointer);
+ui.OpenBookList();
+slots[0].OnPointerClick(pointer);
+Check(hand.SelectedIndex == 8 && Named("HandItemPanel").GetComponent<UnityEngine.CanvasGroup>().alpha == 0, "Book list hides hand UI and blocks hidden pocket clicks");
+ui.Back();
+Check(hand.SelectedIndex == 8 && Named("HandItemPanel").GetComponent<UnityEngine.CanvasGroup>().alpha == 1, "Closing list restores the selected pocket");
+var bookSlot = UnityEngine.Object.FindObjectsByType<BookSlot>(UnityEngine.FindObjectsSortMode.None).Single(s => s.SlotIndex == selected.CorrectSlotIndex);
+Check(placement.TryPlaceBook(bookSlot) && bookSlot.IsCorrect(), "Ninth book can be placed with its identity intact");
+Check(hand.BookCount == 8 && !hand.HasSelectedBook && Label("HandCountLabel").text == "8 / 9 冊" && Named("HandEmptyLabel8").activeSelf, "Placement updates count, empty pocket and selection immediately");
+Check(placement.TryReturnBookToHand(bookSlot) && hand.BookCount == 9 && !Named("HandEmptyLabel8").activeSelf, "Returning a book fills the ninth pocket again");
+slots[0].OnPointerClick(pointer);
+hand.TryGetSelectedBook(out var first);
+var firstSlot = UnityEngine.Object.FindObjectsByType<BookSlot>(UnityEngine.FindObjectsSortMode.None).Single(s => s.SlotIndex == first.CorrectSlotIndex);
+Check(placement.TryPlaceBook(firstSlot) && hand.TryAddBook(books[9].BookSprite, 9), "Test setup fills the hand while a book remains on the shelf");
+Check(!placement.TryReturnBookToHand(firstSlot) && firstSlot.IsFilled && hand.BookCount == 9, "Full hand prevents returning a tenth book");
+hand.SelectBook(8); hand.RemoveSelectedBook();
+Check(placement.TryReturnBookToHand(firstSlot) && hand.BookCount == 9 && !firstSlot.IsFilled, "A freed slot allows returning that book");
+UnityEngine.Canvas.ForceUpdateCanvases();
+var panel = Named("HandItemPanel").GetComponent<UnityEngine.RectTransform>();
+Check(Fits(panel, Named("Canvas").GetComponent<UnityEngine.RectTransform>()) && slots.All(s => Fits(s.GetComponent<UnityEngine.RectTransform>(), panel)), "Hand panel and all nine pockets fit the screen");
+foreach (var label in panel.GetComponentsInChildren<TMPro.TMP_Text>(true))
+    Check(label.text.Where(c => !char.IsControl(c)).All(c => label.font.HasCharacter(c)), "Japanese atlas covers " + label.name);
+Check(panel.GetComponentsInChildren<TMPro.TMP_Text>(true).All(t => !t.isTextOverflowing), "Hand labels do not overflow");
+return new { passed = checks.Count, checks };

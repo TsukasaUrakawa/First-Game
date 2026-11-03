@@ -18,20 +18,20 @@ var hint = Named("SelectionHintLabel").GetComponent<TMPro.TMP_Text>();
 var confirm = Button("ConfirmSelectionButton");
 var clear = Button("ClearSelectionButton");
 var books = UnityEngine.Object.FindObjectsByType<BookButton>(UnityEngine.FindObjectsSortMode.None).OrderBy(b => b.transform.GetSiblingIndex()).ToArray();
-Check(ui.IsBookListOpen && hand.BookCount == 0 && books.Length > 7, "Fresh list has books and empty inventory");
-Check(status.text.Contains("選択 0 / 6") && status.text.Contains("手持ち 0 / 6"), "Japanese counter starts at zero");
+Check(ui.IsBookListOpen && hand.BookCount == 0 && hand.Capacity == 9 && books.Length > 10, "Fresh list has books and nine-slot inventory");
+Check(status.text.Contains("選択 0 / 9") && status.text.Contains("手持ち 0 / 9"), "Japanese counter starts at zero");
 Check(!confirm.interactable && !clear.interactable, "No selection disables both actions");
 confirm.onClick.Invoke();
 Check(!popup.IsOpen, "Empty confirmation does not open a popup");
 
 books[0].GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
-Check(confirm.interactable && clear.interactable && status.text.Contains("選択 1 / 6"), "Selecting one book immediately updates counter and actions");
+Check(confirm.interactable && clear.interactable && status.text.Contains("選択 1 / 9"), "Selecting one book immediately updates counter and actions");
 books[0].GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
 Check(selection.SelectedCount == 0 && !confirm.interactable, "Deselecting updates the counter and actions");
-foreach (var book in books.Take(7)) book.GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
-Check(selection.SelectedCount == 6 && hint.text.Contains("上限"), "Selection is capped at capacity with visible guidance");
+foreach (var book in books.Take(10)) book.GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
+Check(selection.SelectedCount == 9 && hint.text.Contains("上限"), "Selection is capped at nine with visible guidance");
 clear.onClick.Invoke();
-Check(selection.SelectedCount == 0 && books.Take(7).All(b => !b.IsSelected), "Clear button resets every selection highlight");
+Check(selection.SelectedCount == 0 && books.Take(10).All(b => !b.IsSelected), "Clear button resets every selection highlight");
 Check(!clear.interactable && !confirm.interactable, "Clearing disables the actions again");
 
 // Native scrolling moves the books without moving the title, Close or actions.
@@ -56,29 +56,29 @@ ui.Back();
 Check(!popup.IsOpen && ui.IsBookListOpen && selection.SelectedCount == 1 && books.Last().IsSelected, "Cancelling confirmation preserves selection in the list");
 clear.onClick.Invoke();
 
-foreach (var book in books.Take(6)) book.GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
+foreach (var book in books.Take(9)) book.GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
 confirm.onClick.Invoke();
 Button("TakeButton").onClick.Invoke();
-Check(hand.BookCount == 6 && !ui.IsBookListOpen, "New confirmation path transfers six books through the real Take button");
+Check(hand.BookCount == 9 && !ui.IsBookListOpen, "New confirmation path transfers nine books through the real Take button");
 ui.OpenBookList();
 Check(selection.SelectionLimit == 0 && hint.text.Contains("いっぱい"), "Full hand shows the capacity guidance when reopening");
-Check(status.text.Contains("選択 0 / 0") && status.text.Contains("手持ち 6 / 6") && !confirm.interactable, "Full hand has a zero selection limit and disabled confirmation");
-books[6].GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
+Check(status.text.Contains("選択 0 / 0") && status.text.Contains("手持ち 9 / 9") && !confirm.interactable, "Full hand has a zero selection limit and disabled confirmation");
+books[9].GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
 Check(selection.SelectedCount == 0, "A full hand cannot select another book");
 
 // Inventory changes should update the open controls without frame-by-frame polling.
 hand.SelectBook(0);
 hand.RemoveSelectedBook();
-Check(status.text.Contains("選択 0 / 1") && status.text.Contains("手持ち 5 / 6"), "Inventory change updates remaining capacity immediately");
-books[6].GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
+Check(status.text.Contains("選択 0 / 1") && status.text.Contains("手持ち 8 / 9"), "Inventory change updates remaining capacity immediately");
+books[9].GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
 Check(selection.SelectedCount == 1 && confirm.interactable && hint.text.Contains("上限"), "One free hand slot permits one selection");
 confirm.onClick.Invoke();
 Button("TakeButton").onClick.Invoke();
-Check(hand.BookCount == 6 && !ui.IsBookListOpen, "Taking the remaining capacity succeeds and closes the list");
+Check(hand.BookCount == 9 && !ui.IsBookListOpen, "Taking the remaining capacity succeeds and closes the list");
 ui.OpenBookList();
 ui.CloseBookList();
 ui.OpenBookList();
-Check(status.text.Contains("手持ち 6 / 6") && !confirm.interactable && !clear.interactable, "Repeated reopening refreshes the controls correctly");
+Check(status.text.Contains("手持ち 9 / 9") && !confirm.interactable && !clear.interactable, "Repeated reopening refreshes the controls correctly");
 
 foreach (var label in Named("BookListFooter").GetComponentsInChildren<TMPro.TMP_Text>())
     Check(label.text.Where(c => !char.IsControl(c)).All(c => label.font.HasCharacter(c)), "Static atlas contains every glyph for " + label.name);

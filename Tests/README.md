@@ -62,7 +62,7 @@ unity command script eval_file --file Tests/ShelfNavigationDialogSmoke.cs --json
 ```
 
 This checks the physical shelf order, one-click zoom, toolbar context and
-visibility, immediate progress after actual placement/return, 1/3/6-book preview
+visibility, immediate progress after actual placement/return, 1/3/6/9-book preview
 alignment, preserving selection on Back/Cancel, inventory capacity and duplicate
 Take calls, and Japanese glyph coverage. Repeat at 1366×768 to check the scaled
 layout as well as 1920×1080.
@@ -102,3 +102,18 @@ This places all 140 books through the gameplay controller, exercises wrong color
 and wrong order, returns/replaces endpoint books, checks colliders and completed
 shelf locks, and verifies game clear. It silences test audio for that Play session.
 Stop Play mode afterwards to discard books, completion state, and audio changes.
+
+## Nine-book hand inventory
+
+In another fresh ShelfCare Play session, open the book list and let its first
+frame create the books, then run:
+
+```powershell
+unity command script eval_file --file Tests/HandInventorySmoke.cs --json
+```
+
+This takes nine real books, rejects a tenth, selects/deselects the ninth pocket,
+checks hover and modal input, places and returns the ninth book with its identity
+intact, and checks returning into a full/partial hand. It also verifies immediate
+counts/guidance, empty pockets, screen bounds and Japanese glyphs. Repeat at
+1366×768 and stop Play mode afterwards to discard inventory changes.
