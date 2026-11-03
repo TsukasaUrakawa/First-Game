@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class TitleSceneController : MonoBehaviour
 {
     [SerializeField] private string _gameSceneName = "ShelfCare";
+    [SerializeField] private GameObject _quitButton;
 
     [Header("Sound")]
     [SerializeField] private AudioSource _audioSource;
@@ -22,6 +23,9 @@ public class TitleSceneController : MonoBehaviour
 
     private void Awake()
     {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        if (_quitButton != null) _quitButton.SetActive(false);
+#endif
         if (_audioSource == null)
         {
             _audioSource = GetComponent<AudioSource>();
@@ -57,6 +61,7 @@ public class TitleSceneController : MonoBehaviour
 
         DOTween.Sequence()
             .SetId(this)
+            .SetUpdate(true)
             .AppendInterval(_sceneChangeDelay)
             .Append(FadeOut())
             .OnComplete(() =>
@@ -77,12 +82,18 @@ public class TitleSceneController : MonoBehaviour
 
         DOTween.Sequence()
             .SetId(this)
+            .SetUpdate(true)
             .AppendInterval(_sceneChangeDelay)
             .Append(FadeOut())
             .OnComplete(() =>
             {
 #if UNITY_EDITOR
                 Debug.Log("ゲーム終了");
+                if (_fadeCanvasGroup != null)
+                {
+                    _fadeCanvasGroup.alpha = 0;
+                    _fadeCanvasGroup.blocksRaycasts = false;
+                }
                 _isProcessing = false;
 #else
                 Application.Quit();

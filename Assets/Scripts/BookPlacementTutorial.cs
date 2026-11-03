@@ -160,7 +160,7 @@ public class BookPlacementTutorial : MonoBehaviour
                 break;
             case Step.CloseList:
                 number = 4;
-                _body.text = "手持ちに本があります。\n右上のCloseで一覧を閉じましょう。";
+                _body.text = "手持ちに本があります。\n右上の「閉じる」をクリック。";
                 _focusTarget = _closeListButton;
                 break;
             case Step.SelectHandBook:
@@ -194,9 +194,9 @@ public class BookPlacementTutorial : MonoBehaviour
         }
         _heading.text = CurrentStep == Step.Completed ? "できました！" : $"あそびかた　{number} / 7";
         _dismissLabel.text = CurrentStep == Step.Completed ? "閉じる" : "スキップ";
-        Vector2 corner = _ui.IsBookListOpen ? new Vector2(0, 1) : Vector2.one;
+        Vector2 corner = _ui.IsBookListOpen ? new Vector2(.5f, 1) : Vector2.one;
         _panel.anchorMin = _panel.anchorMax = _panel.pivot = corner;
-        _panel.anchoredPosition = _ui.IsBookListOpen ? new Vector2(24, -10) : new Vector2(-24, -180);
+        _panel.anchoredPosition = _ui.IsBookListOpen ? new Vector2(120, -10) : new Vector2(-24, -180);
         UpdateFocus();
     }
 

@@ -181,3 +181,25 @@ Repeat at 1920×1080 and 1366×768. This checks the paper card, wooden picture d
 all eight shelf titles/images, Japanese glyphs, modal raycasts and both return buttons.
 Also run the existing full shelf Play check after replacing artwork to verify
 all 140 books can still be placed, returned, judged and cleared.
+
+## Title, clear and paper book selection
+
+In a fresh TitleScene Play session, let the intro render, then run:
+
+```powershell
+unity command script eval_file --file Tests/PresentationSceneSmoke.cs --json
+```
+
+Repeat after completing the game (or invoking `PlayClearEffect` and waiting for
+its fade) to check the completion card, all eight earned patterns and both buttons.
+Check at 1920×1080 and 1366×768. Verify that background, headline vertices and
+ambient geometry change over time, including with Time.timeScale set to zero;
+restore timeScale afterwards. The buttons must remain stationary and reachable.
+
+Click Start to enter ShelfCare; Replay must create an empty fresh game, and Title
+must return to TitleScene. In the Editor, Quit should finish its fade and allow
+further input. WebGL/browser testing is separate; the Quit button is hidden there.
+
+Run the existing book-list controls, tutorial flow and confirmation raycast checks
+with the new cards. Verify full-card clicks, persistent selection, nine-book
+capacity, scrolling to the last row and that guide text does not cover the heading.
