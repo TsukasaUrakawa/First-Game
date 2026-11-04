@@ -1,0 +1,81 @@
+// Fresh ShelfCare Play game. Open/close the list once first. Back up progress/settings.
+if (!UnityEditor.EditorApplication.isPlaying) throw new System.Exception("Run in Play.");
+int checks = 0;
+void Check(bool ok, string label) { if (!ok) throw new System.Exception("FAIL: " + label); checks++; }
+T Find<T>() where T : UnityEngine.Object => UnityEngine.Object.FindFirstObjectByType<T>(UnityEngine.FindObjectsInactive.Include);
+GameObject Named(string n) => UnityEngine.Object.FindObjectsByType<Transform>(UnityEngine.FindObjectsInactive.Include, UnityEngine.FindObjectsSortMode.None).Single(t => t.name == n).gameObject;
+UnityEngine.UI.Button Button(string n) => Named(n).GetComponent<UnityEngine.UI.Button>();
+void Click(string n) => Button(n).OnPointerClick(new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current) { button = UnityEngine.EventSystems.PointerEventData.InputButton.Left });
+var pause = Find<PauseMenuController>(); var ui = Find<GameplayUIController>(); var hand = Find<HandItemController>();
+var selection = Find<BookSelectionController>(); var popup = Find<BookPopUpController>(); var list = Find<BookListUI>();
+var camera = Find<CameraController>(); var tutorial = Find<BookPlacementTutorial>(); var answer = Find<ShelfAnswerPanelController>();
+var green = Named("GreenShelfButton").GetComponent<BookShelfZoomButton>(); var move = Find<ShelfBookMoveController>();
+var scroll = Named("Scroll View").GetComponent<UnityEngine.UI.ScrollRect>();
+var cards = UnityEngine.Object.FindObjectsByType<BookButton>(UnityEngine.FindObjectsInactive.Include, UnityEngine.FindObjectsSortMode.None).ToDictionary(b => b.BookSprite.name);
+var slots = UnityEngine.Object.FindObjectsByType<BookSlot>(UnityEngine.FindObjectsSortMode.None).OrderBy(s => s.SlotIndex).ToArray();
+GamePreferences.SetMuted(true); tutorial.BeginTutorial();
+Check(!ui.HasModal && !pause.IsOpen && hand.BookCount == 0 && cards.Count == 140, "Fresh room ready");
+var controls = UnityEngine.Object.FindObjectsByType<UnityEngine.UI.Selectable>(UnityEngine.FindObjectsInactive.Include, UnityEngine.FindObjectsSortMode.None).Where(c => !c.transform.IsChildOf(Named("PausePanel").transform)).ToDictionary(c => c, c => c.interactable);
+UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(Button("OpenPauseButton").gameObject);
+Time.timeScale = .35f; var animator = Find<BoxOpenAndClose>().GetComponent<Animator>(); animator.SetBool("IsOpen", true);
+Click("OpenPauseButton");
+Check(pause.IsOpen && ui.IsPauseOpen && ui.BlocksWorldInput && Time.timeScale == 0, "Pause blocks input and stops the clock");
+Check(!animator.GetBool("IsOpen"), "An unfinished box opening is cancelled safely");
+Check(UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject == Button("ResumePlayButton").gameObject, "Resume is the safe initial keyboard focus");
+Check(controls.Keys.All(c => !c.IsInteractable()) && !scroll.enabled, "Underlying controls and scrolling are disabled");
+pause.Open(); Find<SettingsPanelController>().Open(); ui.OpenBookList();
+Check(pause.IsOpen && !ui.IsSettingsOpen && !ui.IsBookListOpen, "Nested open requests are rejected");
+ui.Back();
+Check(!pause.IsOpen && Time.timeScale == .35f && !ui.HasModal, "Back closes only Pause and restores the previous clock");
+Check(controls.All(p => p.Key.interactable == p.Value) && scroll.enabled, "Original control states return");
+Check(UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject == Button("OpenPauseButton").gameObject, "Previous keyboard focus returns");
+Time.timeScale = 1;
+ui.OpenBookList(); list.ShowColor(0); cards["Green01"].SendSprite(); list.ShowColor(1); cards["Blue01"].SendSprite();
+scroll.verticalNormalizedPosition = .25f; float scrollBefore = scroll.verticalNormalizedPosition;
+UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(Button("ConfirmSelectionButton").gameObject);
+Click("OpenPauseButton");
+selection.CancelSelection(); selection.TakeSelectedBooks(); cards["Blue02"].SendSprite(); list.ShowColor(-1); ui.CloseBookList();
+Check(ui.IsBookListOpen && selection.SelectedCount == 2 && hand.BookCount == 0 && list.ActiveColorIndex == 1, "Pause protects mixed-color selections and the current list");
+Check(!scroll.enabled && !Button("ConfirmSelectionButton").IsInteractable(), "List controls stay outside keyboard navigation");
+Click("ResumePlayButton");
+Check(ui.IsBookListOpen && !popup.IsOpen && selection.SelectedCount == 2 && list.ActiveColorIndex == 1, "List selections/filter survive Resume");
+Check(scroll.enabled && Mathf.Abs(scroll.verticalNormalizedPosition - scrollBefore) < .001f, "List scroll position survives Resume");
+Check(UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject == Button("ConfirmSelectionButton").gameObject, "List focus is restored");
+selection.ShowSelectionConfirmation(); Click("OpenPauseButton");
+selection.ReturnToSelection(); selection.TakeSelectedBooks();
+Check(popup.IsOpen && selection.SelectedCount == 2 && hand.BookCount == 0 && !Button("TakeButton").IsInteractable(), "Confirmation remains intact under Pause");
+ui.Back(); Check(popup.IsOpen && ui.IsBookListOpen && selection.SelectedCount == 2, "One Back closes Pause without closing confirmation");
+ui.Back(); Check(!popup.IsOpen && selection.SelectedCount == 2, "The next Back closes confirmation normally"); ui.CloseBookList();
+green.OpenActionMenu(); green.ShowCompletedImage(); Click("OpenPauseButton");
+answer.Close(); ui.ReturnToRoom(); Check(answer.IsOpen && camera.IsZoomed, "Completion image cannot close behind Pause");
+Click("ResumePlayButton"); Check(answer.IsOpen && camera.IsZoomed, "Resume returns to the completion image"); ui.Back(); ui.ReturnToRoom();
+var sprites = Find<BookManager>()._allBookSprites.ToDictionary(s => s.name);
+Check(hand.TryAddBook(sprites["Green01"], 0) && hand.TryAddBook(sprites["Green02"], 1), "Prepare hand");
+hand.SelectBook(0); Check(Find<HandBookPlacementController>().TryPlaceBook(slots[1]), "Prepare a wrongly placed book"); hand.SelectBook(0);
+green.OpenActionMenu(); tutorial.BeginTutorial(); var pos = camera.transform.position; float size = camera.GetComponent<Camera>().orthographicSize;
+var step = tutorial.CurrentStep; Click("OpenPauseButton");
+Check(tutorial.IsRunning && !Named("TutorialPanel").activeInHierarchy, "Tutorial hides without advancing");
+Click("ResumePlayButton");
+Check(camera.IsZoomed && camera.transform.position == pos && camera.GetComponent<Camera>().orthographicSize == size && hand.SelectedIndex == 0, "Zoom and selected hand book are unchanged");
+Check(tutorial.IsRunning && tutorial.CurrentStep == step && Named("TutorialPanel").activeInHierarchy, "Tutorial resumes at the same step");
+Check(move.ClickBook(slots[1]), "Select shelf book"); var selectedBook = slots[1].PlacedBook;
+Click("OpenPauseButton");
+Check(move.SelectedSlot == slots[1] && !move.CanReturnToHand, "Selected shelf identity is kept while movement is blocked");
+Check(!move.TryMoveSelectedBookTo(slots[2]) && !Find<HandBookPlacementController>().TryReturnBookToHand(slots[1]), "Moving and returning are blocked");
+Click("CancelShelfMoveButton"); Check(move.HasSelection, "Disabled underlying cancel cannot fire");
+Click("ResumePlayButton"); Check(move.SelectedSlot == slots[1] && slots[1].PlacedBook == selectedBook && move.CanReturnToHand, "Shelf selection returns without a new selection click");
+ui.Back(); ui.Back(); ui.Back(); Check(pause.IsOpen, "Back from the room opens Pause"); ui.Back();
+Find<SettingsPanelController>().Open(); pause.Open(); Check(ui.IsSettingsOpen && !pause.IsOpen, "Settings and Pause cannot overlap"); Find<SettingsPanelController>().Close();
+Click("OpenPauseButton"); var progress = Find<GameProgressController>();
+var initialized = typeof(GameProgressController).GetField("_initialized", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+string saved = PlayerPrefs.GetString(GameProgressStore.PreferenceKey, "");
+try
+{
+    initialized.SetValue(progress, false); Click("SaveReturnTitleButton");
+    Check(pause.IsOpen && Time.timeScale == 0 && UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "ShelfCare", "A rejected save never unloads gameplay");
+    Check(Named("PauseStatus").GetComponent<TMPro.TMP_Text>().text.Contains("保存できませんでした") && Button("ResumePlayButton").IsInteractable() && Button("SaveReturnTitleButton").IsInteractable(), "Save rejection offers Resume or retry");
+    Check(PlayerPrefs.GetString(GameProgressStore.PreferenceKey, "") == saved && slots[1].PlacedBook == selectedBook && hand.BookCount == 1, "Save rejection preserves saved and live progress");
+}
+finally { initialized.SetValue(progress, true); }
+// Leave the error state visible for layout/raycast checks, with saving available again.
+return new { passed = checks, open = pause.IsOpen, books = hand.BookCount, selected = selection.SelectedCount };

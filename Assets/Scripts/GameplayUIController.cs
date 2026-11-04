@@ -20,6 +20,8 @@ public class GameplayUIController : MonoBehaviour
     [SerializeField] private ShelfBookMoveController _bookMovement;
     [SerializeField] private SettingsPanelController _settings;
     [SerializeField] private GameObject _settingsButton;
+    [SerializeField] private PauseMenuController _pause;
+    [SerializeField] private GameObject _pauseButton;
 
     public static GameplayUIController Instance { get; private set; }
     public static bool IsWorldInputBlocked => Instance != null && Instance.BlocksWorldInput;
@@ -27,9 +29,12 @@ public class GameplayUIController : MonoBehaviour
     public bool IsBookListOpen => _bookListPanel.activeSelf;
     public bool IsGameCleared { get; private set; }
     public bool IsSettingsOpen => _settings != null && _settings.IsOpen;
-    public bool HasModal => IsSettingsOpen || IsGameCleared || IsBookListOpen || _answerController.IsOpen;
+    public bool IsPauseOpen => _pause != null && _pause.IsOpen;
+    public bool IsMenuOpen => IsSettingsOpen || IsPauseOpen;
+    public bool HasModal => IsMenuOpen || IsGameCleared || IsBookListOpen || _answerController.IsOpen;
     public bool BlocksWorldInput => HasModal;
     public event System.Action StateChanged;
+    public event System.Action PauseChanged;
 
     private void Awake()
     {
@@ -69,7 +74,7 @@ public class GameplayUIController : MonoBehaviour
 
     public void OpenBookList()
     {
-        if (IsGameCleared || IsBookListOpen || IsSettingsOpen)
+        if (IsGameCleared || IsBookListOpen || IsMenuOpen)
         {
             return;
         }
@@ -82,6 +87,7 @@ public class GameplayUIController : MonoBehaviour
 
     public void CloseBookList()
     {
+        if (IsPauseOpen) return;
         _bookSelectionController.ClearSelection();
         _bookListPanel.SetActive(false);
         _boxController.CloseLid();
@@ -103,9 +109,10 @@ public class GameplayUIController : MonoBehaviour
 
     public void OnGameClear()
     {
-        if (IsSettingsOpen) _settings.Close();
         // Lock gameplay immediately, including the delay before the clear fade.
         IsGameCleared = true;
+        if (IsPauseOpen) _pause.CloseForClear();
+        if (IsSettingsOpen) _settings.Close();
         CloseBookList();
         _answerController.Close();
         _actionMenuController.Close();
@@ -114,6 +121,7 @@ public class GameplayUIController : MonoBehaviour
 
     public void Back()
     {
+        if (IsPauseOpen) { _pause.Resume(); return; }
         if (IsSettingsOpen) { _settings.Close(); return; }
         if (IsGameCleared)
         {
@@ -143,6 +151,10 @@ public class GameplayUIController : MonoBehaviour
         {
             ReturnToRoom();
         }
+        else
+        {
+            _pause?.Open();
+        }
     }
 
     public void ReturnToRoom()
@@ -155,12 +167,26 @@ public class GameplayUIController : MonoBehaviour
 
     public void RefreshVisibility()
     {
+        ApplyVisibility();
+        StateChanged?.Invoke();
+    }
+
+    public void RefreshPauseVisibility()
+    {
+        // A temporary pause must not cancel a selected shelf book.
+        if (IsPauseOpen && !IsBookListOpen) _boxController.CloseLid();
+        ApplyVisibility();
+        PauseChanged?.Invoke();
+    }
+
+    private void ApplyVisibility()
+    {
+        if (_pauseButton != null) _pauseButton.SetActive(!IsGameCleared && !IsMenuOpen);
         if (_settingsButton != null) _settingsButton.SetActive(!HasModal);
         SetVisible(_handItemCanvasGroup, !BlocksWorldInput);
         SetVisible(_shelfButtonCanvasGroup, !HasModal && !_cameraController.IsZoomed);
         _zoomBackButton.SetActive(_cameraController.IsZoomed && !BlocksWorldInput);
         _actionMenuController.SetVisible(_cameraController.IsZoomed && !HasModal);
-        StateChanged?.Invoke();
     }
 
     private static void SetVisible(CanvasGroup group, bool visible)

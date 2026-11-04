@@ -33,7 +33,7 @@ public class ShelfAnswerPanelController : MonoBehaviour
 
     public void Open(Sprite answerSprite, string shelfName = null)
     {
-        if (_gameplayUI.IsGameCleared || _gameplayUI.IsSettingsOpen)
+        if (_gameplayUI.IsGameCleared || _gameplayUI.IsMenuOpen)
         {
             return;
         }
@@ -59,6 +59,7 @@ public class ShelfAnswerPanelController : MonoBehaviour
 
     public void Close()
     {
+        if (_gameplayUI.IsPauseOpen) return;
         if (_answerPanel != null)
         {
             _answerPanel.SetActive(false);

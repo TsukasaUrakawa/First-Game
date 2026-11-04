@@ -357,8 +357,12 @@ It also covers opening settings during a box-opening animation, shelf judgement
 behind the modal, and preservation of camera, inventory, tutorial and progress.
 
 After a rendered frame with the menu open, run `Tests/SettingsPresentationSmoke.cs`
-in both scenes at 1920×1080 and 1366×768 (33 checks each). It checks text, glyphs,
-card bounds, every control's raycast and the backdrop. Run
+in both scenes at 1920×1080 and 1366×768 (65 checks each). It checks text, glyphs,
+card bounds, every control's raycast and the backdrop. It also moves both sliders
+silently through 0/25/50/75/100%, checks that their thumbs stay inside the row and
+never overlap Preview, and raycasts at each thumb's lower edge. This catches
+UGUI's driven-anchor stretching and low-volume overlap that a center hit misses.
+The original slider values and saved preferences must remain unchanged. Run
 `Tests/SettingsSliderInputSmoke.cs` in both scenes (8 checks each) to test native
 UGUI pointer/drag events, toggle clicks and slider fill/handle anchors. These calls
 do not synthesize OS mouse or keyboard input.
@@ -390,7 +394,7 @@ and browser reload/storage in a WebGL build. No browser audio/storage test is
 implied by these Editor checks.
 
 For button feedback, run `Tests/UIButtonAudioWiringSmoke.cs` in Edit mode
-(99 checks covering all 43 authored buttons, including hidden panels). It also
+(105 checks covering all 46 authored buttons, including hidden panels). It also
 checks the effect source/clip, settings routing, existing book sounds and absence
 of a second generic click on buttons that already provide feedback.
 
@@ -416,3 +420,52 @@ transition must complete with Time.timeScale=0. Restore Time.timeScale=1 afterwa
 The color-filter (259), shelf-movement (77), settings (20 Title / 27 game) and
 native slider/toggle input (8 per scene) checks must still pass. Stop Play, restore
 both backups and leave the title open. Listen to the clicks in a WebGL build too.
+
+## Pause and return to Title
+
+Back up progress and settings in Edit mode with both helpers above. In a fresh
+ShelfCare Play game, open and close the list once to initialize its cards. Run
+`Tests/PauseMenuFlowSmoke.cs` (34 checks). It uses native Button clicks to cover
+room pause, the original time scale and focus, disabled underlying controls and
+scrolling, mixed-color selections, filtering, scroll position, confirmation,
+completion image, zoom, selected hand/shelf books, tutorial continuity and Escape
+stacking. It also checks the box-opening race and exclusivity with Settings.
+
+The flow check temporarily makes the progress controller unready so SaveNow
+rejects the operation, verifies the error and unchanged live/stored progress, then
+restores readiness in a finally block. This exercises a rejected save, without
+simulating browser storage denial. It leaves Pause open with the error visible
+and retry available. Let a frame render and run `Tests/PauseMenuPresentationSmoke.cs`
+at 1920×1080 and 1366×768 (24 checks each). Repeat in the normal state after reopening
+Pause. These checks cover text/glyphs, screen bounds, both button raycasts, backdrop
+capture and exclusion of all covered controls from keyboard navigation.
+
+From that error state, run `Tests/PauseSaveAndReturnSmoke.cs` (6 checks). A retry
+must save and reach Title, with the original time scale. Compare progress with
+`.utmp/save-smoke-expected.json`, select Continue, open/close the list and run
+`Tests/SaveRestorePlaySmoke.cs` (27 checks for this one-placed/one-hand fixture).
+Check the persisted music/effects/mute/motion settings as well.
+
+In a separate fresh game, run the existing `Tests/ShelfBookMoveSmoke.cs` (77).
+Its fixture has 27 placed books, nine in hand, one completed shelf and a selected
+shelf book. Run `Tests/PauseSaveAndReturnSmoke.cs` again (7 checks): it makes one
+last transfer and saves within the same eval, before LateUpdate can autosave.
+Continue and run the restore check (105). Exact identities, hand order, wrong
+positions, completed locks and remaining box books must all match.
+
+Also take Green01, Blue01 and Red01, place Green01 at slot 1, then select Green02
+and Blue02 across filters and open confirmation. Pause and save from there.
+Continue must restore only the two owned hand books and one placed book (restore
+check 27). Green02 and Blue02 must remain in the box; there must be no old popup,
+pause, selection, filter or zoom. Stop Play while Pause is open and verify the
+clock returns to its original value. Restart Play from Title and Continue again
+to check storage across sessions, rather than only a scene change.
+
+During a pause, the clear preview must close Pause, restore the clock and lock
+gameplay. After Clear, Pause must stay hidden and Back must not reopen it. Run
+the existing flow (36), list (27), tutorial (110), hand (49), shelf movement (77),
+color filter (259), navigation (96), 140-book clear (777) and Clear presentation
+(36) checks in separate fresh games where required. Audio coverage must include
+the three new buttons. Restore both original backups after stopping Play,
+including on failure. Browser audio, actual keyboard/pointer input and reload
+persistence remain separate WebGL checks.
