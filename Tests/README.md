@@ -295,3 +295,40 @@ Existing shelf navigation (96), hand inventory (49), book list (27), tutorial
 fresh games. The world-handler check temporarily disables the EventSystem to
 avoid dependence on the OS pointer position; it does not synthesize OS input.
 Manually check right-click/Escape on the Web build in addition to these CLI checks.
+
+## Book-list color filters
+
+Back up preferences before Play checks as described at the start of this document.
+Start a new game, open the box and let a frame create its cards. Run
+`Tests/BookColorFilterSmoke.cs` (259 checks). It exercises all eight colors and All,
+stable card instances/order, exact remaining counts, switching from the bottom
+of a scrolled list, cross-color selection and clearing, hover restoration, nine-book
+capacity, mixed-color confirmation order, modal guards, immediate removal on Take,
+reopening and both empty-state messages. It uses actual selection/take/place actions
+to take all 140 books and leaves 133 placed plus seven in hand, with no box books.
+
+The check writes `.utmp/save-smoke-expected.json`. Let a frame autosave, then
+return to Title and Continue (or stop and restart Play). Counts must be correct
+before the list's first Start. The view starts on All. Open the list, let its cards
+initialize, close it and run `Tests/SaveRestorePlaySmoke.cs` (423 checks for this
+fixture). Also test a partial save with Green01 placed and Blue01 in hand: counts
+are total 138, green 17 and blue 16, and the restore smoke has 27 checks.
+
+With the list open and a rendered frame, run `Tests/BookColorFilterPresentationSmoke.cs`
+at 1920×1080 and 1366×768 (83 checks, 84 while the tutorial is visible). Cover All,
+a populated color, a color with no remaining books and the fully empty box.
+It checks all nine button raycasts, text/glyphs, selected markers, scroll reachability
+and the empty message. A sparse single row is covered by taking nine blue books,
+placing them and switching back to the remaining eight blue books from the bottom
+of All. The last row must remain reachable without moving the filters.
+
+Select nine books across colors and return to green to check the hidden-selection
+limit message. Open confirmation, let a frame render, then run
+`Tests/BookColorFilterConfirmationSmoke.cs` (9 checks): the overlay must intercept
+all nine filter positions. Back retains the color and the selections; Close clears
+all selections but reopening retains the color within the same game.
+
+Run the existing book list (27), tutorial (110), hand inventory (49), shelf movement
+(77), shelf navigation/confirmation (96), and full placement/clear (777) checks in
+separate fresh games. Restore original preferences after all checks, including on
+failure. Browser input, rendering and storage remain separate Web-build checks.

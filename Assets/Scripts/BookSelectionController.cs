@@ -10,12 +10,23 @@ public class BookSelectionController : MonoBehaviour
     [SerializeField] private BookPopUpController _bookPopUpController;
     [SerializeField] private GameObject _bookListPanel;
     [SerializeField] private GameplayUIController _gameplayUI;
+    [SerializeField] private BookListUI _bookList;
 
     private readonly List<BookButton> _selectedBooks = new List<BookButton>();
 
     public int SelectedCount => _selectedBooks.Count;
     public int SelectionLimit => _handItemController.AvailableSpace;
+    public bool IsConfirmationOpen => _bookPopUpController.IsOpen;
     public event System.Action SelectionChanged;
+
+    public int CountSelectedOutsideColor(int colorIndex)
+    {
+        if (colorIndex < 0) return 0;
+        int count = 0;
+        foreach (var button in _selectedBooks)
+            if (button != null && BookColorUtility.GetColorIndexFromSpriteName(button.BookSprite.name) != colorIndex) count++;
+        return count;
+    }
 
     private void Update()
     {
@@ -47,7 +58,7 @@ public class BookSelectionController : MonoBehaviour
 
     public void ToggleSelection(BookButton bookButton)
     {
-        if (bookButton == null || _bookPopUpController.IsOpen)
+        if (bookButton == null || !bookButton.isActiveAndEnabled || !_bookListPanel.activeInHierarchy || _bookPopUpController.IsOpen)
         {
             return;
         }
@@ -98,6 +109,7 @@ public class BookSelectionController : MonoBehaviour
             }
         }
 
+        var takenNames = new List<string>();
         foreach (BookButton button in _selectedBooks)
         {
             Sprite sprite = button.BookSprite;
@@ -105,11 +117,13 @@ public class BookSelectionController : MonoBehaviour
 
             if (_handItemController.TryAddBook(sprite, correctSlotIndex))
             {
-                Destroy(button.gameObject);
+                takenNames.Add(sprite.name);
+                if (_bookList == null) Destroy(button.gameObject);
             }
         }
 
         _selectedBooks.Clear();
+        _bookList?.ExcludeOwnedBooks(takenNames);
         _bookPopUpController.CloseBookPopUp();
         _gameplayUI.CloseBookList();
     }
