@@ -68,7 +68,7 @@ public class TitleSceneController : MonoBehaviour
         if (_startButtonLabel != null) _startButtonLabel.text = _hasProgress ? "続きから" : "はじめる";
         if (_newGameButton != null) _newGameButton.SetActive(_hasProgress);
         if (_quitButton != null && _quitButton.transform is RectTransform quit)
-            quit.anchorMin = quit.anchorMax = new Vector2(.38f, _hasProgress ? .155f : .231f);
+            quit.anchorMin = quit.anchorMax = new Vector2(quit.anchorMin.x, _hasProgress ? .155f : .231f);
         if (_saveSummary == null) return;
         _saveSummary.text = result == ProgressReadResult.Invalid
             ? "保存データを読み込めませんでした。\n「はじめる」で新しく遊べます。"
