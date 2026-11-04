@@ -184,7 +184,7 @@ public class GameplayUIController : MonoBehaviour
     {
         if (_menuRow != null)
         {
-            _menuRow.anchoredPosition = new Vector2(IsBookListOpen ? -248 : -24, -24);
+            _menuRow.anchoredPosition = IsBookListOpen ? new Vector2(-248, -36) : new Vector2(-24, -24);
             if (!IsMenuOpen && !IsGameCleared) _menuRow.SetAsLastSibling();
         }
         if (_pauseButton != null) _pauseButton.SetActive(!IsGameCleared && !IsMenuOpen);
