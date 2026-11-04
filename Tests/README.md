@@ -11,6 +11,8 @@ New Game confirmation, or, while already in gameplay, call
 starting Play resumes saved progress. After all tests (including on failure),
 stop Play and run `Tests/RestoreProgressAfterSmoke.cs`. Only the two progress
 preferences and the tutorial preference are backed up/restored; do not use DeleteAll.
+For settings checks, also back up and restore the settings key using the separate
+helpers described in the audio/motion section below.
 
 1. Start a fresh ShelfCare game using the procedure above.
 2. Verify the room is shown, with the book list closed and shelf buttons visible.
@@ -332,3 +334,57 @@ Run the existing book list (27), tutorial (110), hand inventory (49), shelf move
 (77), shelf navigation/confirmation (96), and full placement/clear (777) checks in
 separate fresh games. Restore original preferences after all checks, including on
 failure. Browser input, rendering and storage remain separate Web-build checks.
+
+## Audio and motion settings
+
+In Edit mode, before testing, run both `Tests/BackupProgressForSmoke.cs` and
+`Tests/BackupSettingsForSmoke.cs`. Keep their ignored `.utmp` backups until all
+checks finish. After testing, including on failure, stop Play and run both
+`Tests/RestoreProgressAfterSmoke.cs` and `Tests/RestoreSettingsAfterSmoke.cs`.
+Never restore while Play is still running; shutdown callbacks may save again.
+
+Run `Tests/GamePreferencesStoreSmoke.cs` in Edit mode (20 checks). It also restores
+the previous settings in a finally block. It checks defaults, live events, dirty
+state, clamping and nonfinite inputs, mute without losing levels, JSON round trips,
+invalid/oversized/versioned data, and isolation from progress.
+
+In TitleScene Play, with a nonempty saved game so New Game is available, run
+`Tests/SettingsPanelSmoke.cs` (20 checks). Repeat in gameplay with a selected hand
+book, an unlocked placed book, the shelf zoomed and the tutorial running (27 checks).
+The check leaves the menu open. It exercises the actual controls, authored gains,
+percentages, mute/unmute, preview, BGM playback, saving, focus and modal guards.
+It also covers opening settings during a box-opening animation, shelf judgement
+behind the modal, and preservation of camera, inventory, tutorial and progress.
+
+After a rendered frame with the menu open, run `Tests/SettingsPresentationSmoke.cs`
+in both scenes at 1920×1080 and 1366×768 (33 checks each). It checks text, glyphs,
+card bounds, every control's raycast and the backdrop. Run
+`Tests/SettingsSliderInputSmoke.cs` in both scenes (8 checks each) to test native
+UGUI pointer/drag events, toggle clicks and slider fill/handle anchors. These calls
+do not synthesize OS mouse or keyboard input.
+
+Close the menu, stop Play, restart TitleScene and confirm that BGM 25%, effects 60%,
+mute and reduced motion persist. Continue into gameplay and confirm the same levels
+apply to its different AudioSources. A fresh game and Replay must retain settings.
+In TitleScene, open New Game confirmation, let a frame render and raycast at the
+settings access position: the confirmation must receive the hit. Settings access
+must also remain below the scene fade in the hierarchy.
+
+Use `Tests/SettingsMotionSnapshot.cs` twice across rendered frames in both Title
+and Clear, including with Time.timeScale=0. With reduced motion enabled, background,
+brand, glyph and mote coordinates must match; with it disabled, they must change.
+BGM should keep playing and its sample position should advance while muted.
+Setting changes should save after 0.35 unscaled seconds. Restore Time.timeScale=1.
+For the tutorial box, sample its renderer's `_BaseColor` material property block;
+for a selected shelf book, sample its SpriteRenderer color. Green must remain steady
+with reduced motion and pulse normally when disabled.
+
+Run existing list controls (27), tutorial (110), hand inventory (49), shelf moves
+(77), color filters (259), navigation/confirmation (96), and full placement/clear
+(777) checks in separate fresh games. The title/save checks (35 with a saved game)
+and normal/reduced Clear presentation checks (36) must also pass.
+
+Finally restore both original backups, reset the Game view to 1920×1080, and leave
+Play stopped. Manually verify audible levels, mute, effect preview, Escape, dragging,
+and browser reload/storage in a WebGL build. No browser audio/storage test is
+implied by these Editor checks.

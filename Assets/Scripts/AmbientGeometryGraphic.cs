@@ -7,13 +7,32 @@ public class AmbientGeometryGraphic : MaskableGraphic
 {
     [SerializeField, Range(0, 40)] private int _moteCount = 22;
     [SerializeField, Range(0, 1)] private float _ornamentAlpha = .18f;
-    private void Update() => SetVerticesDirty();
+    private bool _reduced;
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        _reduced = GamePreferences.ReducedMotion;
+        GamePreferences.Changed += OnPreferencesChanged;
+    }
+    protected override void OnDisable()
+    {
+        GamePreferences.Changed -= OnPreferencesChanged;
+        base.OnDisable();
+    }
+    private void OnPreferencesChanged()
+    {
+        bool reduced = GamePreferences.ReducedMotion;
+        if (_reduced == reduced) return;
+        _reduced = reduced;
+        SetVerticesDirty();
+    }
+    private void Update() { if (!_reduced) SetVerticesDirty(); }
 
     protected override void OnPopulateMesh(VertexHelper mesh)
     {
         mesh.Clear();
         Rect r = rectTransform.rect;
-        float t = Time.unscaledTime;
+        float t = _reduced ? 0 : Time.unscaledTime;
         for (int i = 0; i < _moteCount; i++)
         {
             float phase = i * 2.39996f;

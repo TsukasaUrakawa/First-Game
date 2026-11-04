@@ -30,7 +30,7 @@ public class BookSelectionController : MonoBehaviour
 
     private void Update()
     {
-        if (_selectedBooks.Count == 0 || _bookPopUpController.IsOpen || Input.GetKeyDown(KeyCode.Escape))
+        if (_gameplayUI.IsSettingsOpen || _selectedBooks.Count == 0 || _bookPopUpController.IsOpen || Input.GetKeyDown(KeyCode.Escape))
         {
             return;
         }
@@ -49,7 +49,7 @@ public class BookSelectionController : MonoBehaviour
 
     public void ShowSelectionConfirmation()
     {
-        if (_selectedBooks.Count > 0 && _bookListPanel.activeInHierarchy && !_bookPopUpController.IsOpen)
+        if (!_gameplayUI.IsSettingsOpen && _selectedBooks.Count > 0 && _bookListPanel.activeInHierarchy && !_bookPopUpController.IsOpen)
         {
             _bookPopUpController.ShowSelectedBooks(_selectedBooks);
             _bookPopUpController.PlayClickSE();
@@ -58,7 +58,7 @@ public class BookSelectionController : MonoBehaviour
 
     public void ToggleSelection(BookButton bookButton)
     {
-        if (bookButton == null || !bookButton.isActiveAndEnabled || !_bookListPanel.activeInHierarchy || _bookPopUpController.IsOpen)
+        if (_gameplayUI.IsSettingsOpen || bookButton == null || !bookButton.isActiveAndEnabled || !_bookListPanel.activeInHierarchy || _bookPopUpController.IsOpen)
         {
             return;
         }
@@ -89,7 +89,7 @@ public class BookSelectionController : MonoBehaviour
     /// </summary>
     public void TakeSelectedBooks()
     {
-        if (_selectedBooks.Count == 0)
+        if (_gameplayUI.IsSettingsOpen || _selectedBooks.Count == 0)
         {
             return;
         }
