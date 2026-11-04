@@ -17,6 +17,7 @@ public class GameplayUIController : MonoBehaviour
     [SerializeField] private BookPopUpController _bookPopUpController;
     [SerializeField] private ShelfAnswerPanelController _answerController;
     [SerializeField] private ShelfActionMenuController _actionMenuController;
+    [SerializeField] private ShelfBookMoveController _bookMovement;
 
     public static GameplayUIController Instance { get; private set; }
     public static bool IsWorldInputBlocked => Instance != null && Instance.BlocksWorldInput;
@@ -55,9 +56,9 @@ public class GameplayUIController : MonoBehaviour
         {
             Back();
         }
-        else if (Input.GetMouseButtonDown(1) &&
-                 _cameraController.IsZoomed && !BlocksWorldInput &&
-                 (EventSystem.current == null || !EventSystem.current.IsPointerOverGameObject()))
+        else if (Input.GetMouseButtonDown(1) && !BlocksWorldInput &&
+                 ((_bookMovement != null && _bookMovement.HasSelection) ||
+                  (_cameraController.IsZoomed && (EventSystem.current == null || !EventSystem.current.IsPointerOverGameObject()))))
         {
             Back();
         }
@@ -107,6 +108,12 @@ public class GameplayUIController : MonoBehaviour
             return;
         }
 
+        if (!HasModal && _bookMovement != null && _bookMovement.HasSelection)
+        {
+            _bookMovement.CancelSelection();
+            return;
+        }
+
         // One input closes only the topmost layer.
         if (_bookPopUpController.IsOpen)
         {
@@ -122,9 +129,16 @@ public class GameplayUIController : MonoBehaviour
         }
         else if (_cameraController.IsZoomed)
         {
-            _actionMenuController.Close();
-            _cameraController.ResetCamera();
+            ReturnToRoom();
         }
+    }
+
+    public void ReturnToRoom()
+    {
+        if (HasModal) return;
+        _bookMovement?.CancelSelection();
+        _actionMenuController.Close();
+        _cameraController.ResetCamera();
     }
 
     public void RefreshVisibility()

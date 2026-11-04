@@ -256,3 +256,42 @@ backup and repair the primary on its next save. With both copies invalid, Title
 must explain the problem and preserve them until the explicit fresh start.
 Restore the original preferences after all cases. Storage-denied / quota errors,
 page reload and private browsing require a separate Web build/browser check.
+
+## Moving and swapping shelf books
+
+Back up preferences as described at the top of this document. Start a new game,
+open the box once so its cards are created, and close it. Run
+`Tests/ShelfBookMoveSmoke.cs` (77 checks). It uses real selection/take actions,
+world click handlers and the return button to check:
+
+- Movement and swaps with nine books in hand, preserving every book identity,
+  scale, hand order, position, click handler and collider.
+- A single shelf notification per transfer, with both references already final
+  even if an observer saves immediately.
+- Rejected self/null/cross-color/locked targets, cancellation, modal blocking,
+  hand versus shelf selection, completed locks and the return-capacity limit.
+- First Back cancels; second Back leaves. The room button leaves in one click
+  while preserving its click sound. Reopening the tutorial cancels selection.
+- Saving the moved layout without changing version 1 of the progress format.
+
+The check leaves a selected blue book, nine red books in hand, 27 placed books
+and one completed shelf. Let a frame render, then run
+`Tests/ShelfBookMovePresentationSmoke.cs` (34 checks) at 1920×1080 and 1366×768.
+It checks text/glyphs, toolbar bounds, preview, both button raycasts, the disabled
+full-hand return explanation and that every position in the shelf remains reachable.
+Repeat with a free hand slot to check the enabled return state.
+
+The move check writes the expected layout to `.utmp/save-smoke-expected.json`.
+Stop Play and restart (or return to Title and Continue). Open and close the box
+after its first frame, then run `Tests/SaveRestorePlaySmoke.cs` (105 checks for
+this fixture). The stored positions, box contents and hand order must return,
+while the transient shelf selection must not. Restore the original preferences
+after all Play checks, including on a failure.
+
+Also verify automatic saving without explicitly calling SaveNow after a move,
+and that pulse colors change with Time.timeScale=0 and restore on cancellation.
+Existing shelf navigation (96), hand inventory (49), book list (27), tutorial
+(110) and all-book placement/completion (777) checks should still pass in separate
+fresh games. The world-handler check temporarily disables the EventSystem to
+avoid dependence on the OS pointer position; it does not synthesize OS input.
+Manually check right-click/Escape on the Web build in addition to these CLI checks.

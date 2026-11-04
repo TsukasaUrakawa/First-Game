@@ -73,6 +73,7 @@ public class BookPlacementTutorial : MonoBehaviour
     public void BeginTutorial()
     {
         if (_ui.IsGameCleared) return;
+        ShelfBookMoveController.Instance?.CancelSelection();
         IsRunning = true;
         _completed = false;
         Refresh();

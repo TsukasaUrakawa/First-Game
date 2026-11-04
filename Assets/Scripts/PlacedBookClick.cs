@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 public class PlacedBookClick : MonoBehaviour
 {
     private BookSlot _currentSlot;
+    public BookSlot CurrentSlot => _currentSlot;
 
     public void SetCurrentSlot(BookSlot slot)
     {
@@ -24,6 +25,7 @@ public class PlacedBookClick : MonoBehaviour
             return;
         }
 
-        HandBookPlacementController.Instance.TryReturnBookToHand(_currentSlot);
+        if (ShelfBookMoveController.Instance != null) ShelfBookMoveController.Instance.ClickBook(_currentSlot);
+        else HandBookPlacementController.Instance.TryReturnBookToHand(_currentSlot);
     }
 }
