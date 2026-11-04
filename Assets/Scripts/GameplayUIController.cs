@@ -18,13 +18,16 @@ public class GameplayUIController : MonoBehaviour
     [SerializeField] private ShelfAnswerPanelController _answerController;
     [SerializeField] private ShelfActionMenuController _actionMenuController;
     [SerializeField] private ShelfBookMoveController _bookMovement;
+    [SerializeField] private SettingsPanelController _settings;
+    [SerializeField] private GameObject _settingsButton;
 
     public static GameplayUIController Instance { get; private set; }
     public static bool IsWorldInputBlocked => Instance != null && Instance.BlocksWorldInput;
 
     public bool IsBookListOpen => _bookListPanel.activeSelf;
     public bool IsGameCleared { get; private set; }
-    public bool HasModal => IsGameCleared || IsBookListOpen || _answerController.IsOpen;
+    public bool IsSettingsOpen => _settings != null && _settings.IsOpen;
+    public bool HasModal => IsSettingsOpen || IsGameCleared || IsBookListOpen || _answerController.IsOpen;
     public bool BlocksWorldInput => HasModal;
     public event System.Action StateChanged;
 
@@ -66,7 +69,7 @@ public class GameplayUIController : MonoBehaviour
 
     public void OpenBookList()
     {
-        if (IsGameCleared || IsBookListOpen)
+        if (IsGameCleared || IsBookListOpen || IsSettingsOpen)
         {
             return;
         }
@@ -91,8 +94,16 @@ public class GameplayUIController : MonoBehaviour
         RefreshVisibility();
     }
 
+    public void OnSettingsOpened()
+    {
+        // Cancel a box-opening animation whose event has not shown the list yet.
+        _boxController.CloseLid();
+        RefreshVisibility();
+    }
+
     public void OnGameClear()
     {
+        if (IsSettingsOpen) _settings.Close();
         // Lock gameplay immediately, including the delay before the clear fade.
         IsGameCleared = true;
         CloseBookList();
@@ -103,6 +114,7 @@ public class GameplayUIController : MonoBehaviour
 
     public void Back()
     {
+        if (IsSettingsOpen) { _settings.Close(); return; }
         if (IsGameCleared)
         {
             return;
@@ -143,6 +155,7 @@ public class GameplayUIController : MonoBehaviour
 
     public void RefreshVisibility()
     {
+        if (_settingsButton != null) _settingsButton.SetActive(!HasModal);
         SetVisible(_handItemCanvasGroup, !BlocksWorldInput);
         SetVisible(_shelfButtonCanvasGroup, !HasModal && !_cameraController.IsZoomed);
         _zoomBackButton.SetActive(_cameraController.IsZoomed && !BlocksWorldInput);

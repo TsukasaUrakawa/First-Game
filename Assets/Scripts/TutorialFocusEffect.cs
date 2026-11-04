@@ -49,7 +49,7 @@ public class TutorialFocusEffect : MonoBehaviour
     private void UpdatePulse()
     {
         // A gentle fade, including when timeScale is zero. The object never disappears.
-        float wave = .5f + .5f * Mathf.Sin(Time.unscaledTime * (Mathf.PI * 2 / _pulseSeconds));
+        float wave = GamePreferences.ReducedMotion ? .5f : .5f + .5f * Mathf.Sin(Time.unscaledTime * (Mathf.PI * 2 / _pulseSeconds));
         for (int i = 0; i < _graphics.Count; i++)
         {
             Color original = _graphicColors[i];

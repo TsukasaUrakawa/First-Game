@@ -13,6 +13,7 @@ public class PresentationMotion : MonoBehaviour
     [SerializeField, Min(.1f)] private float _introDuration = .8f;
     private Vector2 _backgroundOrigin, _brandOrigin, _pointer;
     private float _elapsed;
+    private bool _reduced, _introFinished;
 
     private void Awake()
     {
@@ -24,12 +25,17 @@ public class PresentationMotion : MonoBehaviour
     {
         _elapsed = 0;
         _pointer = Vector2.zero;
-        if (_intro != null) _intro.alpha = 0;
+        _reduced = GamePreferences.ReducedMotion;
+        _introFinished = _reduced;
+        GamePreferences.Changed += OnPreferencesChanged;
+        if (_intro != null) _intro.alpha = _reduced ? 1 : 0;
+        if (_reduced) ResetPose();
     }
 
     private void LateUpdate()
     {
         _elapsed += Time.unscaledDeltaTime;
+        if (_reduced) return;
         float t = _elapsed;
         Vector2 mouse = Input.mousePosition;
         Vector2 target = new Vector2(
@@ -40,7 +46,11 @@ public class PresentationMotion : MonoBehaviour
             Mathf.Sin(t * .16f) * 6 + _pointer.x * _parallax.x,
             Mathf.Cos(t * .13f) * 4 + _pointer.y * _parallax.y);
         _brand.anchoredPosition = _brandOrigin + Vector2.up * (Mathf.Sin(t * .7f) * _floatHeight);
-        if (_intro != null) _intro.alpha = Mathf.SmoothStep(0, 1, t / _introDuration);
+        if (_intro != null && !_introFinished)
+        {
+            _intro.alpha = Mathf.SmoothStep(0, 1, t / _introDuration);
+            _introFinished = t >= _introDuration;
+        }
 
         // Rebuild the base glyph positions before applying this frame's offsets.
         _headline.ForceMeshUpdate();
@@ -56,11 +66,28 @@ public class PresentationMotion : MonoBehaviour
         _headline.UpdateVertexData(TMP_VertexDataUpdateFlags.Vertices);
     }
 
-    private void OnDisable()
+    private void OnPreferencesChanged()
+    {
+        bool reduced = GamePreferences.ReducedMotion;
+        if (reduced == _reduced) return;
+        _reduced = reduced;
+        if (!reduced) return;
+        ResetPose();
+        if (_intro != null) _intro.alpha = 1;
+        _introFinished = true;
+    }
+
+    private void ResetPose()
     {
         if (_background != null) _background.anchoredPosition = _backgroundOrigin;
         if (_brand != null) _brand.anchoredPosition = _brandOrigin;
         if (_headline != null) _headline.ForceMeshUpdate();
+    }
+
+    private void OnDisable()
+    {
+        GamePreferences.Changed -= OnPreferencesChanged;
+        ResetPose();
         if (_intro != null) _intro.alpha = 1;
     }
 }

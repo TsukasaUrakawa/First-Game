@@ -58,6 +58,7 @@ public class ShelfActionMenuController : MonoBehaviour
 
     public void JudgeSelectedShelf()
     {
+        if (_gameplayUI.IsSettingsOpen) return;
         if (_selectedShelfButton == null) return;
         bool correct = _selectedShelfButton.JudgeShelf();
         if (_selectedShelfButton != null && _shelfStatusLabel != null)

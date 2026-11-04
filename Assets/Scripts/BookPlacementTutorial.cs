@@ -72,7 +72,7 @@ public class BookPlacementTutorial : MonoBehaviour
 
     public void BeginTutorial()
     {
-        if (_ui.IsGameCleared) return;
+        if (_ui.IsGameCleared || _ui.IsSettingsOpen) return;
         ShelfBookMoveController.Instance?.CancelSelection();
         IsRunning = true;
         _completed = false;
@@ -121,7 +121,7 @@ public class BookPlacementTutorial : MonoBehaviour
     private void Refresh()
     {
         if (_ui.IsGameCleared) IsRunning = false;
-        bool visible = IsRunning && !_ui.IsGameCleared && !_answer.IsOpen;
+        bool visible = IsRunning && !_ui.IsGameCleared && !_ui.IsSettingsOpen && !_answer.IsOpen;
         _panel.gameObject.SetActive(visible);
         _helpButton.SetActive(!IsRunning && !_ui.HasModal);
         _focus.gameObject.SetActive(false);

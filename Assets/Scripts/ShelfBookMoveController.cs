@@ -105,7 +105,7 @@ public sealed class ShelfBookMoveController : MonoBehaviour
         ValidateSelection();
         if (_renderer != null)
         {
-            float pulse = .45f + .15f * Mathf.Sin(Time.unscaledTime * 3.5f);
+            float pulse = GamePreferences.ReducedMotion ? .45f : .45f + .15f * Mathf.Sin(Time.unscaledTime * 3.5f);
             _renderer.color = Color.Lerp(_originalColor, new Color(.55f, .90f, .58f, _originalColor.a), pulse);
         }
     }

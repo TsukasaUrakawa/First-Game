@@ -54,11 +54,12 @@ public class BookPopUpController : MonoBehaviour
         DOTween.Kill(this);
         if (_dialogCard != null && _dialogCanvasGroup != null)
         {
-            _dialogCanvasGroup.alpha = 0;
-            _dialogCard.localScale = Vector3.one * .97f;
-            DOTween.Sequence().SetId(this).SetUpdate(true)
-                .Join(_dialogCanvasGroup.DOFade(1, .16f))
-                .Join(_dialogCard.DOScale(1, .16f).SetEase(Ease.OutCubic));
+            _dialogCanvasGroup.alpha = GamePreferences.ReducedMotion ? 1 : 0;
+            _dialogCard.localScale = GamePreferences.ReducedMotion ? Vector3.one : Vector3.one * .97f;
+            if (!GamePreferences.ReducedMotion)
+                DOTween.Sequence().SetId(this).SetUpdate(true)
+                    .Join(_dialogCanvasGroup.DOFade(1, .16f))
+                    .Join(_dialogCard.DOScale(1, .16f).SetEase(Ease.OutCubic));
         }
         VisibilityChanged?.Invoke();
     }

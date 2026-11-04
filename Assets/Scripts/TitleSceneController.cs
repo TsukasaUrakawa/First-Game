@@ -16,6 +16,9 @@ public class TitleSceneController : MonoBehaviour
     [SerializeField] private GameObject _newGameDialog;
     [SerializeField] private Button _cancelNewGameButton;
     [SerializeField] private CanvasGroup _titleContent;
+    [SerializeField] private SettingsPanelController _settings;
+    [SerializeField] private Button _settingsButton;
+    public bool CanUseTitleActions => !_isProcessing && !(_newGameDialog != null && _newGameDialog.activeSelf) && !(_settings != null && _settings.IsOpen);
 
     [Header("Sound")]
     [SerializeField] private AudioSource _audioSource;
@@ -77,6 +80,7 @@ public class TitleSceneController : MonoBehaviour
 
     private void Update()
     {
+        if (_settings != null && _settings.IsOpen && Input.GetKeyDown(KeyCode.Escape)) { _settings.Close(); return; }
         if (_newGameDialog != null && _newGameDialog.activeSelf && Input.GetKeyDown(KeyCode.Escape)) CancelNewGame();
     }
 
@@ -87,13 +91,13 @@ public class TitleSceneController : MonoBehaviour
 
     public void StartGame()
     {
-        if (_isProcessing || (_newGameDialog != null && _newGameDialog.activeSelf)) return;
+        if (!CanUseTitleActions) return;
         BeginGame(!_hasProgress);
     }
 
     public void StartNewGame()
     {
-        if (_isProcessing || (_newGameDialog != null && _newGameDialog.activeSelf)) return;
+        if (!CanUseTitleActions) return;
         if (!_hasProgress) { BeginGame(true); return; }
         if (_newGameDialog == null) return;
         PlaySound(_startButtonSound);
@@ -120,16 +124,24 @@ public class TitleSceneController : MonoBehaviour
     private void SetNewGameDialog(bool visible)
     {
         if (_newGameDialog != null) _newGameDialog.SetActive(visible);
+        RefreshInput();
+    }
+
+    public void RefreshInput()
+    {
+        bool available = CanUseTitleActions;
         if (_titleContent != null)
         {
-            _titleContent.interactable = !visible;
-            _titleContent.blocksRaycasts = !visible;
+            _titleContent.interactable = available;
+            _titleContent.blocksRaycasts = available;
         }
+        if (_settingsButton != null) _settingsButton.interactable = available;
     }
 
     private void BeginGame(bool newGame)
     {
         _isProcessing = true;
+        RefreshInput();
         PlaySound(_startButtonSound);
 
         DOTween.Sequence()
@@ -146,12 +158,13 @@ public class TitleSceneController : MonoBehaviour
 
     public void QuitGame()
     {
-        if (_isProcessing || (_newGameDialog != null && _newGameDialog.activeSelf))
+        if (!CanUseTitleActions)
         {
             return;
         }
 
         _isProcessing = true;
+        RefreshInput();
         PlaySound(_quitButtonSound);
 
         DOTween.Sequence()
@@ -169,6 +182,7 @@ public class TitleSceneController : MonoBehaviour
                     _fadeCanvasGroup.blocksRaycasts = false;
                 }
                 _isProcessing = false;
+                RefreshInput();
 #else
                 Application.Quit();
 #endif
