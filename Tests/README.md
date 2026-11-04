@@ -469,3 +469,62 @@ color filter (259), navigation (96), 140-book clear (777) and Clear presentation
 the three new buttons. Restore both original backups after stopping Play,
 including on failure. Browser audio, actual keyboard/pointer input and reload
 persistence remain separate WebGL checks.
+
+## UI overlap and shelf reachability
+
+Back up progress and settings before Play as above. Use 1920×1080, 1366×768 and
+1024×768 (4:3). Wait for the current view/intro to render before running
+`Tests/UILayoutOverlapSmoke.cs`. Require `issueCount == 0` and an empty `issues`
+array, in addition to the CLI/eval success flags. This is an audit report: it
+returns all detected issues rather than throwing on the first one.
+
+The audit enumerates visible Selectables, occupied hand pockets, rendered text
+and main painted panels. It checks screen bounds, unrelated element intersections,
+text overflow, and raycasts at the center and four corners of each control.
+Text bounds use glyph metrics, excluding transparent SDF padding. Scroll content
+is clipped to Mask/RectMask2D bounds. A modal's covered view is excluded, while
+the accessible Pause button and tutorial remain included where appropriate.
+This catches partial overlap that a center-only button test misses.
+
+Cover these 22 states at all three sizes (66 snapshots):
+
+- Room and zoomed shelf, each with and without the tutorial.
+- Book list with/without the tutorial, and the fully empty box.
+- Confirmation with one and nine books plus the tutorial, and nine without it.
+- Pause above confirmation; selected hand book with its shelf/tutorial; selected
+  shelf book with nine books in hand; completion image; Pause above that image.
+- Game settings, title with/without progress, New Game confirmation, title settings,
+  Pause with a rejected-save message, and Clear.
+
+Use real selection/take actions for the confirmation fixture. Select the placed
+book with an actual shelf click before checking its move controls. Keep muted
+audio and stable motion for layout snapshots; run the normal-motion regressions
+in separate fresh games. `Tests/BookColorFilterPresentationSmoke.cs` (84 with guide),
+`Tests/ShelfBookMovePresentationSmoke.cs` (34 or 35 according to shelf length),
+`Tests/TutorialPresentationSmoke.cs` and `Tests/SettingsPresentationSmoke.cs` (65)
+should still pass for their corresponding states.
+
+In an empty fresh room with no modal, run `Tests/ShelfReachabilitySmoke.cs` at each
+size (281 checks). It opens all eight shelves and checks every placement center
+is on screen with margin and receives no UI raycast. Leave the last shelf zoomed,
+resize, let a frame render and repeat (315 when the previous 17-slot shelf is
+checked first). The first check uses the existing view before reopening any
+shelf, so it also verifies live camera adjustment. The tutorial smoke (110) must
+pass at 1024×768; a clipped endpoint previously prevented its focus from expanding.
+
+Existing flow (36), list (27), hand inventory (49), shelf move (77), navigation (96),
+Pause (34), filters (259), 140-book placement/clear (777) and Clear presentation
+(36) checks must pass. Stop Play and restore both backups. Remove any temporary
+custom Game view size and restore 1920×1080. Native OS input and browser rendering
+remain separate WebGL checks.
+
+For the room's cardboard box, also run `Tests/BoxReachabilitySmoke.cs` with the
+tutorial both hidden and visible at all three sizes. It projects the full enabled
+Renderer bounds, checks that the visible mesh and shelf navigation do not overlap,
+requires 24 reference units of vertical clearance, and raycasts UI at a 5×5 grid
+of points that actually hit the box Collider (25/26 checks, 21/22 hit points for
+these views). A center-only hit previously missed the covered top edge.
+`UILayoutOverlapSmoke` includes the visible box mesh as an overlap participant
+in room view. Finally invoke the real box mouse handler with EventSystem disabled
+only for that call, restore EventSystem, and let its opening animation show the
+140-book list. This is a handler/animation check, not synthesized OS input.

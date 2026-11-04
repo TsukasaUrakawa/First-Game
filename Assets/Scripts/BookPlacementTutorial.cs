@@ -199,7 +199,7 @@ public class BookPlacementTutorial : MonoBehaviour
         _dismissLabel.text = CurrentStep == Step.Completed ? "閉じる" : "スキップ";
         Vector2 corner = _ui.IsBookListOpen ? new Vector2(.5f, 1) : Vector2.one;
         _panel.anchorMin = _panel.anchorMax = _panel.pivot = corner;
-        _panel.anchoredPosition = _ui.IsBookListOpen ? new Vector2(120, -10) : new Vector2(-24, -180);
+        _panel.anchoredPosition = _ui.IsBookListOpen ? new Vector2(120, -10) : new Vector2(-24, _camera.IsZoomed ? -264 : -180);
         UpdateFocus();
     }
 

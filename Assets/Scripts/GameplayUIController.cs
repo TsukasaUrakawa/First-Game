@@ -22,6 +22,7 @@ public class GameplayUIController : MonoBehaviour
     [SerializeField] private GameObject _settingsButton;
     [SerializeField] private PauseMenuController _pause;
     [SerializeField] private GameObject _pauseButton;
+    [SerializeField] private RectTransform _menuRow;
 
     public static GameplayUIController Instance { get; private set; }
     public static bool IsWorldInputBlocked => Instance != null && Instance.BlocksWorldInput;
@@ -181,6 +182,11 @@ public class GameplayUIController : MonoBehaviour
 
     private void ApplyVisibility()
     {
+        if (_menuRow != null)
+        {
+            _menuRow.anchoredPosition = new Vector2(IsBookListOpen ? -248 : -24, -24);
+            if (!IsMenuOpen && !IsGameCleared) _menuRow.SetAsLastSibling();
+        }
         if (_pauseButton != null) _pauseButton.SetActive(!IsGameCleared && !IsMenuOpen);
         if (_settingsButton != null) _settingsButton.SetActive(!HasModal);
         SetVisible(_handItemCanvasGroup, !BlocksWorldInput);
