@@ -180,6 +180,22 @@ empty shelf positions beneath the spotlight and pulse.
 
 ## Geometric art and shelf presentation
 
+For the live 3D title, back up progress/settings as above, enter TitleScene Play,
+disable reduced motion, and run `Tests/TitleBookSculptureSmoke.cs` at 1920×1080,
+1366×768 and 4:3. It samples 49 poses across the intro and full idle cycle,
+checks actual projected mesh vertices against the menu/screen area, and uses
+oriented bounding boxes to detect intersecting solid books. It also checks that
+bindings/pages are rigid shared geometry and that title art is independent of
+the gameplay textures. The method restores the animation clock after sampling.
+
+Run the existing `PresentationSceneSmoke`, `SaveTitleSmoke`, `NewGameDialogSmoke`,
+`SettingsPanelSmoke`, `SettingsPresentationSmoke` and `UILayoutOverlapSmoke`
+for text, saved/no-save actions, modal input and settings. Compare book/orbit
+transforms across rendered frames before and after switching reduced motion;
+they should move normally and remain unchanged with reduced motion enabled.
+Stop Play before restoring both preference backups. Browser/WebGL rendering,
+performance and actual audio output remain separate checks.
+
 In Edit mode run `Tests/BookPatternAssetSmoke.cs` to check all 140 sprite identities,
 image proportions and sampled pixels against the eight completion pictures.
 `Tools/BuildBookPatternAssets.cs` also verifies that rebuilding preserves every
