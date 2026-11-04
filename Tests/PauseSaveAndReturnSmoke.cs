@@ -15,7 +15,7 @@ if (!pause.IsOpen && movement.HasSelection)
     inflight = true;
 }
 var expected = new GameProgressData { version = 1, hand = hand.Books.Select(b => b.Sprite.name).ToArray(),
-    placed = slots.Where(s => s.IsFilled).Select(s => new SavedBookPlacement { book = s.PlacedBook.GetComponent<SpriteRenderer>().sprite.name, slot = s.SlotIndex }).ToArray(),
+    placed = slots.Where(s => s.IsFilled).Select(s => new SavedBookPlacement { book = s.PlacedBook.Sprite.name, slot = s.SlotIndex }).ToArray(),
     completedShelves = UnityEngine.Object.FindObjectsByType<BookShelfJudge>(UnityEngine.FindObjectsSortMode.None).Where(s => s.IsCompleted).Select(s => s.GetComponentsInChildren<BookSlot>(true)[0].ShelfColorIndex).OrderBy(c => c).ToArray(), cleared = false };
 Check(expected.IsValid(), "Live fixture is valid");
 System.IO.File.WriteAllText(".utmp/save-smoke-expected.json", JsonUtility.ToJson(expected));

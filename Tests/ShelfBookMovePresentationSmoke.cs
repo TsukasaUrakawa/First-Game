@@ -16,7 +16,7 @@ foreach(string name in new[]{"ReturnShelfBookButton","CancelShelfMoveButton"}){
 }
 Check(Named("ReturnShelfBookButton").GetComponent<UnityEngine.UI.Button>().interactable==!hand.IsFull,"Return availability follows hand capacity");
 Check(Named("ReturnShelfBookButtonLabel").GetComponent<TMPro.TMP_Text>().text==(hand.IsFull?"手持ちがいっぱい":"手持ちに戻す"),"Full-hand explanation is visible");
-Check(move.SelectedSlot.PlacedBook.GetComponent<SpriteRenderer>().color!=Color.white,"Selected book itself has a visible tint");
+Check(move.SelectedSlot.PlacedBook.Visual.HighlightAmount>0 && move.SelectedSlot.PlacedBook.Visual.SpineRenderer.HasPropertyBlock(),"Selected book itself has a visible tint");
 var camera=UnityEngine.Object.FindFirstObjectByType<CameraController>().GetComponent<Camera>();
 foreach(var slot in move.SelectedSlot.ShelfJudge.GetComponentsInChildren<BookSlot>()){
     var point=(Vector2)camera.WorldToScreenPoint(slot.transform.position);var input=new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current){position=point};var hits=new System.Collections.Generic.List<UnityEngine.EventSystems.RaycastResult>();UnityEngine.EventSystems.EventSystem.current.RaycastAll(input,hits);Check(hits.Count==0,"Shelf position "+slot.SlotIndex+" remains reachable beneath UI");

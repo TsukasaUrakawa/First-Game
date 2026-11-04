@@ -8,11 +8,9 @@ public class BookSlot : MonoBehaviour
 
     [SerializeField] private int _slotIndex;
     [Header("Ghost Preview")]
-    [SerializeField] private SpriteRenderer _ghostBookRenderer;
-    [SerializeField, Min(0.01f)] private float _ghostTargetWorldWidth = 0.58f;
-    [SerializeField, Min(0.01f)] private float _ghostTargetWorldHeight = 2.3f;
-    [SerializeField, Range(0f, 1f)] private float _ghostAlpha = 0.35f;
-    [SerializeField] private int _ghostSortingOrder = 9;
+    [SerializeField] private BookVisual3D _ghostPrefab;
+    private BookVisual3D _ghost;
+    public BookVisual3D GhostPreview => _ghost;
 
     public int SlotIndex => _slotIndex;
     public BookObject PlacedBook => _placedBook;
@@ -21,16 +19,15 @@ public class BookSlot : MonoBehaviour
     public bool CanRearrange => !IsLocked && _shelfJudge != null && !_shelfJudge.IsCompleted;
 
     private BookObject _placedBook;
-    private Collider2D _clickCollider;
+    private Collider _clickCollider;
     private BookShelfJudge _shelfJudge;
 
     private void Awake()
     {
-        _clickCollider = GetComponent<Collider2D>();
+        _clickCollider = GetComponent<Collider>();
         _shelfJudge = GetComponentInParent<BookShelfJudge>();
         UpdateSlotIndexFromName();
         UpdateShelfColorIndex();
-        PrepareGhostRenderer();
     }
 
     private void OnValidate()
@@ -161,9 +158,12 @@ public class BookSlot : MonoBehaviour
         if (_clickCollider != null) _clickCollider.enabled = !IsLocked && !IsFilled;
         HideGhostPreview();
         if (book == null) return;
-        book.transform.position = transform.position;
+        book.transform.SetParent(transform, false);
+        book.transform.localPosition = Vector3.zero;
+        book.transform.localRotation = Quaternion.identity;
+        book.transform.localScale = Vector3.one;
         book.GetComponent<PlacedBookClick>()?.SetCurrentSlot(this);
-        var collider = book.GetComponent<Collider2D>();
+        var collider = book.GetComponent<Collider>();
         if (collider != null) collider.enabled = !IsLocked;
     }
 
@@ -182,7 +182,7 @@ public class BookSlot : MonoBehaviour
             return;
         }
 
-        Collider2D placedBookCollider = _placedBook.GetComponent<Collider2D>();
+        Collider placedBookCollider = _placedBook.GetComponent<Collider>();
 
         if (placedBookCollider != null)
         {
@@ -198,23 +198,6 @@ public class BookSlot : MonoBehaviour
         }
 
         return _placedBook.CorrectSlotIndex == _slotIndex;
-    }
-
-    private void PrepareGhostRenderer()
-    {
-        if (_ghostBookRenderer == null)
-        {
-            GameObject ghostObject = new GameObject("GhostBookPreview");
-            ghostObject.transform.SetParent(transform);
-            ghostObject.transform.localPosition = Vector3.zero;
-            ghostObject.transform.localRotation = Quaternion.identity;
-            ghostObject.transform.localScale = Vector3.one;
-
-            _ghostBookRenderer = ghostObject.AddComponent<SpriteRenderer>();
-        }
-
-        _ghostBookRenderer.sortingOrder = _ghostSortingOrder;
-        HideGhostPreview();
     }
 
     private void UpdateGhostPreview()
@@ -243,47 +226,18 @@ public class BookSlot : MonoBehaviour
 
     private void ShowGhostPreview(Sprite sprite)
     {
-        if (_ghostBookRenderer == null || sprite == null)
+        if (_ghostPrefab == null || sprite == null) return;
+        if (_ghost == null)
         {
-            return;
+            _ghost = Instantiate(_ghostPrefab, transform, false);
+            _ghost.name = "GhostBookPreview";
         }
-
-        _ghostBookRenderer.sprite = sprite;
-        _ghostBookRenderer.color = new Color(1f, 1f, 1f, _ghostAlpha);
-        _ghostBookRenderer.enabled = true;
-
-        NormalizeGhostSize(sprite);
+        _ghost.SetSprite(sprite);
+        _ghost.gameObject.SetActive(true);
     }
 
     private void HideGhostPreview()
     {
-        if (_ghostBookRenderer != null)
-        {
-            _ghostBookRenderer.enabled = false;
-        }
-    }
-
-    private void NormalizeGhostSize(Sprite sprite)
-    {
-        float spriteWidth = sprite.bounds.size.x;
-        float spriteHeight = sprite.bounds.size.y;
-
-        if (spriteWidth <= 0f || spriteHeight <= 0f)
-        {
-            return;
-        }
-
-        Transform ghostTransform = _ghostBookRenderer.transform;
-        float parentScaleX = ghostTransform.parent != null
-            ? Mathf.Abs(ghostTransform.parent.lossyScale.x)
-            : 1f;
-        float parentScaleY = ghostTransform.parent != null
-            ? Mathf.Abs(ghostTransform.parent.lossyScale.y)
-            : 1f;
-
-        Vector3 scale = ghostTransform.localScale;
-        scale.x = _ghostTargetWorldWidth / (spriteWidth * parentScaleX);
-        scale.y = _ghostTargetWorldHeight / (spriteHeight * parentScaleY);
-        ghostTransform.localScale = scale;
+        if (_ghost != null) _ghost.gameObject.SetActive(false);
     }
 }

@@ -185,7 +185,7 @@ public class BookPlacementTutorial : MonoBehaviour
                 foreach (var slot in slots)
                 {
                     if (slot.IsFilled) continue;
-                    Bounds bounds = slot.GetComponent<Collider2D>().bounds;
+                    Bounds bounds = slot.GetComponent<Collider>().bounds;
                     if (_worldFocus.HasValue) { var combined = _worldFocus.Value; combined.Encapsulate(bounds); _worldFocus = combined; }
                     else _worldFocus = bounds;
                 }
@@ -225,8 +225,9 @@ public class BookPlacementTutorial : MonoBehaviour
         {
             Bounds bounds = _focusBox ? _boxCollider.bounds : _worldFocus.Value;
             Camera camera = _camera.GetComponent<Camera>();
-            Include(camera.WorldToScreenPoint(bounds.min), ref min, ref max);
-            Include(camera.WorldToScreenPoint(bounds.max), ref min, ref max);
+            for (int x = 0; x < 2; x++) for (int y = 0; y < 2; y++) for (int z = 0; z < 2; z++)
+                Include(camera.WorldToScreenPoint(new Vector3(x == 0 ? bounds.min.x : bounds.max.x,
+                    y == 0 ? bounds.min.y : bounds.max.y, z == 0 ? bounds.min.z : bounds.max.z)), ref min, ref max);
         }
         RectTransformUtility.ScreenPointToLocalPointInRectangle(_layer, min, null, out var localMin);
         RectTransformUtility.ScreenPointToLocalPointInRectangle(_layer, max, null, out var localMax);

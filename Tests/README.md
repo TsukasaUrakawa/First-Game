@@ -180,6 +180,23 @@ empty shelf positions beneath the spotlight and pulse.
 
 ## Geometric art and shelf presentation
 
+The gameplay room and books now use real 3D meshes and colliders; see
+`Docs/3DGameplay.md`. In Edit mode run `Gameplay3DAssetSmoke.cs` to verify the
+original 140 sprite identities/UV regions, eight shared source textures, ordinary
+thick book geometry, 3D colliders and genuinely transparent preview materials.
+`BookPatternAssetSmoke.cs` still checks the original image pixels/completion pictures.
+
+Back up progress/settings, then in Play use `Gameplay3DRoomSmoke.cs` in the room
+and `ShelfReachabilitySmoke.cs` across all eight zoomed shelves. Both use actual
+Physics.Raycast hits as well as UI raycasts. Run in an unfinished game because
+completed shelves intentionally disable book input. Repeat at 1920×1080,
+1366×768 and 1024×768, including resizing an already zoomed shelf.
+`Gameplay3DPreviewSmoke.cs` needs a hand book and an empty place of that color;
+it checks that a cached translucent preview never intercepts the empty-slot ray,
+and that leaving/opening a modal hides it. The existing move/swap, save/restore,
+full 140-book completion, hand, tutorial, pause and settings checks use the same
+gameplay contracts with `BookObject.Sprite` and 3D Collider references.
+
 For the live 3D title, back up progress/settings as above, enter TitleScene Play,
 disable reduced motion, and run `Tests/TitleBookSculptureSmoke.cs` at 1920×1080,
 1366×768 and 4:3. It samples 49 poses across the intro and full idle cycle,
@@ -396,7 +413,7 @@ brand, glyph and mote coordinates must match; with it disabled, they must change
 BGM should keep playing and its sample position should advance while muted.
 Setting changes should save after 0.35 unscaled seconds. Restore Time.timeScale=1.
 For the tutorial box, sample its renderer's `_BaseColor` material property block;
-for a selected shelf book, sample its SpriteRenderer color. Green must remain steady
+for a selected shelf book, sample its BookVisual3D spine renderer's `_BaseColor` property block. Green must remain steady
 with reduced motion and pulse normally when disabled.
 
 Run existing list controls (27), tutorial (110), hand inventory (49), shelf moves
@@ -521,9 +538,10 @@ in separate fresh games. `Tests/BookColorFilterPresentationSmoke.cs` (84 with gu
 should still pass for their corresponding states.
 
 In an empty fresh room with no modal, run `Tests/ShelfReachabilitySmoke.cs` at each
-size (281 checks). It opens all eight shelves and checks every placement center
-is on screen with margin and receives no UI raycast. Leave the last shelf zoomed,
-resize, let a frame render and repeat (315 when the previous 17-slot shelf is
+size (421 checks). It opens all eight shelves and checks every placement center
+is on screen with margin, receives no UI raycast, and receives a real 3D physics
+ray at its intended slot. Leave the last shelf zoomed,
+resize, let a frame render and repeat (472 when the previous 17-slot shelf is
 checked first). The first check uses the existing view before reopening any
 shelf, so it also verifies live camera adjustment. The tutorial smoke (110) must
 pass at 1024×768; a clipped endpoint previously prevented its focus from expanding.

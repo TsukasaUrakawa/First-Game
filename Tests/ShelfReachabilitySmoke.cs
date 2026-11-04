@@ -7,6 +7,7 @@ var shelves = UnityEngine.Object.FindObjectsByType<BookShelfZoomButton>(UnityEng
 Check(shelves.Length == 8, "All shelves present");
 void CheckShelf(BookShelfZoomButton shelf)
 {
+    Physics.SyncTransforms();
     foreach (var slot in shelf.ShelfJudge.GetComponentsInChildren<BookSlot>(true))
     {
         var point = (Vector2)camera.WorldToScreenPoint(slot.transform.position);
@@ -14,6 +15,9 @@ void CheckShelf(BookShelfZoomButton shelf)
         var hits = new System.Collections.Generic.List<UnityEngine.EventSystems.RaycastResult>();
         UnityEngine.EventSystems.EventSystem.current.RaycastAll(new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current) { position = point }, hits);
         Check(hits.Count == 0, shelf.name + " slot " + slot.SlotIndex + " is not covered by UI");
+        var ray = camera.ScreenPointToRay(point);
+        Check(Physics.Raycast(ray, out var hit, 200) && hit.collider.GetComponentInParent<BookSlot>() == slot,
+            shelf.name + " slot " + slot.SlotIndex + " receives a real 3D physics ray");
     }
 }
 // After a resize, check the current view before reopening any shelf.

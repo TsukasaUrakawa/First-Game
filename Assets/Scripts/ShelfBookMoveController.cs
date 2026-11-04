@@ -14,12 +14,10 @@ public sealed class ShelfBookMoveController : MonoBehaviour
     public static ShelfBookMoveController Instance { get; private set; }
     public BookSlot SelectedSlot { get; private set; }
     public bool HasSelection => SelectedSlot != null;
-    public Sprite SelectedSprite => _renderer != null ? _renderer.sprite : null;
+    public Sprite SelectedSprite => _book != null ? _book.Sprite : null;
     public bool CanReturnToHand => HasSelection && SelectedSlot.CanRearrange && !_hand.IsFull && !_ui.BlocksWorldInput;
     public event System.Action SelectionChanged;
     private BookObject _book;
-    private SpriteRenderer _renderer;
-    private Color _originalColor;
 
     private void Awake() => Instance = this;
 
@@ -54,8 +52,6 @@ public sealed class ShelfBookMoveController : MonoBehaviour
         _hand.ClearSelection();
         SelectedSlot = slot;
         _book = slot.PlacedBook;
-        _renderer = _book.GetComponent<SpriteRenderer>();
-        if (_renderer != null) _originalColor = _renderer.color;
         slot.ShelfJudge.StateChanged += ValidateSelection;
         Play(_selectSound);
         SelectionChanged?.Invoke();
@@ -84,12 +80,11 @@ public sealed class ShelfBookMoveController : MonoBehaviour
     public void CancelSelection()
     {
         bool hadSelection = HasSelection;
-        if (_renderer != null) _renderer.color = _originalColor;
+        if (_book != null) _book.Visual.SetHighlight(0);
         if (SelectedSlot != null && SelectedSlot.ShelfJudge != null)
             SelectedSlot.ShelfJudge.StateChanged -= ValidateSelection;
         SelectedSlot = null;
         _book = null;
-        _renderer = null;
         if (hadSelection) SelectionChanged?.Invoke();
     }
 
@@ -103,10 +98,10 @@ public sealed class ShelfBookMoveController : MonoBehaviour
     private void Update()
     {
         ValidateSelection();
-        if (_renderer != null)
+        if (_book != null)
         {
             float pulse = GamePreferences.ReducedMotion ? .45f : .45f + .15f * Mathf.Sin(Time.unscaledTime * 3.5f);
-            _renderer.color = Color.Lerp(_originalColor, new Color(.55f, .90f, .58f, _originalColor.a), pulse);
+            _book.Visual.SetHighlight(pulse);
         }
     }
 

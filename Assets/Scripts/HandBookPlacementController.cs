@@ -119,16 +119,14 @@ public class HandBookPlacementController : MonoBehaviour
             return false;
         }
 
-        SpriteRenderer spriteRenderer = bookObject.GetComponent<SpriteRenderer>();
-
-        if (spriteRenderer == null || spriteRenderer.sprite == null)
+        if (bookObject.Sprite == null)
         {
             Debug.LogError("配置された本からSpriteを取得できません");
             return false;
         }
 
         if (!_handItemController.TryAddBook(
-                spriteRenderer.sprite,
+                bookObject.Sprite,
                 bookObject.CorrectSlotIndex))
         {
             return false;

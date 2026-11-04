@@ -82,7 +82,7 @@ public sealed class GameProgressController : MonoBehaviour
         hand = _hand.Books.Select(b => b.Sprite.name).ToArray(),
         placed = _slots.Where(s => s.IsFilled).Select(s => new SavedBookPlacement
         {
-            book = s.PlacedBook.GetComponent<SpriteRenderer>().sprite.name, slot = s.SlotIndex
+            book = s.PlacedBook.Sprite.name, slot = s.SlotIndex
         }).ToArray(),
         completedShelves = _shelves.Where(s => s.IsCompleted).Select(s =>
             s.GetComponentsInChildren<BookSlot>(true)[0].ShelfColorIndex).OrderBy(c => c).ToArray(),
