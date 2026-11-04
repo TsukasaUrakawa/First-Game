@@ -9,6 +9,8 @@ public class BookJudgeManager : MonoBehaviour
     [SerializeField] private UnityEvent _onGameClear;
 
     private bool _isGameCleared;
+    public bool IsGameCleared => _isGameCleared;
+    public event System.Action GameCleared;
 
     private void Awake()
     {
@@ -86,6 +88,7 @@ public class BookJudgeManager : MonoBehaviour
         }
 
         _onGameClear?.Invoke();
+        GameCleared?.Invoke();
         Debug.Log("すべての本棚が完成しました。ゲームクリア！");
     }
 }

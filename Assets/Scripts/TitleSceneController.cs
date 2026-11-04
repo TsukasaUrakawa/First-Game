@@ -1,11 +1,21 @@
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class TitleSceneController : MonoBehaviour
 {
     [SerializeField] private string _gameSceneName = "ShelfCare";
     [SerializeField] private GameObject _quitButton;
+    [Header("Saved Progress")]
+    [SerializeField] private TMP_Text _startButtonLabel;
+    [SerializeField] private GameObject _newGameButton;
+    [SerializeField] private TMP_Text _saveSummary;
+    [SerializeField] private GameObject _newGameDialog;
+    [SerializeField] private Button _cancelNewGameButton;
+    [SerializeField] private CanvasGroup _titleContent;
 
     [Header("Sound")]
     [SerializeField] private AudioSource _audioSource;
@@ -20,6 +30,8 @@ public class TitleSceneController : MonoBehaviour
     [SerializeField] private Ease _fadeEase = Ease.InOutQuad;
 
     private bool _isProcessing;
+    private bool _hasProgress;
+    private GameObject _previousSelection;
 
     private void Awake()
     {
@@ -42,6 +54,30 @@ public class TitleSceneController : MonoBehaviour
             _fadeCanvasGroup.alpha = 0f;
             _fadeCanvasGroup.blocksRaycasts = false;
         }
+        SetNewGameDialog(false);
+        RefreshSavedProgress();
+    }
+
+    private void RefreshSavedProgress()
+    {
+        var result = GameProgressStore.Read(out var data);
+        _hasProgress = data != null && data.HasProgress;
+        if (_startButtonLabel != null) _startButtonLabel.text = _hasProgress ? "続きから" : "はじめる";
+        if (_newGameButton != null) _newGameButton.SetActive(_hasProgress);
+        if (_quitButton != null && _quitButton.transform is RectTransform quit)
+            quit.anchorMin = quit.anchorMax = new Vector2(.38f, _hasProgress ? .155f : .231f);
+        if (_saveSummary == null) return;
+        _saveSummary.text = result == ProgressReadResult.Invalid
+            ? "保存データを読み込めませんでした。\n「はじめる」で新しく遊べます。"
+            : _hasProgress
+                ? (result == ProgressReadResult.Recovered ? "前回の保存データから再開できます。\n" : "") +
+                    (data.cleared ? "すべての本棚が完成しました" : $"完成した棚 {data.completedShelves.Length} / 8・収納 {data.placed.Length} / 140 冊")
+                : "進行は自動で保存されます。";
+    }
+
+    private void Update()
+    {
+        if (_newGameDialog != null && _newGameDialog.activeSelf && Input.GetKeyDown(KeyCode.Escape)) CancelNewGame();
     }
 
     private void OnDestroy()
@@ -51,11 +87,48 @@ public class TitleSceneController : MonoBehaviour
 
     public void StartGame()
     {
-        if (_isProcessing)
-        {
-            return;
-        }
+        if (_isProcessing || (_newGameDialog != null && _newGameDialog.activeSelf)) return;
+        BeginGame(!_hasProgress);
+    }
 
+    public void StartNewGame()
+    {
+        if (_isProcessing || (_newGameDialog != null && _newGameDialog.activeSelf)) return;
+        if (!_hasProgress) { BeginGame(true); return; }
+        if (_newGameDialog == null) return;
+        PlaySound(_startButtonSound);
+        _previousSelection = EventSystem.current != null ? EventSystem.current.currentSelectedGameObject : null;
+        SetNewGameDialog(true);
+        if (EventSystem.current != null && _cancelNewGameButton != null)
+            EventSystem.current.SetSelectedGameObject(_cancelNewGameButton.gameObject);
+    }
+
+    public void CancelNewGame()
+    {
+        if (_isProcessing || _newGameDialog == null || !_newGameDialog.activeSelf) return;
+        SetNewGameDialog(false);
+        if (EventSystem.current != null) EventSystem.current.SetSelectedGameObject(_previousSelection);
+    }
+
+    public void ConfirmNewGame()
+    {
+        if (_isProcessing || _newGameDialog == null || !_newGameDialog.activeSelf) return;
+        SetNewGameDialog(false);
+        BeginGame(true);
+    }
+
+    private void SetNewGameDialog(bool visible)
+    {
+        if (_newGameDialog != null) _newGameDialog.SetActive(visible);
+        if (_titleContent != null)
+        {
+            _titleContent.interactable = !visible;
+            _titleContent.blocksRaycasts = !visible;
+        }
+    }
+
+    private void BeginGame(bool newGame)
+    {
         _isProcessing = true;
         PlaySound(_startButtonSound);
 
@@ -66,13 +139,14 @@ public class TitleSceneController : MonoBehaviour
             .Append(FadeOut())
             .OnComplete(() =>
             {
+                if (newGame) GameProgressStore.RequestNewGame();
                 SceneManager.LoadScene(_gameSceneName);
             });
     }
 
     public void QuitGame()
     {
-        if (_isProcessing)
+        if (_isProcessing || (_newGameDialog != null && _newGameDialog.activeSelf))
         {
             return;
         }

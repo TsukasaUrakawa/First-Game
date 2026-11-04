@@ -9,6 +9,15 @@ public class BookListUI : MonoBehaviour
     [SerializeField] private BookSelectionController _bookSelectionController;
     [SerializeField] private BookButton _bookButtonPrefab;
     [SerializeField] private Transform _content;
+    private readonly System.Collections.Generic.HashSet<string> _ownedBooks = new System.Collections.Generic.HashSet<string>();
+
+    public void ExcludeOwnedBooks(System.Collections.Generic.IEnumerable<string> names)
+    {
+        _ownedBooks.UnionWith(names);
+        foreach (var button in _content.GetComponentsInChildren<BookButton>(true))
+            if (button.BookSprite != null && _ownedBooks.Contains(button.BookSprite.name))
+                Destroy(button.gameObject);
+    }
 
     private void Start()
     {
@@ -35,6 +44,7 @@ public class BookListUI : MonoBehaviour
         //並び替え後の本ボタンを生成
         foreach (Sprite bookSprite in books)
         {
+            if (_ownedBooks.Contains(bookSprite.name)) continue;
             BookButton button = Instantiate(_bookButtonPrefab, _content);
             button.SetUp(bookSprite, _bookSelectionController);
         }

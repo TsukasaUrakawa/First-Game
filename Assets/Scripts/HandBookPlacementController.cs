@@ -43,7 +43,7 @@ public class HandBookPlacementController : MonoBehaviour
 
     public bool TryPlaceBook(BookSlot slot)
     {
-        if (GameplayUIController.IsWorldInputBlocked || slot == null || slot.IsFilled ||
+        if (GameplayUIController.IsWorldInputBlocked || slot == null || slot.IsFilled || slot.IsLocked ||
             _handItemController == null ||
             !_handItemController.TryGetSelectedBook(out HandBookData handBook))
         {
@@ -67,27 +67,7 @@ public class HandBookPlacementController : MonoBehaviour
             return false;
         }
 
-        GameObject prefab = GetPrefab(bookColorIndex);
-
-        if (prefab == null)
-        {
-            Debug.LogWarning($"対応する本Prefabが見つかりません: {sprite.name}");
-            return false;
-        }
-
-        GameObject book = Instantiate(prefab, slot.transform.position, Quaternion.identity);
-        BookObject bookObject = book.GetComponent<BookObject>();
-
-        if (bookObject == null)
-        {
-            Debug.LogError("生成した本PrefabにBookObjectがありません");
-            Destroy(book);
-            return false;
-        }
-
-        bookObject.SetSprite(sprite);
-        bookObject.SetCorrectSlotIndex(handBook.CorrectSlotIndex);
-        slot.PlaceBook(book.transform);
+        if (!CreatePlacedBook(slot, sprite, handBook.CorrectSlotIndex, bookColorIndex)) return false;
         PlayPlaceSound();
         _handItemController.RemoveSelectedBook();
         BookPlaced?.Invoke(slot);
@@ -100,7 +80,7 @@ public class HandBookPlacementController : MonoBehaviour
     {
         handBook = null;
 
-        if (GameplayUIController.IsWorldInputBlocked || slot == null || slot.IsFilled || _handItemController == null)
+        if (GameplayUIController.IsWorldInputBlocked || slot == null || slot.IsFilled || slot.IsLocked || _handItemController == null)
         {
             return false;
         }
@@ -125,6 +105,7 @@ public class HandBookPlacementController : MonoBehaviour
         if (GameplayUIController.IsWorldInputBlocked || _handItemController == null ||
             _handItemController.IsFull ||
             slot == null ||
+            slot.IsLocked ||
             !slot.IsFilled)
         {
             return false;
@@ -168,6 +149,33 @@ public class HandBookPlacementController : MonoBehaviour
         }
 
         return _bookPrefabs[index];
+    }
+
+    internal bool CanRestoreBook(BookSlot slot, Sprite sprite)
+    {
+        if (slot == null || sprite == null || !BookColorUtility.TryGetBookIndex(sprite.name, out int index)) return false;
+        int color = BookColorUtility.GetColorIndexFromSlotIndex(index);
+        GameObject prefab = GetPrefab(color);
+        return slot.ShelfColorIndex == color && prefab != null && prefab.GetComponent<BookObject>() != null;
+    }
+
+    internal bool RestoreBook(BookSlot slot, Sprite sprite)
+    {
+        if (!CanRestoreBook(slot, sprite)) return false;
+        BookColorUtility.TryGetBookIndex(sprite.name, out int index);
+        return CreatePlacedBook(slot, sprite, index, BookColorUtility.GetColorIndexFromSlotIndex(index));
+    }
+
+    private bool CreatePlacedBook(BookSlot slot, Sprite sprite, int correctIndex, int color)
+    {
+        GameObject prefab = GetPrefab(color);
+        if (slot.IsFilled || prefab == null || prefab.GetComponent<BookObject>() == null) return false;
+        GameObject book = Instantiate(prefab, slot.transform.position, Quaternion.identity);
+        BookObject bookObject = book.GetComponent<BookObject>();
+        bookObject.SetSprite(sprite);
+        bookObject.SetCorrectSlotIndex(correctIndex);
+        slot.PlaceBook(book.transform);
+        return true;
     }
 
     private void PlayPlaceSound()
