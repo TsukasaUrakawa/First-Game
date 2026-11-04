@@ -91,7 +91,7 @@ public class BookSelectionController : MonoBehaviour
 
         foreach (BookButton button in _selectedBooks)
         {
-            if (GetSlotIndexFromSpriteName(button.BookSprite.name) < 0)
+            if (!BookColorUtility.TryGetBookIndex(button.BookSprite.name, out _))
             {
                 Debug.LogError($"本の名前から正解スロットを取得できません: {button.BookSprite.name}");
                 return;
@@ -101,7 +101,7 @@ public class BookSelectionController : MonoBehaviour
         foreach (BookButton button in _selectedBooks)
         {
             Sprite sprite = button.BookSprite;
-            int correctSlotIndex = GetSlotIndexFromSpriteName(sprite.name);
+            BookColorUtility.TryGetBookIndex(sprite.name, out int correctSlotIndex);
 
             if (_handItemController.TryAddBook(sprite, correctSlotIndex))
             {
@@ -144,38 +144,4 @@ public class BookSelectionController : MonoBehaviour
         SelectionChanged?.Invoke();
     }
 
-    /// <summary>
-    /// 本画像の名前から正解スロットを計算
-    /// </summary>
-    /// <param name="spriteName"></param>
-    /// <returns></returns>
-    private int GetSlotIndexFromSpriteName(string spriteName)
-    {
-        if (string.IsNullOrEmpty(spriteName) || spriteName.Length < 2)
-        {
-            return -1;
-        }
-
-        //Sprite名最後の２文字だけ取り出す
-        string numberPart = spriteName.Substring(spriteName.Length - 2);
-
-        if (!int.TryParse(numberPart, out int number))
-        {
-            return -1;
-        }
-
-        int offset;
-
-        if (spriteName.Contains("Green")) offset = 0;
-        else if (spriteName.Contains("Blue")) offset = 18;
-        else if (spriteName.Contains("Beige")) offset = 35;
-        else if (spriteName.Contains("Red")) offset = 53;
-        else if (spriteName.Contains("Purple")) offset = 70;
-        else if (spriteName.Contains("Brown")) offset = 88;
-        else if (spriteName.Contains("White")) offset = 105;
-        else if (spriteName.Contains("Black")) offset = 123;
-        else return -1;
-
-        return offset + number - 1;
-    }
 }

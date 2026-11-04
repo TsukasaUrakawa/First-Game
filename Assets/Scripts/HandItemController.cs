@@ -23,6 +23,7 @@ public class HandItemController : MonoBehaviour
     public bool IsFull => BookCount >= Capacity;
     public bool HasSelectedBook => _selectedIndex >= 0 && _selectedIndex < BookCount;
     public int SelectedIndex => HasSelectedBook ? _selectedIndex : -1;
+    public IReadOnlyList<HandBookData> Books => _books;
     public event System.Action InventoryChanged;
     public event System.Action SelectionChanged;
 

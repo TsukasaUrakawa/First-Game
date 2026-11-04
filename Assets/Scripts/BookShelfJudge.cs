@@ -120,6 +120,13 @@ public class BookShelfJudge : MonoBehaviour
         StateChanged?.Invoke();
     }
 
+    internal void RestoreCompleted(bool completed)
+    {
+        IsCompleted = completed && IsShelfCorrect();
+        SetShelfLocked(IsCompleted && _lockBooksWhenCompleted);
+        StateChanged?.Invoke();
+    }
+
     private void CompleteShelf()
     {
         IsCompleted = true;

@@ -8,11 +8,13 @@ public class SceneButtonController : MonoBehaviour
 
     public void LoadTitleScene()
     {
+        FindFirstObjectByType<GameProgressController>()?.SaveNow();
         SceneManager.LoadScene(_titleSceneName);
     }
 
     public void LoadGameScene()
     {
+        GameProgressStore.RequestNewGame();
         SceneManager.LoadScene(_gameSceneName);
     }
 
