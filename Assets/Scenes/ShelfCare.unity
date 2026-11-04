@@ -9492,7 +9492,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 404356140}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 903028813}
+        m_TargetAssemblyTypeName: SceneAudioSettings, Assembly-CSharp
+        m_MethodName: PlayClick
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &406329853
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11378,6 +11390,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 903028813}
+        m_TargetAssemblyTypeName: SceneAudioSettings, Assembly-CSharp
+        m_MethodName: PlayClick
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &470249079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12264,7 +12288,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 495075223}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 903028813}
+        m_TargetAssemblyTypeName: SceneAudioSettings, Assembly-CSharp
+        m_MethodName: PlayClick
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &499436434
 GameObject:
   m_ObjectHideFlags: 0
@@ -13482,8 +13518,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1354289895}
         m_TargetAssemblyTypeName: SceneButtonController, Assembly-CSharp
-        m_MethodName: LoadTitleScene
-        m_Mode: 1
+        m_MethodName: LoadTitleSceneWithSound
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -17136,7 +17172,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 824879375}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 903028813}
+        m_TargetAssemblyTypeName: SceneAudioSettings, Assembly-CSharp
+        m_MethodName: PlayClick
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -18201,6 +18249,7 @@ MonoBehaviour:
   _gameplay: {fileID: 1716211015}
   _effectsSource: {fileID: 1716211008}
   _previewSound: {fileID: 8300000, guid: f01494148f8a453429510bf1e3eff2f5, type: 3}
+  _uiAudio: {fileID: 903028813}
 --- !u!114 &903028813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18215,6 +18264,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _musicSources:
   - {fileID: 1975829610}
+  _effectsSource: {fileID: 1716211008}
+  _clickSound: {fileID: 8300000, guid: f01494148f8a453429510bf1e3eff2f5, type: 3}
+  _clickVolume: 0.6
 --- !u!4 &903028814
 Transform:
   m_ObjectHideFlags: 0
@@ -18447,7 +18499,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 912130913}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 903028813}
+        m_TargetAssemblyTypeName: SceneAudioSettings, Assembly-CSharp
+        m_MethodName: PlayClick
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &912365266
 GameObject:
   m_ObjectHideFlags: 0
@@ -21281,6 +21345,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 903028813}
+        m_TargetAssemblyTypeName: SceneAudioSettings, Assembly-CSharp
+        m_MethodName: PlayClick
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1027794900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22136,7 +22212,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1058269394}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 903028813}
+        m_TargetAssemblyTypeName: SceneAudioSettings, Assembly-CSharp
+        m_MethodName: PlayClick
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1061725942
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24630,6 +24718,18 @@ MonoBehaviour:
       - m_Target: {fileID: 903028812}
         m_TargetAssemblyTypeName: SettingsPanelController, Assembly-CSharp
         m_MethodName: Close
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 903028813}
+        m_TargetAssemblyTypeName: SceneAudioSettings, Assembly-CSharp
+        m_MethodName: PlayClick
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -29214,6 +29314,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _titleSceneName: TitleScene
   _gameSceneName: ShelfCare
+  _uiAudio: {fileID: 903028813}
+  _transitionButtons:
+  - {fileID: 615064221}
+  - {fileID: 1695120267}
 --- !u!4 &1354289896
 Transform:
   m_ObjectHideFlags: 0
@@ -34948,7 +35052,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1584175228}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 903028813}
+        m_TargetAssemblyTypeName: SceneAudioSettings, Assembly-CSharp
+        m_MethodName: PlayClick
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1589580846
 GameObject:
   m_ObjectHideFlags: 0
@@ -35752,7 +35868,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1607875186}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 903028813}
+        m_TargetAssemblyTypeName: SceneAudioSettings, Assembly-CSharp
+        m_MethodName: PlayClick
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1608012298
 GameObject:
   m_ObjectHideFlags: 0
@@ -37752,7 +37880,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1354289895}
         m_TargetAssemblyTypeName: SceneButtonController, Assembly-CSharp
-        m_MethodName: LoadGameScene
+        m_MethodName: LoadGameSceneWithSound
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -38506,7 +38634,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1720282974}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 903028813}
+        m_TargetAssemblyTypeName: SceneAudioSettings, Assembly-CSharp
+        m_MethodName: PlayClick
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1721733858 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9060335290681986763, guid: 1a744813dc722ae48bc4b09953aff4d0, type: 3}
@@ -45459,7 +45599,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2065521088}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 903028813}
+        m_TargetAssemblyTypeName: SceneAudioSettings, Assembly-CSharp
+        m_MethodName: PlayClick
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2067520515
 GameObject:
   m_ObjectHideFlags: 0

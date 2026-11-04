@@ -388,3 +388,31 @@ Finally restore both original backups, reset the Game view to 1920×1080, and le
 Play stopped. Manually verify audible levels, mute, effect preview, Escape, dragging,
 and browser reload/storage in a WebGL build. No browser audio/storage test is
 implied by these Editor checks.
+
+For button feedback, run `Tests/UIButtonAudioWiringSmoke.cs` in Edit mode
+(99 checks covering all 43 authored buttons, including hidden panels). It also
+checks the effect source/clip, settings routing, existing book sounds and absence
+of a second generic click on buttons that already provide feedback.
+
+After backing up both progress and settings, provide a nonempty saved game and
+run `Tests/UIClickAudioPlaySmoke.cs` in Title Play (13 checks). Repeat in a fresh
+game after opening and closing the list once to initialize its cards (23 checks).
+It dispatches native UGUI pointer events and checks the effect source's actual
+playback state for settings open/close, both toggles, all nine filters, New Game
+cancellation and shelf selection cancellation. Right clicks and disabled controls
+must remain silent; sliders must not generate repeated clicks. Effect gain and
+mute must still apply. These checks do not establish audible quality or OS input.
+
+Show Clear using `Tools > Shelf Care > Preview Clear Screen` and wait for its fade.
+Set EventSystem's selected object to `TitleButton`, then run
+`Tests/ClearButtonAudioSmoke.cs` (4 immediate checks). In a later CLI call verify
+that the scene is TitleScene and saved progress/settings match its returned JSON.
+Repeat from gameplay Clear with `ReplayButton` selected: the resulting ShelfCare
+game must have no progress, while settings remain unchanged. Each test submits the
+chosen button, confirms that sound starts before unload, locks both actions, and
+deliberately invokes the opposite callback to test the re-entry guard. The scene
+transition must complete with Time.timeScale=0. Restore Time.timeScale=1 afterwards.
+
+The color-filter (259), shelf-movement (77), settings (20 Title / 27 game) and
+native slider/toggle input (8 per scene) checks must still pass. Stop Play, restore
+both backups and leave the title open. Listen to the clicks in a WebGL build too.

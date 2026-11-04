@@ -18,6 +18,7 @@ public sealed class SettingsPanelController : MonoBehaviour
     [SerializeField] private GameplayUIController _gameplay;
     [SerializeField] private AudioSource _effectsSource;
     [SerializeField] private AudioClip _previewSound;
+    [SerializeField] private SceneAudioSettings _uiAudio;
     private GameObject _previousSelection;
     private bool _savePending;
     private float _saveAfter;
@@ -29,8 +30,8 @@ public sealed class SettingsPanelController : MonoBehaviour
         GamePreferences.Changed += OnPreferencesChanged;
         _musicSlider.onValueChanged.AddListener(GamePreferences.SetMusicVolume);
         _effectsSlider.onValueChanged.AddListener(GamePreferences.SetEffectsVolume);
-        _mutedToggle.onValueChanged.AddListener(GamePreferences.SetMuted);
-        _motionToggle.onValueChanged.AddListener(GamePreferences.SetReducedMotion);
+        _mutedToggle.onValueChanged.AddListener(SetMuted);
+        _motionToggle.onValueChanged.AddListener(SetReducedMotion);
         Refresh();
     }
 
@@ -40,8 +41,8 @@ public sealed class SettingsPanelController : MonoBehaviour
         GamePreferences.Changed -= OnPreferencesChanged;
         _musicSlider.onValueChanged.RemoveListener(GamePreferences.SetMusicVolume);
         _effectsSlider.onValueChanged.RemoveListener(GamePreferences.SetEffectsVolume);
-        _mutedToggle.onValueChanged.RemoveListener(GamePreferences.SetMuted);
-        _motionToggle.onValueChanged.RemoveListener(GamePreferences.SetReducedMotion);
+        _mutedToggle.onValueChanged.RemoveListener(SetMuted);
+        _motionToggle.onValueChanged.RemoveListener(SetReducedMotion);
     }
 
     public void Open()
@@ -70,6 +71,18 @@ public sealed class SettingsPanelController : MonoBehaviour
     public void PreviewSound()
     {
         if (IsOpen && _effectsSource != null && _previewSound != null) _effectsSource.PlayOneShot(_previewSound, .6f);
+    }
+
+    private void SetMuted(bool value)
+    {
+        GamePreferences.SetMuted(value);
+        _uiAudio.PlayClick();
+    }
+
+    private void SetReducedMotion(bool value)
+    {
+        GamePreferences.SetReducedMotion(value);
+        _uiAudio.PlayClick();
     }
 
     private void OnPreferencesChanged()

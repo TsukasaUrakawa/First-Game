@@ -1956,6 +1956,7 @@ MonoBehaviour:
   _gameplay: {fileID: 0}
   _effectsSource: {fileID: 603387652}
   _previewSound: {fileID: 8300000, guid: b0b52bb28171e7748b2bd38188d05782, type: 3}
+  _uiAudio: {fileID: 520487081}
 --- !u!114 &520487081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1970,6 +1971,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _musicSources:
   - {fileID: 285757089}
+  _effectsSource: {fileID: 603387652}
+  _clickSound: {fileID: 8300000, guid: f01494148f8a453429510bf1e3eff2f5, type: 3}
+  _clickVolume: 0.6
 --- !u!4 &520487082
 Transform:
   m_ObjectHideFlags: 0
@@ -2892,6 +2896,18 @@ MonoBehaviour:
       - m_Target: {fileID: 603387650}
         m_TargetAssemblyTypeName: TitleSceneController, Assembly-CSharp
         m_MethodName: CancelNewGame
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 520487081}
+        m_TargetAssemblyTypeName: SceneAudioSettings, Assembly-CSharp
+        m_MethodName: PlayClick
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4885,6 +4901,18 @@ MonoBehaviour:
       - m_Target: {fileID: 520487080}
         m_TargetAssemblyTypeName: SettingsPanelController, Assembly-CSharp
         m_MethodName: Open
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 520487081}
+        m_TargetAssemblyTypeName: SceneAudioSettings, Assembly-CSharp
+        m_MethodName: PlayClick
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6889,6 +6917,18 @@ MonoBehaviour:
       - m_Target: {fileID: 520487080}
         m_TargetAssemblyTypeName: SettingsPanelController, Assembly-CSharp
         m_MethodName: Close
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 520487081}
+        m_TargetAssemblyTypeName: SceneAudioSettings, Assembly-CSharp
+        m_MethodName: PlayClick
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
