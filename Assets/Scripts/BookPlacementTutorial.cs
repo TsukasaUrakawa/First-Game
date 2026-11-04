@@ -44,6 +44,7 @@ public class BookPlacementTutorial : MonoBehaviour
     private void OnEnable()
     {
         _ui.StateChanged += Refresh;
+        _ui.PauseChanged += Refresh;
         _selection.SelectionChanged += Refresh;
         _popup.VisibilityChanged += Refresh;
         _hand.InventoryChanged += Refresh;
@@ -61,6 +62,7 @@ public class BookPlacementTutorial : MonoBehaviour
     private void OnDisable()
     {
         _ui.StateChanged -= Refresh;
+        _ui.PauseChanged -= Refresh;
         _selection.SelectionChanged -= Refresh;
         _popup.VisibilityChanged -= Refresh;
         _hand.InventoryChanged -= Refresh;
@@ -72,7 +74,7 @@ public class BookPlacementTutorial : MonoBehaviour
 
     public void BeginTutorial()
     {
-        if (_ui.IsGameCleared || _ui.IsSettingsOpen) return;
+        if (_ui.IsGameCleared || _ui.IsMenuOpen) return;
         ShelfBookMoveController.Instance?.CancelSelection();
         IsRunning = true;
         _completed = false;
@@ -121,7 +123,7 @@ public class BookPlacementTutorial : MonoBehaviour
     private void Refresh()
     {
         if (_ui.IsGameCleared) IsRunning = false;
-        bool visible = IsRunning && !_ui.IsGameCleared && !_ui.IsSettingsOpen && !_answer.IsOpen;
+        bool visible = IsRunning && !_ui.IsGameCleared && !_ui.IsMenuOpen && !_answer.IsOpen;
         _panel.gameObject.SetActive(visible);
         _helpButton.SetActive(!IsRunning && !_ui.HasModal);
         _focus.gameObject.SetActive(false);

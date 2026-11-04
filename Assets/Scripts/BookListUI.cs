@@ -29,7 +29,7 @@ public class BookListUI : MonoBehaviour
 
     public void ShowColor(int colorIndex)
     {
-        if (colorIndex < -1 || colorIndex >= BookColorUtility.ShelfCount || ActiveColorIndex == colorIndex ||
+        if ((GameplayUIController.Instance != null && GameplayUIController.Instance.IsPauseOpen) || colorIndex < -1 || colorIndex >= BookColorUtility.ShelfCount || ActiveColorIndex == colorIndex ||
             !_content.gameObject.activeInHierarchy || _bookSelectionController.IsConfirmationOpen) return;
         ActiveColorIndex = colorIndex;
         ApplyFilter(true);

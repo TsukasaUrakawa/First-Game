@@ -17,6 +17,8 @@
 タイトルの「はじめから」確認中やシーン移動中にも設定を開けません。
 設定中は背後の操作を止め、チュートリアルと強調表示は一時的に隠します。
 再開すると同じ状態に戻ります。
+プレイを途中でやめる場合は、設定を閉じて右上の「中断」を使います。
+保存してタイトルへ戻る流れは`Docs/PauseAndReturn.md`を参照してください。
 
 ## 保存
 
@@ -36,6 +38,10 @@
 
 - 両シーンの`SceneSettings`に`SettingsPanelController`と`SceneAudioSettings`があります。
   表示はCanvas直下の`SettingsPanel/SettingsCard`、入口は`OpenSettingsButton`です。
+- 音量スライダーの行は48、つまみは上下2ずつ空けた44の高さです。
+  Sliderがつまみの縦アンカーを0〜1へ変更するため、つまみの`sizeDelta.y`は-4にします。
+  正の44を指定すると行の高さが加算され、92まで伸びて下のボタンに重なります。
+  試聴ボタンは効果音の行から36、ミュートの行から40の間隔を空けています。
 - `SceneAudioSettings`はシーン内のAudioSourceの元の音量・ミュート状態を記録します。
   `_musicSources`にはタイトルの`TitleBGM`、ゲームの`GameBGM`だけを登録し、
   それ以外の音源に効果音の倍率を適用します。
