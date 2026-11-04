@@ -17,6 +17,8 @@ public class BookSlot : MonoBehaviour
     public int SlotIndex => _slotIndex;
     public BookObject PlacedBook => _placedBook;
     public int ShelfColorIndex { get; private set; } = -1;
+    public BookShelfJudge ShelfJudge => _shelfJudge;
+    public bool CanRearrange => !IsLocked && _shelfJudge != null && !_shelfJudge.IsCompleted;
 
     private BookObject _placedBook;
     private Collider2D _clickCollider;
@@ -78,7 +80,11 @@ public class BookSlot : MonoBehaviour
             return;
         }
 
-        if (HandBookPlacementController.Instance.TryPlaceBook(this))
+        var movement = ShelfBookMoveController.Instance;
+        bool placed = movement != null && movement.HasSelection
+            ? movement.TryMoveSelectedBookTo(this)
+            : HandBookPlacementController.Instance.TryPlaceBook(this);
+        if (placed)
         {
             HideGhostPreview();
         }
@@ -121,36 +127,44 @@ public class BookSlot : MonoBehaviour
             return;
         }
 
-        bookTransform.position = transform.position;
-        IsFilled = true;
-        _placedBook = bookObject;
-
-        if (_clickCollider != null)
-        {
-            _clickCollider.enabled = false;
-        }
-
-        HideGhostPreview();
-
-        PlacedBookClick bookClick = bookTransform.GetComponent<PlacedBookClick>();
-
-        if (bookClick != null)
-        {
-            bookClick.SetCurrentSlot(this);
-        }
+        AssignBook(bookObject);
         _shelfJudge?.NotifyBookChanged();
     }
 
     public void ClearSlot()
     {
-        IsFilled = false;
-        _placedBook = null;
-
-        if (_clickCollider != null)
-        {
-            _clickCollider.enabled = !IsLocked;
-        }
+        if (_placedBook != null) _placedBook.GetComponent<PlacedBookClick>()?.SetCurrentSlot(null);
+        AssignBook(null);
         _shelfJudge?.NotifyBookChanged();
+    }
+
+    public bool CanMoveOrSwapTo(BookSlot target) => !GameplayUIController.IsWorldInputBlocked &&
+        IsFilled && _placedBook != null && CanRearrange && target != null && target != this &&
+        target.CanRearrange && target._shelfJudge == _shelfJudge && target.ShelfColorIndex == ShelfColorIndex;
+
+    public bool TryMoveOrSwapTo(BookSlot target)
+    {
+        if (!CanMoveOrSwapTo(target)) return false;
+        BookObject moving = _placedBook;
+        BookObject other = target._placedBook;
+        // Both positions and click handlers are final before observers can save or judge.
+        AssignBook(other);
+        target.AssignBook(moving);
+        _shelfJudge.NotifyBookChanged();
+        return true;
+    }
+
+    private void AssignBook(BookObject book)
+    {
+        _placedBook = book;
+        IsFilled = book != null;
+        if (_clickCollider != null) _clickCollider.enabled = !IsLocked && !IsFilled;
+        HideGhostPreview();
+        if (book == null) return;
+        book.transform.position = transform.position;
+        book.GetComponent<PlacedBookClick>()?.SetCurrentSlot(this);
+        var collider = book.GetComponent<Collider2D>();
+        if (collider != null) collider.enabled = !IsLocked;
     }
 
     public void SetLocked(bool locked)
@@ -205,6 +219,13 @@ public class BookSlot : MonoBehaviour
 
     private void UpdateGhostPreview()
     {
+        var movement = ShelfBookMoveController.Instance;
+        if (movement != null && movement.HasSelection)
+        {
+            if (!IsFilled && movement.TryGetPreview(this, out Sprite sprite)) ShowGhostPreview(sprite);
+            else HideGhostPreview();
+            return;
+        }
         if (IsLocked ||
             IsFilled ||
             HandBookPlacementController.Instance == null ||

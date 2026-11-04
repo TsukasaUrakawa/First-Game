@@ -99,6 +99,14 @@ public class HandItemController : MonoBehaviour
         return true;
     }
 
+    public void ClearSelection()
+    {
+        if (!HasSelectedBook) return;
+        _selectedIndex = -1;
+        RefreshUI();
+        SelectionChanged?.Invoke();
+    }
+
     public bool RemoveSelectedBook()
     {
         if (!HasSelectedBook)

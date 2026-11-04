@@ -7,6 +7,7 @@ public class ShelfActionMenuController : MonoBehaviour
     [SerializeField] private GameObject _actionPanel;
     [SerializeField] private TMP_Text _shelfTitleLabel;
     [SerializeField] private TMP_Text _shelfStatusLabel;
+    [SerializeField] private TMP_Text _moveInstructionLabel;
     [SerializeField] private AudioClip _shelfButtonClickSound;
     [SerializeField] private GameplayUIController _gameplayUI;
     [SerializeField] private AudioSource _audioSource;
@@ -91,5 +92,7 @@ public class ShelfActionMenuController : MonoBehaviour
         BookShelfJudge shelf = _selectedShelfButton.ShelfJudge;
         if (_shelfStatusLabel != null && shelf != null)
             _shelfStatusLabel.text = shelf.IsCompleted ? "この棚は完成です！" : $"収納 {shelf.PlacedCount} / {shelf.SlotCount} 冊";
+        if (_moveInstructionLabel != null && shelf != null)
+            _moveInstructionLabel.text = shelf.IsCompleted ? "完成した棚の本は動かせません" : "棚の本をクリックで移動・入れ替え";
     }
 }
