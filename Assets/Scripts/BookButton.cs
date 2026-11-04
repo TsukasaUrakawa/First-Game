@@ -80,4 +80,10 @@ public class BookButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         //明度を1にする
         _bookImage.color = Color.white;
     }
+
+    private void OnDisable()
+    {
+        if (_bookImage != null) _bookImage.color = Color.white;
+        if (_frameImage != null) _frameImage.SetActive(IsSelected);
+    }
 }
