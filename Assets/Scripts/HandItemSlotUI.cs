@@ -95,11 +95,11 @@ public class HandItemSlotUI : MonoBehaviour,
         if (_stateLabel != null)
         {
             _stateLabel.text = _isSelected && _hasBook ? "選択中" : (_index + 1).ToString();
-            _stateLabel.color = _isSelected ? new Color(.22f, .39f, .25f) : new Color(.60f, .50f, .38f);
+            _stateLabel.color = _isSelected ? new Color(.98f, .88f, .67f) : new Color(.69f, .76f, .72f);
         }
         if (_background != null)
-            _background.color = _isSelected ? new Color(.88f, .94f, .87f)
-                : _hasBook ? new Color(1, .99f, .96f) : new Color(.92f, .87f, .78f);
+            _background.color = _isSelected ? new Color(.22f, .36f, .35f)
+                : _hasBook ? new Color(.12f, .23f, .25f) : new Color(.08f, .16f, .18f);
     }
 
     private void OnDisable()

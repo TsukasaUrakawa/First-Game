@@ -23,4 +23,15 @@ foreach(float x in new[]{.1f,.3f,.5f,.7f,.9f})foreach(float y in new[]{.1f,.3f,.
     Check(uiHits.Count==0,"Box collider point is not covered by UI: "+point);
 }
 Check(hitPoints>=3,"Several visible parts of the collider are reachable");
+var body=box.GetComponentInChildren<SkinnedMeshRenderer>();
+var bodyRect=Project(body.bounds);
+Check(bodyRect.xMin>=6*scale&&bodyRect.xMax<=Screen.width-6*scale&&bodyRect.yMin>=6*scale&&bodyRect.yMax<=Screen.height-6*scale,"Authored box size fits the screen without clipping");
+for(int x=0;x<2;x++)for(int y=0;y<2;y++)for(int z=0;z<2;z++)
+    Check(camera.WorldToViewportPoint(new Vector3(x==0?body.bounds.min.x:body.bounds.max.x,y==0?body.bounds.min.y:body.bounds.max.y,z==0?body.bounds.min.z:body.bounds.max.z)).z>camera.nearClipPlane,"The camera near plane cannot cut into the cardboard faces");
+float floorY=GameObject.Find("GameplayRoom3D/Floor").GetComponent<Renderer>().bounds.max.y;
+Check(Mathf.Abs(body.bounds.min.y-floorY)<.002f,"The visible cardboard bottom touches the actual floor, independently of its larger click collider");
+var contact=GameObject.Find("GameplayRoom3D/FloorContactShadow").GetComponent<MeshRenderer>();
+Check(contact.enabled&&contact.bounds.center.y>floorY&&contact.bounds.center.y<floorY+.02f,"Soft contact shadow stays just above the floor");
+Check(contact.GetComponentsInChildren<Collider>().Length==0,"Floor contact shadow cannot block input");
+Check(contact.bounds.size.y<.001f,"Changing the box rotation or scale cannot tilt its floor shadow");
 return new{passed=checks,width=Screen.width,height=Screen.height,hitPoints,gap=navigation.yMin-visible.yMax};

@@ -37,13 +37,13 @@ for (int color = 0; color < shelves.Length; color++)
         }
         Check(placement.CanPlaceSelectedBookOnSlot(row[i], out _), "Placement preview available for " + books[i].name);
         Check(placement.TryPlaceBook(row[i]) && row[i].IsCorrect() && hand.BookCount == 0, "Place correct book in " + row[i].name);
-        Check(UnityEngine.Vector3.Distance(row[i].PlacedBook.transform.position, row[i].transform.position) < .00002f && row[i].PlacedBook.GetComponent<UnityEngine.SpriteRenderer>().sprite == books[i], "Book image and click position follow " + row[i].name);
-        Check(!row[i].GetComponent<UnityEngine.Collider2D>().enabled && row[i].PlacedBook.GetComponent<UnityEngine.Collider2D>().enabled, "Filled slot transfers click handling to the book");
+        Check(UnityEngine.Vector3.Distance(row[i].PlacedBook.transform.position, row[i].transform.position) < .00002f && row[i].PlacedBook.Sprite == books[i], "Book image and click position follow " + row[i].name);
+        Check(!row[i].GetComponent<UnityEngine.Collider>().enabled && row[i].PlacedBook.GetComponent<UnityEngine.Collider>().enabled, "Filled slot transfers click handling to the book");
         placed++;
     }
     foreach (var slot in new[] { row.First(), row.Last() })
     {
-        Check(placement.TryReturnBookToHand(slot) && !slot.IsFilled && slot.GetComponent<UnityEngine.Collider2D>().enabled, "Return endpoint book " + slot.name);
+        Check(placement.TryReturnBookToHand(slot) && !slot.IsFilled && slot.GetComponent<UnityEngine.Collider>().enabled, "Return endpoint book " + slot.name);
         hand.SelectBook(0);
         Check(placement.TryPlaceBook(slot) && slot.IsCorrect(), "Restore endpoint book " + slot.name);
     }
@@ -51,7 +51,7 @@ for (int color = 0; color < shelves.Length; color++)
     Check(shelves[color].CheckShelf() && shelves[color].IsCompleted, shelves[color].name + " completes successfully");
     var card = UnityEngine.Object.FindObjectsByType<BookShelfZoomButton>(UnityEngine.FindObjectsInactive.Include, UnityEngine.FindObjectsSortMode.None).Single(c => c.ShelfJudge == shelves[color]);
     Check(card.transform.Find("ShelfProgressLabel").GetComponent<TMPro.TMP_Text>().text == "完成" && card.transform.Find("ProgressTrack/ProgressFill").GetComponent<UnityEngine.UI.Image>().fillAmount == 1, shelves[color].name + " immediately shows completed navigation progress");
-    Check(row.All(s => s.IsLocked && !s.PlacedBook.GetComponent<UnityEngine.Collider2D>().enabled), shelves[color].name + " locks the completed books");
+    Check(row.All(s => s.IsLocked && !s.PlacedBook.GetComponent<UnityEngine.Collider>().enabled), shelves[color].name + " locks the completed books");
 }
 Check(placed == 140 && GameplayUIController.Instance.IsGameCleared && GameplayUIController.IsWorldInputBlocked, "All 140 books still lead to game clear");
 return new { passed = checks, placed, completedShelves = shelves.Count(s => s.IsCompleted) };

@@ -1,0 +1,466 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faffbecad9f5798429c0f1de863e7391, type: 3}
+  m_Name: BookVisualLibrary
+  m_EditorClassIdentifier: 
+  _bodyMesh: {fileID: 4300000, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+  _spines:
+  - Sprite: {fileID: -1804510595, guid: 0f1efff0d315b274391aac6633e28682, type: 3}
+    Mesh: {fileID: -6004191064488358041, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 0
+  - Sprite: {fileID: -1105485433, guid: 0f1efff0d315b274391aac6633e28682, type: 3}
+    Mesh: {fileID: 6500781882718836055, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 0
+  - Sprite: {fileID: 1839050717, guid: 0f1efff0d315b274391aac6633e28682, type: 3}
+    Mesh: {fileID: 6561331244814326485, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 0
+  - Sprite: {fileID: 482398667, guid: 0f1efff0d315b274391aac6633e28682, type: 3}
+    Mesh: {fileID: 8529033647689349521, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 0
+  - Sprite: {fileID: -1382217489, guid: 0f1efff0d315b274391aac6633e28682, type: 3}
+    Mesh: {fileID: 1492424578219189676, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 0
+  - Sprite: {fileID: -1800458424, guid: 0f1efff0d315b274391aac6633e28682, type: 3}
+    Mesh: {fileID: 5306245477689302827, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 0
+  - Sprite: {fileID: -2137703285, guid: 0f1efff0d315b274391aac6633e28682, type: 3}
+    Mesh: {fileID: -3265828678855399657, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 0
+  - Sprite: {fileID: 552989796, guid: 0f1efff0d315b274391aac6633e28682, type: 3}
+    Mesh: {fileID: 6092190060122076962, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 0
+  - Sprite: {fileID: -1988275432, guid: 0f1efff0d315b274391aac6633e28682, type: 3}
+    Mesh: {fileID: -9040733112187691213, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 0
+  - Sprite: {fileID: -803139728, guid: 0f1efff0d315b274391aac6633e28682, type: 3}
+    Mesh: {fileID: 5801341862526423771, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 0
+  - Sprite: {fileID: -540055061, guid: 0f1efff0d315b274391aac6633e28682, type: 3}
+    Mesh: {fileID: -6748899423811343511, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 0
+  - Sprite: {fileID: 1158891417, guid: 0f1efff0d315b274391aac6633e28682, type: 3}
+    Mesh: {fileID: -2361549061420914888, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 0
+  - Sprite: {fileID: 613299178, guid: 0f1efff0d315b274391aac6633e28682, type: 3}
+    Mesh: {fileID: 4715022388462730843, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 0
+  - Sprite: {fileID: 864056362, guid: 0f1efff0d315b274391aac6633e28682, type: 3}
+    Mesh: {fileID: -4935164002177100182, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 0
+  - Sprite: {fileID: 1254341803, guid: 0f1efff0d315b274391aac6633e28682, type: 3}
+    Mesh: {fileID: 7379517111099370155, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 0
+  - Sprite: {fileID: -1436103712, guid: 0f1efff0d315b274391aac6633e28682, type: 3}
+    Mesh: {fileID: -6534830088056082480, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 0
+  - Sprite: {fileID: -914518212, guid: 0f1efff0d315b274391aac6633e28682, type: 3}
+    Mesh: {fileID: -4540971428321136452, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 0
+  - Sprite: {fileID: 1558837001, guid: 0f1efff0d315b274391aac6633e28682, type: 3}
+    Mesh: {fileID: 3022021306741546778, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 0
+  - Sprite: {fileID: -1913063917, guid: 4e87fd8a86cf50b469778ded3f7d4f4e, type: 3}
+    Mesh: {fileID: -5225754466969025441, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 1
+  - Sprite: {fileID: 1566916323, guid: 4e87fd8a86cf50b469778ded3f7d4f4e, type: 3}
+    Mesh: {fileID: -9061139601489937315, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 1
+  - Sprite: {fileID: 464245962, guid: 4e87fd8a86cf50b469778ded3f7d4f4e, type: 3}
+    Mesh: {fileID: 6184266387735831304, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 1
+  - Sprite: {fileID: -466226652, guid: 4e87fd8a86cf50b469778ded3f7d4f4e, type: 3}
+    Mesh: {fileID: 4288249832362722208, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 1
+  - Sprite: {fileID: 1526866943, guid: 4e87fd8a86cf50b469778ded3f7d4f4e, type: 3}
+    Mesh: {fileID: 6734035137994064799, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 1
+  - Sprite: {fileID: 1657087171, guid: 4e87fd8a86cf50b469778ded3f7d4f4e, type: 3}
+    Mesh: {fileID: -8493379414872326687, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 1
+  - Sprite: {fileID: 1146251623, guid: 4e87fd8a86cf50b469778ded3f7d4f4e, type: 3}
+    Mesh: {fileID: -2477235367395864281, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 1
+  - Sprite: {fileID: 1019038387, guid: 4e87fd8a86cf50b469778ded3f7d4f4e, type: 3}
+    Mesh: {fileID: 4230686978203251022, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 1
+  - Sprite: {fileID: 1770356809, guid: 4e87fd8a86cf50b469778ded3f7d4f4e, type: 3}
+    Mesh: {fileID: 9069540708644338913, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 1
+  - Sprite: {fileID: 979776365, guid: 4e87fd8a86cf50b469778ded3f7d4f4e, type: 3}
+    Mesh: {fileID: -8064136118319199080, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 1
+  - Sprite: {fileID: 1037657545, guid: 4e87fd8a86cf50b469778ded3f7d4f4e, type: 3}
+    Mesh: {fileID: -2799291179462466742, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 1
+  - Sprite: {fileID: -2102708996, guid: 4e87fd8a86cf50b469778ded3f7d4f4e, type: 3}
+    Mesh: {fileID: 8774858057543489320, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 1
+  - Sprite: {fileID: 1726476520, guid: 4e87fd8a86cf50b469778ded3f7d4f4e, type: 3}
+    Mesh: {fileID: -2240696640622098239, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 1
+  - Sprite: {fileID: -680401439, guid: 4e87fd8a86cf50b469778ded3f7d4f4e, type: 3}
+    Mesh: {fileID: -8158715879036967075, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 1
+  - Sprite: {fileID: 1368352564, guid: 4e87fd8a86cf50b469778ded3f7d4f4e, type: 3}
+    Mesh: {fileID: -2247849121302536676, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 1
+  - Sprite: {fileID: 1186186062, guid: 4e87fd8a86cf50b469778ded3f7d4f4e, type: 3}
+    Mesh: {fileID: -8084026453684087252, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 1
+  - Sprite: {fileID: 2105589868, guid: 4e87fd8a86cf50b469778ded3f7d4f4e, type: 3}
+    Mesh: {fileID: -2485226874414498514, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 1
+  - Sprite: {fileID: 955068583, guid: bb2397e2a1bbbc746a33c39c278e1ca0, type: 3}
+    Mesh: {fileID: 6301679238655137292, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 2
+  - Sprite: {fileID: -963440662, guid: bb2397e2a1bbbc746a33c39c278e1ca0, type: 3}
+    Mesh: {fileID: -1747232880296168398, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 2
+  - Sprite: {fileID: -2145804827, guid: bb2397e2a1bbbc746a33c39c278e1ca0, type: 3}
+    Mesh: {fileID: 7987290041893260283, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 2
+  - Sprite: {fileID: -770483183, guid: bb2397e2a1bbbc746a33c39c278e1ca0, type: 3}
+    Mesh: {fileID: -5703824896905727845, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 2
+  - Sprite: {fileID: 1829804482, guid: bb2397e2a1bbbc746a33c39c278e1ca0, type: 3}
+    Mesh: {fileID: 661662842781808718, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 2
+  - Sprite: {fileID: 2086414617, guid: bb2397e2a1bbbc746a33c39c278e1ca0, type: 3}
+    Mesh: {fileID: -4490911912861112289, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 2
+  - Sprite: {fileID: 2117293371, guid: bb2397e2a1bbbc746a33c39c278e1ca0, type: 3}
+    Mesh: {fileID: -7258233809444680824, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 2
+  - Sprite: {fileID: 1874568269, guid: bb2397e2a1bbbc746a33c39c278e1ca0, type: 3}
+    Mesh: {fileID: -4692429226284114865, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 2
+  - Sprite: {fileID: -587556263, guid: bb2397e2a1bbbc746a33c39c278e1ca0, type: 3}
+    Mesh: {fileID: -3034671657750361216, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 2
+  - Sprite: {fileID: 1589663762, guid: bb2397e2a1bbbc746a33c39c278e1ca0, type: 3}
+    Mesh: {fileID: 3326252487222983858, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 2
+  - Sprite: {fileID: 1361922641, guid: bb2397e2a1bbbc746a33c39c278e1ca0, type: 3}
+    Mesh: {fileID: 7679484496854082105, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 2
+  - Sprite: {fileID: -1073225314, guid: bb2397e2a1bbbc746a33c39c278e1ca0, type: 3}
+    Mesh: {fileID: 8940203712237744096, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 2
+  - Sprite: {fileID: -2024432032, guid: bb2397e2a1bbbc746a33c39c278e1ca0, type: 3}
+    Mesh: {fileID: -5722804969028375021, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 2
+  - Sprite: {fileID: -2014092833, guid: bb2397e2a1bbbc746a33c39c278e1ca0, type: 3}
+    Mesh: {fileID: -6185307328807894445, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 2
+  - Sprite: {fileID: -331180437, guid: bb2397e2a1bbbc746a33c39c278e1ca0, type: 3}
+    Mesh: {fileID: -3396055154626327987, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 2
+  - Sprite: {fileID: -542137271, guid: bb2397e2a1bbbc746a33c39c278e1ca0, type: 3}
+    Mesh: {fileID: 5977611516205252100, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 2
+  - Sprite: {fileID: 1797362684, guid: bb2397e2a1bbbc746a33c39c278e1ca0, type: 3}
+    Mesh: {fileID: 8603884048181885929, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 2
+  - Sprite: {fileID: -1030822658, guid: bb2397e2a1bbbc746a33c39c278e1ca0, type: 3}
+    Mesh: {fileID: 1124493772038989721, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 2
+  - Sprite: {fileID: 1925288026, guid: 648970a65fb58ed4198115ec1d95822d, type: 3}
+    Mesh: {fileID: -2292938296243035279, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 3
+  - Sprite: {fileID: 1347688541, guid: 648970a65fb58ed4198115ec1d95822d, type: 3}
+    Mesh: {fileID: -3001511016044560709, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 3
+  - Sprite: {fileID: -818546057, guid: 648970a65fb58ed4198115ec1d95822d, type: 3}
+    Mesh: {fileID: 682282737533515610, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 3
+  - Sprite: {fileID: -584467597, guid: 648970a65fb58ed4198115ec1d95822d, type: 3}
+    Mesh: {fileID: -4527132618479242850, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 3
+  - Sprite: {fileID: -1855907672, guid: 648970a65fb58ed4198115ec1d95822d, type: 3}
+    Mesh: {fileID: -3551517060825608296, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 3
+  - Sprite: {fileID: -1611174893, guid: 648970a65fb58ed4198115ec1d95822d, type: 3}
+    Mesh: {fileID: 8298264849862728145, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 3
+  - Sprite: {fileID: 494460966, guid: 648970a65fb58ed4198115ec1d95822d, type: 3}
+    Mesh: {fileID: -6585353144740693587, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 3
+  - Sprite: {fileID: 303706182, guid: 648970a65fb58ed4198115ec1d95822d, type: 3}
+    Mesh: {fileID: -4906010955382801923, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 3
+  - Sprite: {fileID: 1878876913, guid: 648970a65fb58ed4198115ec1d95822d, type: 3}
+    Mesh: {fileID: 274067922195398739, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 3
+  - Sprite: {fileID: 131927824, guid: 648970a65fb58ed4198115ec1d95822d, type: 3}
+    Mesh: {fileID: 588695731472193506, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 3
+  - Sprite: {fileID: -192157419, guid: 648970a65fb58ed4198115ec1d95822d, type: 3}
+    Mesh: {fileID: -6431457978457074106, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 3
+  - Sprite: {fileID: 774019734, guid: 648970a65fb58ed4198115ec1d95822d, type: 3}
+    Mesh: {fileID: -7802167646343904068, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 3
+  - Sprite: {fileID: 1740123165, guid: 648970a65fb58ed4198115ec1d95822d, type: 3}
+    Mesh: {fileID: 8481788000942974997, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 3
+  - Sprite: {fileID: 309159594, guid: 648970a65fb58ed4198115ec1d95822d, type: 3}
+    Mesh: {fileID: -2189377645197599963, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 3
+  - Sprite: {fileID: -79529591, guid: 648970a65fb58ed4198115ec1d95822d, type: 3}
+    Mesh: {fileID: 1652482954658642454, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 3
+  - Sprite: {fileID: 122563131, guid: 648970a65fb58ed4198115ec1d95822d, type: 3}
+    Mesh: {fileID: 5399055052716923395, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 3
+  - Sprite: {fileID: -122112218, guid: 648970a65fb58ed4198115ec1d95822d, type: 3}
+    Mesh: {fileID: -3065844041922522138, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 3
+  - Sprite: {fileID: 2036135975, guid: 0c3ad69eb2dfcc947864ec34a02ccfe2, type: 3}
+    Mesh: {fileID: 8072497069283776684, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 4
+  - Sprite: {fileID: 312788013, guid: 0c3ad69eb2dfcc947864ec34a02ccfe2, type: 3}
+    Mesh: {fileID: -8559063653461359947, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 4
+  - Sprite: {fileID: 1259916244, guid: 0c3ad69eb2dfcc947864ec34a02ccfe2, type: 3}
+    Mesh: {fileID: 6280336793456691604, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 4
+  - Sprite: {fileID: -481025204, guid: 0c3ad69eb2dfcc947864ec34a02ccfe2, type: 3}
+    Mesh: {fileID: -6706479537723157902, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 4
+  - Sprite: {fileID: 237945345, guid: 0c3ad69eb2dfcc947864ec34a02ccfe2, type: 3}
+    Mesh: {fileID: -3091322406293465044, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 4
+  - Sprite: {fileID: -901591459, guid: 0c3ad69eb2dfcc947864ec34a02ccfe2, type: 3}
+    Mesh: {fileID: -8601565684567815798, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 4
+  - Sprite: {fileID: 1661914737, guid: 0c3ad69eb2dfcc947864ec34a02ccfe2, type: 3}
+    Mesh: {fileID: -5731256401885049627, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 4
+  - Sprite: {fileID: 405860656, guid: 0c3ad69eb2dfcc947864ec34a02ccfe2, type: 3}
+    Mesh: {fileID: 1668631728795702638, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 4
+  - Sprite: {fileID: 1391948147, guid: 0c3ad69eb2dfcc947864ec34a02ccfe2, type: 3}
+    Mesh: {fileID: 706752812412762687, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 4
+  - Sprite: {fileID: 1264614621, guid: 0c3ad69eb2dfcc947864ec34a02ccfe2, type: 3}
+    Mesh: {fileID: 5773956082751793695, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 4
+  - Sprite: {fileID: -1104892332, guid: 0c3ad69eb2dfcc947864ec34a02ccfe2, type: 3}
+    Mesh: {fileID: 2669444493829591353, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 4
+  - Sprite: {fileID: 1682381553, guid: 0c3ad69eb2dfcc947864ec34a02ccfe2, type: 3}
+    Mesh: {fileID: -1132503898480021514, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 4
+  - Sprite: {fileID: 1627740114, guid: 0c3ad69eb2dfcc947864ec34a02ccfe2, type: 3}
+    Mesh: {fileID: -5303931793991458432, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 4
+  - Sprite: {fileID: 1518898065, guid: 0c3ad69eb2dfcc947864ec34a02ccfe2, type: 3}
+    Mesh: {fileID: 2452514139440412682, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 4
+  - Sprite: {fileID: 787035054, guid: 0c3ad69eb2dfcc947864ec34a02ccfe2, type: 3}
+    Mesh: {fileID: -8158534150686479512, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 4
+  - Sprite: {fileID: -1087534537, guid: 0c3ad69eb2dfcc947864ec34a02ccfe2, type: 3}
+    Mesh: {fileID: 4535843469679783484, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 4
+  - Sprite: {fileID: -1712200842, guid: 0c3ad69eb2dfcc947864ec34a02ccfe2, type: 3}
+    Mesh: {fileID: -5829107596186055979, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 4
+  - Sprite: {fileID: 1162162930, guid: 0c3ad69eb2dfcc947864ec34a02ccfe2, type: 3}
+    Mesh: {fileID: -6701754348982987273, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 4
+  - Sprite: {fileID: -32778273, guid: 31be750893ae4ae408731613923e0a40, type: 3}
+    Mesh: {fileID: 191789664050062508, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 5
+  - Sprite: {fileID: 885402508, guid: 31be750893ae4ae408731613923e0a40, type: 3}
+    Mesh: {fileID: 5804786251479954538, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 5
+  - Sprite: {fileID: -926685435, guid: 31be750893ae4ae408731613923e0a40, type: 3}
+    Mesh: {fileID: -3999658321581321755, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 5
+  - Sprite: {fileID: -1787235029, guid: 31be750893ae4ae408731613923e0a40, type: 3}
+    Mesh: {fileID: -6075972942865756454, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 5
+  - Sprite: {fileID: 660389453, guid: 31be750893ae4ae408731613923e0a40, type: 3}
+    Mesh: {fileID: 8365487195494201190, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 5
+  - Sprite: {fileID: -965730504, guid: 31be750893ae4ae408731613923e0a40, type: 3}
+    Mesh: {fileID: 8661744457106285615, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 5
+  - Sprite: {fileID: -2108399441, guid: 31be750893ae4ae408731613923e0a40, type: 3}
+    Mesh: {fileID: 3209272317157614214, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 5
+  - Sprite: {fileID: -1101110828, guid: 31be750893ae4ae408731613923e0a40, type: 3}
+    Mesh: {fileID: 2151617475382670106, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 5
+  - Sprite: {fileID: -1715858710, guid: 31be750893ae4ae408731613923e0a40, type: 3}
+    Mesh: {fileID: -5542928965952072454, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 5
+  - Sprite: {fileID: -929581994, guid: 31be750893ae4ae408731613923e0a40, type: 3}
+    Mesh: {fileID: 744186110998820600, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 5
+  - Sprite: {fileID: 521829530, guid: 31be750893ae4ae408731613923e0a40, type: 3}
+    Mesh: {fileID: -190707132048336605, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 5
+  - Sprite: {fileID: -697528808, guid: 31be750893ae4ae408731613923e0a40, type: 3}
+    Mesh: {fileID: -7338110390731658424, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 5
+  - Sprite: {fileID: 1017930384, guid: 31be750893ae4ae408731613923e0a40, type: 3}
+    Mesh: {fileID: -3244927807375213205, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 5
+  - Sprite: {fileID: 1124987315, guid: 31be750893ae4ae408731613923e0a40, type: 3}
+    Mesh: {fileID: -32318372353831167, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 5
+  - Sprite: {fileID: 1573921717, guid: 31be750893ae4ae408731613923e0a40, type: 3}
+    Mesh: {fileID: 7161861485453036289, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 5
+  - Sprite: {fileID: 940819848, guid: 31be750893ae4ae408731613923e0a40, type: 3}
+    Mesh: {fileID: -5270752708980367148, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 5
+  - Sprite: {fileID: 872738946, guid: 31be750893ae4ae408731613923e0a40, type: 3}
+    Mesh: {fileID: 6224699385935841504, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 5
+  - Sprite: {fileID: -482704419, guid: 3293c3a952e833641b3820454159aeea, type: 3}
+    Mesh: {fileID: 4706091171774956880, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 6
+  - Sprite: {fileID: 1114644743, guid: 3293c3a952e833641b3820454159aeea, type: 3}
+    Mesh: {fileID: -5228016018233415599, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 6
+  - Sprite: {fileID: 1299655882, guid: 3293c3a952e833641b3820454159aeea, type: 3}
+    Mesh: {fileID: 1296050137805411618, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 6
+  - Sprite: {fileID: -1303200406, guid: 3293c3a952e833641b3820454159aeea, type: 3}
+    Mesh: {fileID: 614230043975809843, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 6
+  - Sprite: {fileID: -1157609504, guid: 3293c3a952e833641b3820454159aeea, type: 3}
+    Mesh: {fileID: -4986865685597271972, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 6
+  - Sprite: {fileID: 800283450, guid: 3293c3a952e833641b3820454159aeea, type: 3}
+    Mesh: {fileID: 553371467975712336, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 6
+  - Sprite: {fileID: 726126741, guid: 3293c3a952e833641b3820454159aeea, type: 3}
+    Mesh: {fileID: -4505338749601705283, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 6
+  - Sprite: {fileID: -923037735, guid: 3293c3a952e833641b3820454159aeea, type: 3}
+    Mesh: {fileID: -12612173835153738, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 6
+  - Sprite: {fileID: 1107541261, guid: 3293c3a952e833641b3820454159aeea, type: 3}
+    Mesh: {fileID: 8437450124661644125, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 6
+  - Sprite: {fileID: -913346253, guid: 3293c3a952e833641b3820454159aeea, type: 3}
+    Mesh: {fileID: 8710104515745297248, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 6
+  - Sprite: {fileID: -1944148281, guid: 3293c3a952e833641b3820454159aeea, type: 3}
+    Mesh: {fileID: -6588349930602765734, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 6
+  - Sprite: {fileID: -160768304, guid: 3293c3a952e833641b3820454159aeea, type: 3}
+    Mesh: {fileID: -4617040094652813197, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 6
+  - Sprite: {fileID: -1769185862, guid: 3293c3a952e833641b3820454159aeea, type: 3}
+    Mesh: {fileID: 6533941654844334708, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 6
+  - Sprite: {fileID: -1139756635, guid: 3293c3a952e833641b3820454159aeea, type: 3}
+    Mesh: {fileID: 8132080416700585958, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 6
+  - Sprite: {fileID: 2004948951, guid: 3293c3a952e833641b3820454159aeea, type: 3}
+    Mesh: {fileID: -8671078925290407496, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 6
+  - Sprite: {fileID: -1655644299, guid: 3293c3a952e833641b3820454159aeea, type: 3}
+    Mesh: {fileID: 3545028730376631470, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 6
+  - Sprite: {fileID: 1663169593, guid: 3293c3a952e833641b3820454159aeea, type: 3}
+    Mesh: {fileID: -6882708678161032202, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 6
+  - Sprite: {fileID: -415369352, guid: 3293c3a952e833641b3820454159aeea, type: 3}
+    Mesh: {fileID: -7102847468594655456, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 6
+  - Sprite: {fileID: 1973314575, guid: c65c2d62743fa7f4e9ed21d92d36da1e, type: 3}
+    Mesh: {fileID: -2304365158081311953, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 7
+  - Sprite: {fileID: 721641530, guid: c65c2d62743fa7f4e9ed21d92d36da1e, type: 3}
+    Mesh: {fileID: 8904930350429371214, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 7
+  - Sprite: {fileID: 143949065, guid: c65c2d62743fa7f4e9ed21d92d36da1e, type: 3}
+    Mesh: {fileID: -6548248144533355933, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 7
+  - Sprite: {fileID: 744854088, guid: c65c2d62743fa7f4e9ed21d92d36da1e, type: 3}
+    Mesh: {fileID: -6260884046879927889, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 7
+  - Sprite: {fileID: 896961013, guid: c65c2d62743fa7f4e9ed21d92d36da1e, type: 3}
+    Mesh: {fileID: -1076690906533867522, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 7
+  - Sprite: {fileID: -1853887079, guid: c65c2d62743fa7f4e9ed21d92d36da1e, type: 3}
+    Mesh: {fileID: 2312761173052825667, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 7
+  - Sprite: {fileID: -2054831105, guid: c65c2d62743fa7f4e9ed21d92d36da1e, type: 3}
+    Mesh: {fileID: 7139860734824662412, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 7
+  - Sprite: {fileID: -1616829244, guid: c65c2d62743fa7f4e9ed21d92d36da1e, type: 3}
+    Mesh: {fileID: 7637773389616469438, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 7
+  - Sprite: {fileID: 54780213, guid: c65c2d62743fa7f4e9ed21d92d36da1e, type: 3}
+    Mesh: {fileID: -8061133259845720916, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 7
+  - Sprite: {fileID: -365091751, guid: c65c2d62743fa7f4e9ed21d92d36da1e, type: 3}
+    Mesh: {fileID: -3645462105949318515, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 7
+  - Sprite: {fileID: 870110001, guid: c65c2d62743fa7f4e9ed21d92d36da1e, type: 3}
+    Mesh: {fileID: 6738147290761604456, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 7
+  - Sprite: {fileID: 1812379080, guid: c65c2d62743fa7f4e9ed21d92d36da1e, type: 3}
+    Mesh: {fileID: 3254329182476637936, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 7
+  - Sprite: {fileID: -1602793144, guid: c65c2d62743fa7f4e9ed21d92d36da1e, type: 3}
+    Mesh: {fileID: 7610472701066138182, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 7
+  - Sprite: {fileID: -1030465725, guid: c65c2d62743fa7f4e9ed21d92d36da1e, type: 3}
+    Mesh: {fileID: 6149543426481444026, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 7
+  - Sprite: {fileID: -1127107825, guid: c65c2d62743fa7f4e9ed21d92d36da1e, type: 3}
+    Mesh: {fileID: -8587894211984251485, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 7
+  - Sprite: {fileID: -2041747714, guid: c65c2d62743fa7f4e9ed21d92d36da1e, type: 3}
+    Mesh: {fileID: 8950160001642975061, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 7
+  - Sprite: {fileID: 1683161541, guid: c65c2d62743fa7f4e9ed21d92d36da1e, type: 3}
+    Mesh: {fileID: -5284207552140796773, guid: fc5ee05f63cd15c4ab1011e23da66b87, type: 2}
+    ColorIndex: 7
+  _coverMaterials:
+  - {fileID: 2100000, guid: 8b4bf964af4d71c42a040c053e403ed4, type: 2}
+  - {fileID: 2100000, guid: a22dead095e66944cbad691e05e0eefa, type: 2}
+  - {fileID: 2100000, guid: 7f956d6a1af864e4a9e057171ed12550, type: 2}
+  - {fileID: 2100000, guid: 2bed9c0d063c27a41a3316817be5f7a0, type: 2}
+  - {fileID: 2100000, guid: 62ae06d90f8393c4984be91ab863df1a, type: 2}
+  - {fileID: 2100000, guid: e49f38b050dd7d849a413f06c3f88e33, type: 2}
+  - {fileID: 2100000, guid: fa7f3bab3055e1b4f949e3f395a6b945, type: 2}
+  - {fileID: 2100000, guid: a7bc6b88aeeadc340b795d776a215e50, type: 2}
+  _spineMaterials:
+  - {fileID: 2100000, guid: d65c29e072a0b644bbe28c9fe8039d75, type: 2}
+  - {fileID: 2100000, guid: 3f1eb52ac496c424980c91c3f2d285f3, type: 2}
+  - {fileID: 2100000, guid: ccea56d5b415a254b9231004b9512c04, type: 2}
+  - {fileID: 2100000, guid: 604282c4ac470aa489d5c47573f833e0, type: 2}
+  - {fileID: 2100000, guid: 3708a30559c625c419602fda546d6b5e, type: 2}
+  - {fileID: 2100000, guid: 2b325e998750a22439c497b68ab6df26, type: 2}
+  - {fileID: 2100000, guid: 7a357a583cf870e478ab1025255e85dd, type: 2}
+  - {fileID: 2100000, guid: 136feaa735e4844498e736e09395bb02, type: 2}
+  _ghostSpineMaterials:
+  - {fileID: 2100000, guid: 7796408b8410de845a9419c894a22fbb, type: 2}
+  - {fileID: 2100000, guid: eed36fdc42fee904aaf2198119b02692, type: 2}
+  - {fileID: 2100000, guid: 920b68217844bf649a54462b6bae5ed3, type: 2}
+  - {fileID: 2100000, guid: 6658bed81af511540a7d88d3761ddbb3, type: 2}
+  - {fileID: 2100000, guid: 913cb1b81a5b30d4eb75f151bacdc522, type: 2}
+  - {fileID: 2100000, guid: 87fce84995e829648ac64305f0c99e76, type: 2}
+  - {fileID: 2100000, guid: 2812e9b48cf6efa4989d4b0e962e037a, type: 2}
+  - {fileID: 2100000, guid: 92086f4f9bb99ad469b68f57a03c7fd0, type: 2}
+  _paperMaterial: {fileID: 2100000, guid: c81e0631e6c43e9438379affba0299ed, type: 2}
+  _ghostBodyMaterial: {fileID: 2100000, guid: 97565fd796506944394b23ac76b8a572, type: 2}
+  _ghostPaperMaterial: {fileID: 2100000, guid: aff8a23bd5450454dac654b0caa1de22, type: 2}

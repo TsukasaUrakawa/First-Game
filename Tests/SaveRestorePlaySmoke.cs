@@ -12,13 +12,13 @@ Check(hand.Books.Select(b=>b.Sprite.name).SequenceEqual(expected.hand),"Exact ha
 Check(!hand.HasSelectedBook,"Transient selection is cleared");
 Check(slots.Length==140&&slots.Count(s=>s.IsFilled)==expected.placed.Length,"Exact number of placed books");
 foreach(var book in expected.placed){var slot=slots[book.slot];BookColorUtility.TryGetBookIndex(book.book,out int correct);
-    Check(slot.IsFilled&&slot.PlacedBook.GetComponent<SpriteRenderer>().sprite.name==book.book&&slot.PlacedBook.CorrectSlotIndex==correct,"Restored "+book.book+" at "+book.slot);
+    Check(slot.IsFilled&&slot.PlacedBook.Sprite.name==book.book&&slot.PlacedBook.CorrectSlotIndex==correct,"Restored "+book.book+" at "+book.slot);
     Check(Vector3.Distance(slot.PlacedBook.transform.position,slot.transform.position)<.00002f,"Restored book follows slot position");
 }
 foreach(var shelf in UnityEngine.Object.FindObjectsByType<BookShelfJudge>(UnityEngine.FindObjectsInactive.Include,UnityEngine.FindObjectsSortMode.None)){
     var row=shelf.GetComponentsInChildren<BookSlot>(true);int color=row[0].ShelfColorIndex;bool complete=expected.completedShelves.Contains(color);
     Check(shelf.IsCompleted==complete&&row.All(s=>s.IsLocked==complete),"Completion locks restored for "+shelf.name);
-    foreach(var slot in row.Where(s=>s.IsFilled))Check(slot.PlacedBook.GetComponent<Collider2D>().enabled==!complete,"Placed-book input restored");
+    foreach(var slot in row.Where(s=>s.IsFilled))Check(slot.PlacedBook.GetComponent<Collider>().enabled==!complete,"Placed-book input restored");
     var card=UnityEngine.Object.FindObjectsByType<BookShelfZoomButton>(UnityEngine.FindObjectsInactive.Include,UnityEngine.FindObjectsSortMode.None).Single(s=>s.ShelfJudge==shelf);
     Check(card.transform.Find("ShelfProgressLabel").GetComponent<TMPro.TMP_Text>().text==(complete?"完成":$"{row.Count(s=>s.IsFilled)} / {row.Length} 冊"),"Navigation progress refreshed");
 }

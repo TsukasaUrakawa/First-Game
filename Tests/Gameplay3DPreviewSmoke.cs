@@ -1,0 +1,37 @@
+// ShelfCare Play, with at least one hand book and an empty place of that color.
+if (!UnityEditor.EditorApplication.isPlaying || GameplayUIController.Instance.HasModal) throw new System.Exception("Run in the room/shelf with no modal.");
+int checks = 0;
+void Check(bool ok, string message) { if (!ok) throw new System.Exception("FAIL: " + message); checks++; }
+var hand = UnityEngine.Object.FindFirstObjectByType<HandItemController>();
+if (hand.BookCount == 0) throw new System.Exception("Take a book first.");
+if (!hand.HasSelectedBook) hand.SelectBook(0);
+hand.TryGetSelectedBook(out var selected);
+int color = BookColorUtility.GetColorIndexFromSpriteName(selected.Sprite.name);
+var slot = UnityEngine.Object.FindObjectsByType<BookSlot>(UnityEngine.FindObjectsSortMode.None).First(s => s.ShelfColorIndex == color && !s.IsFilled && !s.IsLocked);
+UnityEngine.Object.FindObjectsByType<BookShelfZoomButton>(UnityEngine.FindObjectsSortMode.None).Single(b => b.ShelfJudge == slot.ShelfJudge).ZoomShelf();
+slot.SendMessage("OnMouseEnter");
+var ghost = slot.GhostPreview;
+Check(ghost != null && ghost.gameObject.activeSelf && ghost.Sprite == selected.Sprite, "Hover shows the chosen book as a 3D preview");
+Check(ghost.GetComponentsInChildren<Collider>().Length == 0, "Preview has no input collider");
+Check(ghost.GetComponentsInChildren<MeshRenderer>().All(r => r.enabled && r.sharedMaterials.All(m => m.renderQueue >= 3000 && m.GetFloat("_ZWrite") == 0)), "Preview materials are genuinely transparent");
+var binding=ghost.transform.Find("BindingAndPages");
+var body=binding.GetComponent<MeshFilter>().sharedMesh;
+var materials=binding.GetComponent<MeshRenderer>().sharedMaterials;
+Check(body.bounds.size.z>1&&body.subMeshCount==2,"Preview has the same thick binding and page geometry as a real book");
+Check(materials.Length==2&&materials[0]!=materials[1]&&materials[0].GetColor("_BaseColor")!=materials[1].GetColor("_BaseColor"),"Cover and paper retain distinct translucent surfaces");
+var nearTop=Camera.main.WorldToScreenPoint(binding.TransformPoint(new Vector3(0,1.46f,.05f)));
+var farTop=Camera.main.WorldToScreenPoint(binding.TransformPoint(new Vector3(0,1.46f,1.4f)));
+Check(Vector2.Distance(nearTop,farTop)>6,"The paper's depth is visible from the actual placement camera");
+Physics.SyncTransforms();
+var ray = Camera.main.ScreenPointToRay(Camera.main.WorldToScreenPoint(slot.transform.position));
+Check(Physics.Raycast(ray, out var hit, 200) && hit.collider.GetComponentInParent<BookSlot>() == slot, "Pointer passes through the preview to the intended empty place");
+slot.SendMessage("OnMouseExit"); Check(!ghost.gameObject.activeSelf, "Leaving hides the preview");
+slot.SendMessage("OnMouseEnter"); Check(slot.GhostPreview == ghost && ghost.gameObject.activeSelf, "Next hover reuses its cached preview");
+GameplayUIController.Instance.OpenBookList(); slot.SendMessage("OnMouseOver");
+Check(!ghost.gameObject.activeSelf, "Opening a modal removes the world preview");
+GameplayUIController.Instance.CloseBookList();
+slot.SendMessage("OnMouseEnter"); var previewPosition=ghost.transform.position; var previewRotation=ghost.transform.rotation;
+Check(HandBookPlacementController.Instance.TryPlaceBook(slot),"Placement still works through the 3D preview");
+Check(!ghost.gameObject.activeSelf&&slot.PlacedBook!=null&&slot.PlacedBook.Sprite==selected.Sprite,"A real book replaces its preview");
+Check(slot.PlacedBook.transform.position==previewPosition&&Quaternion.Angle(slot.PlacedBook.transform.rotation,previewRotation)<.001f&&slot.PlacedBook.transform.Find("BindingAndPages").GetComponent<MeshFilter>().sharedMesh==body,"Placed geometry and pose exactly match the preview");
+return new { passed = checks, book = selected.Sprite.name, slot = slot.SlotIndex };

@@ -11,24 +11,24 @@ foreach(var audio in UnityEngine.Object.FindObjectsByType<AudioSource>(UnityEngi
 Find<BookPlacementTutorial>().Dismiss();
 void Take(string[] names){ui.OpenBookList();foreach(string n in names){var b=UnityEngine.Object.FindObjectsByType<BookButton>(UnityEngine.FindObjectsInactive.Include,UnityEngine.FindObjectsSortMode.None).Single(b=>b.BookSprite.name==n);b.GetComponent<UnityEngine.UI.Button>().onClick.Invoke();}Check(Find<BookSelectionController>().SelectedCount==names.Length,"Select intended books");Find<BookSelectionController>().ShowSelectionConfirmation();Find<BookSelectionController>().TakeSelectedBooks();}
 void Place(string name,int index){int i=hand.Books.Select((b,i)=>new{b,i}).Single(p=>p.b.Sprite.name==name).i;hand.SelectBook(i);Check(place.TryPlaceBook(slots[index]),"Place "+name);}
-void Binding(BookSlot slot,BookObject book){Check(slot.PlacedBook==book&&slot.IsFilled&&book.GetComponent<PlacedBookClick>().CurrentSlot==slot,"Book and click handler agree at "+slot.SlotIndex);Check(Vector3.Distance(book.transform.position,slot.transform.position)<.00002f&&!slot.GetComponent<Collider2D>().enabled&&book.GetComponent<Collider2D>().enabled,"Position and colliders agree at "+slot.SlotIndex);}
+void Binding(BookSlot slot,BookObject book){Check(slot.PlacedBook==book&&slot.IsFilled&&book.GetComponent<PlacedBookClick>().CurrentSlot==slot,"Book and click handler agree at "+slot.SlotIndex);Check(Vector3.Distance(book.transform.position,slot.transform.position)<.00002f&&!slot.GetComponent<Collider>().enabled&&book.GetComponent<Collider>().enabled,"Position and colliders agree at "+slot.SlotIndex);}
 Take(new[]{"Green01","Green02","Green03"});Place("Green01",0);Place("Green02",2);Place("Green03",4);
 Take(Enumerable.Range(1,9).Select(i=>"Blue"+i.ToString("D2")).ToArray());
-var first=slots[0].PlacedBook;var second=slots[2].PlacedBook;var third=slots[4].PlacedBook;var color=first.GetComponent<SpriteRenderer>().color;var scale=first.transform.localScale;string[] originalHand=hand.Books.Select(b=>b.Sprite.name).ToArray();
+var first=slots[0].PlacedBook;var second=slots[2].PlacedBook;var third=slots[4].PlacedBook;var highlight=first.Visual.HighlightAmount;var scale=first.transform.localScale;string[] originalHand=hand.Books.Select(b=>b.Sprite.name).ToArray();
 int notifications=0;
-System.Action atomicObserver=()=>{notifications++;var names=slots.Where(s=>s.IsFilled).Select(s=>s.PlacedBook.GetComponent<SpriteRenderer>().sprite.name).Concat(hand.Books.Select(b=>b.Sprite.name)).ToArray();Check(names.Length==12&&names.Distinct().Count()==12,"Observers see no missing or duplicate book during transfer");Check(progress.SaveNow(),"An observer can save the complete transfer immediately");};
+System.Action atomicObserver=()=>{notifications++;var names=slots.Where(s=>s.IsFilled).Select(s=>s.PlacedBook.Sprite.name).Concat(hand.Books.Select(b=>b.Sprite.name)).ToArray();Check(names.Length==12&&names.Distinct().Count()==12,"Observers see no missing or duplicate book during transfer");Check(progress.SaveNow(),"An observer can save the complete transfer immediately");};
 var shelf=slots[0].ShelfJudge;shelf.StateChanged+=atomicObserver;
 try{
     hand.SelectBook(0);
     Check(move.ClickBook(slots[0])&&move.HasSelection&&!hand.HasSelectedBook&&Find<CameraController>().IsZoomed,"Selecting a shelf book clears the hand selection and opens its shelf");
     Check(!move.CanReturnToHand&&move.TryGetPreview(slots[1],out var preview)&&preview.name=="Green01","Full hands permit movement previews but not returns");
-    Check(move.TryMoveSelectedBookTo(slots[1])&&!move.HasSelection&&!slots[0].IsFilled&&slots[0].GetComponent<Collider2D>().enabled,"Move to an empty position without using the hand");Binding(slots[1],first);
+    Check(move.TryMoveSelectedBookTo(slots[1])&&!move.HasSelection&&!slots[0].IsFilled&&slots[0].GetComponent<Collider>().enabled,"Move to an empty position without using the hand");Binding(slots[1],first);
     Check(first.CorrectSlotIndex==0&&!slots[1].IsCorrect()&&first.transform.localScale==scale,"Rearranging preserves the book identity and scale");
     Check(move.ClickBook(slots[1])&&move.ClickBook(slots[2])&&!move.HasSelection,"A second filled book swaps the pair");Binding(slots[1],second);Binding(slots[2],first);
     Check(notifications==2,"Exactly one stable shelf notification per move or swap");
 }finally{shelf.StateChanged-=atomicObserver;}
 Check(hand.Books.Select(b=>b.Sprite.name).SequenceEqual(originalHand)&&hand.BookCount==9,"Moves and swaps preserve all nine hand books in order");
-Check(first.GetComponent<SpriteRenderer>().color==color&&!shelf.IsCompleted,"Selection tint is restored and rearranging does not auto-complete a shelf");
+Check(first.Visual.HighlightAmount==highlight&&!shelf.IsCompleted,"Selection tint is restored and rearranging does not auto-complete a shelf");
 Check(!slots[2].TryMoveOrSwapTo(null)&&!slots[2].TryMoveOrSwapTo(slots[2])&&!slots[2].TryMoveOrSwapTo(slots[18]),"Null, self and cross-color transfers rejected");
 move.ClickBook(slots[2]);Check(!move.TryMoveSelectedBookTo(slots[18])&&move.SelectedSlot==slots[2],"Wrong-color target preserves the selection and layout");
 slots[3].SetLocked(true);Check(!move.TryMoveSelectedBookTo(slots[3]),"Locked destination rejected");slots[3].SetLocked(false);

@@ -18,8 +18,9 @@
 
 ## 実装と保存
 
-`ShelfBookMoveController`が棚の本の選択と2回のクリックを管理します。描画はSpriteRendererの色だけを一時的に変え、
-解除・移動・シーン終了時に元へ戻します。点滅にはunscaled timeを使用し、枠や新しい材質は生成しません。
+`ShelfBookMoveController`が棚の本の選択と2回のクリックを管理します。`BookVisual3D`がMeshRendererの
+MaterialPropertyBlockで選択中の本だけを緑色にし、解除・移動・シーン終了時に元へ戻します。
+共有マテリアルや元の画像は変更しません。点滅にはunscaled timeを使用し、枠や新しい材質は生成しません。
 `ShelfBookMoveUI`がイベントに応じて通常の操作欄と移動用の操作欄、プレビュー、返却可否を更新します。
 
 `BookSlot.TryMoveOrSwapTo`は、2冊の参照・位置・クリック先・コライダーを両方とも更新してから、
@@ -35,6 +36,6 @@
 - `ShelfCare`の`UIManager`にある`ShelfBookMoveController`と`ShelfBookMoveUI`に参照をまとめています。
 - `ShelfActionPanel/ShelfNormalActions`が従来の操作、`ShelfMoveActions`が選択中の操作です。
   同じ場所で切り替え、棚の本や手持ちを覆いません。
-- 「部屋に戻る」の既存のクリック音は保ち、移動先の半透明表示にも既存のGhostBookPreviewを利用します。
+- 「部屋に戻る」の既存のクリック音は保ち、移動先は`GhostBook3D`の半透明メッシュで表示します。
 - 検証の準備・元の保存の退避と復元は`Tests/README.md`を参照してください。
   WebGLでのOS入力やブラウザ上の描画・保存は別途確認が必要です。
