@@ -19,11 +19,14 @@ Check(!originalScene.GetRootGameObjects().Any(g => g.name == "Splines"), "Unused
 var manifest = Newtonsoft.Json.Linq.JObject.Parse(System.IO.File.ReadAllText("Packages/manifest.json"));
 Check(manifest["dependencies"]["com.unity.splines"] == null, "Splines is no longer a direct package dependency");
 float[] levels = { 7.2f, 3.85f, .5f, -2.85f };
+var uprights=GameObject.Find("GameplayRoom3D/Bookcase").GetComponentsInChildren<MeshRenderer>().Where(r=>r.name=="Upright").OrderBy(r=>r.bounds.center.x).ToArray();
+float bookWidth=UnityEditor.AssetDatabase.LoadAssetAtPath<BookVisualLibrary>("Assets/Presentation/Gameplay3D/BookVisualLibrary.asset").BodyMesh.bounds.size.x;
 for (int i = 0; i < shelves.Length; i++)
 {
     var row = shelves[i].GetComponentsInChildren<BookSlot>(true).OrderBy(s => s.SlotIndex).ToArray();
     int count = i % 2 == 0 ? 18 : 17;
-    float centerX = i % 2 == 0 ? -2.95f : 10.05f;
+    float left=uprights[i%2].bounds.max.x, right=uprights[i%2+1].bounds.min.x;
+    float centerX = (left+right)/2;
     float firstX = centerX - (count - 1) * .68f / 2;
     float lastX = centerX + (count - 1) * .68f / 2;
     float y = levels[i / 2];
@@ -33,6 +36,7 @@ for (int i = 0; i < shelves.Length; i++)
     Check(row.All(s => System.Math.Abs(s.transform.position.y - y) < .00002f && System.Math.Abs(s.transform.position.z) < .00002f), shelves[i].name + " remains level");
     var gaps = row.Zip(row.Skip(1), (a, b) => b.transform.localPosition.x - a.transform.localPosition.x).ToArray();
     Check(gaps.Max() - gaps.Min() < .00002f && gaps.Min() > 0, shelves[i].name + " has uniform increasing spacing");
+    Check(firstX-bookWidth/2-left>=0&&firstX-bookWidth/2-left<=.025f&&right-lastX-bookWidth/2>=0&&right-lastX-bookWidth/2<=.025f,"Full row fits between real uprights with only a tiny clearance, without stretching books");
 }
 
 // Exercise the reusable component independently of the game's existing scene.

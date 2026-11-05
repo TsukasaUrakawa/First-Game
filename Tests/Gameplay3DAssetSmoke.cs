@@ -44,4 +44,7 @@ for (int i = 0; i < colors.Length; i++)
 var ghost = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(folder + "GhostBook3D.prefab");
 Check(ghost != null && ghost.GetComponent<BookVisual3D>() != null && ghost.GetComponentsInChildren<Collider>(true).Length == 0, "3D preview cannot steal clicks");
 Check(ghost.GetComponentsInChildren<MeshRenderer>().All(r => r.shadowCastingMode == UnityEngine.Rendering.ShadowCastingMode.Off && r.sharedMaterials.All(m => m.renderQueue >= 3000 && m.GetFloat("_ZWrite") == 0)), "Preview stays translucent and does not cast a solid shadow");
+var previewMaterials=Enumerable.Range(0,8).Select(i=>library.SpineMaterial(i,true)).Concat(library.BodyMaterials(0,true)).Distinct().ToArray();
+Check(previewMaterials.All(m=>m.GetColor("_BaseColor").a>0&&m.GetColor("_BaseColor").a<1),"Every 3D preview surface remains translucent");
+Check(previewMaterials.All(m=>m.GetFloat("_SrcBlend")== (float)(m.IsKeywordEnabled("_ALPHAPREMULTIPLY_ON")?UnityEngine.Rendering.BlendMode.One:UnityEngine.Rendering.BlendMode.SrcAlpha)),"URP applies alpha once; opening the material inspector cannot change the preview blending");
 return new { passed = checks, books = entries.arraySize, atlases = textures.Count, bodyVertices = body.vertexCount };

@@ -18,6 +18,12 @@ public static class GameplayRoom3DBuilder
     private static readonly string[] Colors = { "Green", "Blue", "Beige", "Red", "Purple", "Brown", "White", "Black" };
     private static readonly string[] ClothColors = { "#35402B", "#263643", "#B69B70", "#793226", "#57405D", "#775034", "#E4D5B6", "#282D30" };
     private static readonly float[] RowY = { 7.2f, 3.85f, .5f, -2.85f };
+    private const float CaseCenter = 3.55f, PostWidth = .26f, BookWidth = .68f, EndClearance = .02f;
+    private static float BayWidth(int column) => BookColorUtility.GetShelfSlotCount(column) * BookWidth + 2 * EndClearance;
+    private static float CaseWidth => BayWidth(0) + BayWidth(1) + 3 * PostWidth;
+    private static float PostX(int post) => CaseCenter - CaseWidth / 2 + PostWidth / 2
+        + (post >= 1 ? BayWidth(0) + PostWidth : 0) + (post >= 2 ? BayWidth(1) + PostWidth : 0);
+    private static float BayX(int column) => (PostX(column) + PostX(column + 1)) / 2;
 
     [MenuItem("Tools/Shelf Care/Rebuild 3D Gameplay Room")]
     public static void Rebuild()
@@ -46,27 +52,13 @@ public static class GameplayRoom3DBuilder
         for (int color = 0; color < 8; color++) BuildBookPrefab(color, library, sprites.First(s => BookColorUtility.GetColorIndexFromSpriteName(s.name) == color));
         MigrateShelfPrefab(ghost);
 
-        var shelves = Object.FindObjectsByType<BookShelfJudge>(FindObjectsSortMode.None).OrderBy(s => s.name).ToArray();
-        if (shelves.Length != 8) throw new InvalidOperationException("Expected eight shelves.");
-        for (int color = 0; color < shelves.Length; color++)
-        {
-            var shelf = shelves[color];
-            shelf.transform.position = new Vector3(color % 2 == 0 ? -2.95f : 10.05f, RowY[color / 2], 0);
-            shelf.transform.rotation = Quaternion.identity; shelf.transform.localScale = Vector3.one;
-            var slots = shelf.GetComponentsInChildren<BookSlot>(true).OrderBy(s => s.SlotIndex).ToArray();
-            var aligner = shelf.GetComponent<BookShelfSlotAligner>();
-            var so = new SerializedObject(aligner);
-            so.FindProperty("_startLocalPosition").vector3Value = new Vector3(-(slots.Length - 1) * .68f / 2, 0, 0);
-            so.FindProperty("_slotSpacing").floatValue = .68f; so.ApplyModifiedPropertiesWithoutUndo();
-            aligner.AlignChildSlots();
-            foreach (var slot in slots) ConfigureSlot(slot, ghost);
-        }
+        FitShelfRows();
+        foreach (var slot in Object.FindObjectsByType<BookSlot>(FindObjectsSortMode.None)) ConfigureSlot(slot, ghost);
         foreach (var renderer in Object.FindObjectsByType<SpriteRenderer>(FindObjectsInactive.Include, FindObjectsSortMode.None))
             if (renderer.name == "bookshelf" || renderer.name == "Square") renderer.enabled = false;
 
         var old = GameObject.Find("GameplayRoom3D"); if (old != null) Object.DestroyImmediate(old);
         var root = new GameObject("GameplayRoom3D");
-        var cabinet = Child("Bookcase", root.transform);
         var grain = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Presentation/TitleBooks/ClothGrain.asset");
         var wood = Mat("Walnut", "#65452D", .04f, .36f, Grain("WoodGrain", false));
         var paint = Mat("PaintedTeal", "#15383C", .08f, .32f, grain);
@@ -74,31 +66,15 @@ public static class GameplayRoom3DBuilder
         var darkBack = Mat("Backboard", "#422D22", .02f, .26f, Grain("WoodGrain", false));
         var wall = Mat("Wall", "#102B30", 0, .12f, grain);
         var floor = Mat("Floor", "#352E26", .04f, .28f, Grain("WoodGrain", false));
-        // Two bays x four rows, with real shelf depth behind every spine.
-        foreach (float x in new[] { -9.46f, 3.55f, 16.56f })
-            Board("Upright", cabinet, new Vector3(x, 2.10f, .85f), new Vector3(.26f, 14.05f, 2.05f), paint);
-        for (int column = 0; column < 2; column++)
-        {
-            float x = column == 0 ? -2.95f : 10.05f;
-            Board("Backboard", cabinet, new Vector3(x, 2.10f, 1.93f), new Vector3(12.78f, 14.05f, .12f), darkBack);
-            foreach (float y in RowY.Select(v => v - 1.61f).Concat(new[] { 9.02f }))
-            {
-                Board("Shelf", cabinet, new Vector3(x, y, .85f), new Vector3(12.78f, .18f, 2.05f), wood);
-                Board("ShelfFront", cabinet, new Vector3(x, y - .015f, -.19f), new Vector3(12.78f, .12f, .075f), paint);
-                Board("ShelfCopper", cabinet, new Vector3(x, y + .071f, -.235f), new Vector3(12.78f, .018f, .018f), copper, .004f);
-            }
-        }
-        Board("Cornice", cabinet, new Vector3(3.55f, 9.18f, .85f), new Vector3(26.70f, .24f, 2.32f), paint);
-        Board("CorniceCopper", cabinet, new Vector3(3.55f, 9.30f, -.23f), new Vector3(26.70f, .025f, .035f), copper, .006f);
-        Board("Plinth", cabinet, new Vector3(3.55f, -4.825f, .85f), new Vector3(26.70f, .65f, 2.24f), paint);
-        Board("PlinthCopper", cabinet, new Vector3(3.55f, -4.47f, -.24f), new Vector3(26.70f, .025f, .025f), copper, .006f);
+        BuildCabinet(root.transform, wood, paint, copper, darkBack);
         Board("Wall", root.transform, new Vector3(3.55f, 9, 4.2f), new Vector3(100, 60, .2f), wall, 0);
         Board("Floor", root.transform, new Vector3(0, -5.22f, -15), new Vector3(200, .14f, 200), floor, 0);
         var target = Child("RoomCameraTarget", root.transform); target.position = new Vector3(3.55f, 2.10f, .85f);
 
         var box = Object.FindFirstObjectByType<BoxOpenAndClose>();
-        var boxMesh = box.GetComponentsInChildren<Renderer>().First();
-        box.transform.localScale *= 3.5f / boxMesh.bounds.size.y;
+        var boxMesh = box.GetComponentInChildren<SkinnedMeshRenderer>();
+        // Keep the box's authored rotation and size when regenerating the room.
+        BuildBoxContactShadow(boxMesh);
         var tutorial = Object.FindFirstObjectByType<BookPlacementTutorial>();
         var boxCollider = (Collider)new SerializedObject(tutorial).FindProperty("_boxCollider").objectReferenceValue;
         var camera = Camera.main; camera.orthographic = true; camera.nearClipPlane = .1f; camera.farClipPlane = 250;
@@ -107,7 +83,9 @@ public static class GameplayRoom3DBuilder
         cameraData.renderPostProcessing = true; cameraData.antialiasing = AntialiasingMode.FastApproximateAntialiasing;
         var control = camera.GetComponent<CameraController>();
         Ref(control, "_roomTarget", target); Ref(control, "_roomBox", box); Ref(control, "_boxCollider", boxCollider);
-        var framing = new SerializedObject(control); framing.FindProperty("_roomSize").vector2Value = new Vector2(28.5f, 16);
+        Ref(control, "_boxBody", boxMesh);
+        Ref(control, "_boxContactShadow", Named("FloorContactShadow").GetComponent<Renderer>());
+        var framing = new SerializedObject(control); framing.FindProperty("_roomSize").vector2Value = new Vector2(26.8f, 16);
         framing.FindProperty("_floorHeight").floatValue = -5.15f; framing.ApplyModifiedPropertiesWithoutUndo();
         typeof(CameraController).GetMethod("Awake", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(control, null);
         foreach (var button in Object.FindObjectsByType<BookShelfZoomButton>(FindObjectsInactive.Include, FindObjectsSortMode.None))
@@ -116,13 +94,20 @@ public static class GameplayRoom3DBuilder
         }
         var key = Named("Directional Light").GetComponent<Light>();
         key.transform.rotation = Quaternion.Euler(38, -28, 0); key.color = C("#FFE6BF"); key.intensity = 1.65f;
-        key.shadows = LightShadows.Soft; key.shadowBias = .02f; key.shadowNormalBias = .10f;
+        key.shadows = LightShadows.Soft; key.shadowBias = .01f; key.shadowNormalBias = .03f;
+        // URP otherwise ignores the light's small contact bias and uses the pipeline default.
+        key.GetUniversalAdditionalLightData().usePipelineSettings = false;
         Point("WarmShelfLight", root.transform, new Vector3(-10, 13, -8), "#FFDCA9", 35, 48);
         Point("CoolShelfFill", root.transform, new Vector3(18, 7, -7), "#A1C5C8", 22, 45);
         RenderSettings.ambientMode = AmbientMode.Trilight; RenderSettings.ambientSkyColor = C("#7C9797");
         RenderSettings.ambientEquatorColor = C("#516263"); RenderSettings.ambientGroundColor = C("#263437");
         RenderSettings.fog = true; RenderSettings.fogMode = FogMode.ExponentialSquared;
-        RenderSettings.fogColor = C("#10282D"); RenderSettings.fogDensity = .010f;
+        RenderSettings.fogColor = C("#10282D"); RenderSettings.fogDensity = .005f;
+        foreach (string pipelinePath in new[] { "Assets/Settings/PC_RPAsset.asset", "Assets/Settings/Mobile_RPAsset.asset" })
+        {
+            var pipeline = AssetDatabase.LoadAssetAtPath<UniversalRenderPipelineAsset>(pipelinePath);
+            pipeline.shadowDistance = Mathf.Max(100, pipeline.shadowDistance); EditorUtility.SetDirty(pipeline); AssetDatabase.SaveAssetIfDirty(pipeline);
+        }
         ConfigureUI();
         foreach (var component in Object.FindObjectsByType<Component>(FindObjectsInactive.Include, FindObjectsSortMode.None))
             if ((component is Graphic || component is Transform || component is Collider || component is SpriteRenderer || component is BookShelfZoomButton)
@@ -130,6 +115,47 @@ public static class GameplayRoom3DBuilder
         foreach (var asset in AssetDatabase.LoadAllAssetsAtPath(MeshPath)) AssetDatabase.SaveAssetIfDirty(asset);
         EditorSceneManager.MarkSceneDirty(scene); EditorSceneManager.SaveScene(scene);
         Debug.Log("3D gameplay room rebuilt: 8 shelves, 140 original spines, 3D colliders, lazy 3D previews.");
+    }
+
+    private static void FitShelfRows()
+    {
+        var shelves = Object.FindObjectsByType<BookShelfJudge>(FindObjectsSortMode.None).OrderBy(s => s.name).ToArray();
+        if (shelves.Length != 8) throw new InvalidOperationException("Expected eight shelves.");
+        for (int color = 0; color < shelves.Length; color++)
+        {
+            var shelf = shelves[color]; var aligner = shelf.GetComponent<BookShelfSlotAligner>();
+            var slots = shelf.GetComponentsInChildren<BookSlot>(true);
+            if (slots.Length != BookColorUtility.GetShelfSlotCount(color)) throw new InvalidOperationException("Unexpected shelf capacity.");
+            shelf.transform.position = new Vector3(BayX(color % 2), RowY[color / 2], 0);
+            shelf.transform.rotation = Quaternion.identity; shelf.transform.localScale = Vector3.one;
+            var so = new SerializedObject(aligner);
+            so.FindProperty("_startLocalPosition").vector3Value = new Vector3(-(slots.Length - 1) * BookWidth / 2, 0, 0);
+            so.FindProperty("_slotSpacing").floatValue = BookWidth; so.ApplyModifiedPropertiesWithoutUndo(); aligner.AlignChildSlots();
+        }
+    }
+
+    private static void BuildCabinet(Transform room, Material wood, Material paint, Material copper, Material back)
+    {
+        var cabinet = Child("Bookcase", room);
+        // Each bay follows its own book count, without stretching any book or its artwork.
+        for (int post = 0; post < 3; post++)
+            Board("Upright", cabinet, new Vector3(PostX(post), 2.10f, .85f), new Vector3(PostWidth, 14.05f, 2.05f), paint);
+        for (int column = 0; column < 2; column++)
+        {
+            float x = BayX(column), width = BayWidth(column) + .03f;
+            Board("Backboard", cabinet, new Vector3(x, 2.10f, 1.93f), new Vector3(width, 14.05f, .12f), back);
+            foreach (float y in RowY.Select(v => v - 1.61f).Concat(new[] { 9.02f }))
+            {
+                Board("Shelf", cabinet, new Vector3(x, y, .85f), new Vector3(width, .18f, 2.05f), wood);
+                Board("ShelfFront", cabinet, new Vector3(x, y - .015f, -.19f), new Vector3(width, .12f, .075f), paint);
+                Board("ShelfCopper", cabinet, new Vector3(x, y + .071f, -.235f), new Vector3(width, .018f, .018f), copper, .004f);
+            }
+        }
+        float total = CaseWidth + .42f;
+        Board("Cornice", cabinet, new Vector3(CaseCenter, 9.18f, .85f), new Vector3(total, .24f, 2.32f), paint);
+        Board("CorniceCopper", cabinet, new Vector3(CaseCenter, 9.30f, -.23f), new Vector3(total, .025f, .035f), copper, .006f);
+        Board("Plinth", cabinet, new Vector3(CaseCenter, -4.825f, .85f), new Vector3(total, .65f, 2.24f), paint);
+        Board("PlinthCopper", cabinet, new Vector3(CaseCenter, -4.47f, -.24f), new Vector3(total, .025f, .025f), copper, .006f);
     }
 
     private static BookVisualLibrary BuildLibrary(Sprite[] sprites)
@@ -158,10 +184,11 @@ public static class GameplayRoom3DBuilder
             covers[i] = Mat("Cloth" + Colors[i], ClothColors[i], .02f, .24f, grain);
             var texture = sprites.First(s => BookColorUtility.GetColorIndexFromSpriteName(s.name) == i).texture;
             spines[i] = Mat("Spine" + Colors[i], "#FFFFFF", .02f, .30f, texture, false, true);
-            ghosts[i] = Mat("Preview" + Colors[i], "#B8EFC5", 0, .12f, texture, true, true);
+            ghosts[i] = Mat("Preview" + Colors[i], "#B8EFC5", 0, .12f, texture, true, true, .48f);
         }
         var paper = Mat("Paper", "#F0DFC0", 0, .12f, Grain("PaperGrain", true));
-        var ghostBody = Mat("PreviewBody", "#5DAF7B", 0, .12f, null, true);
+        var ghostBody = Mat("PreviewBody", "#5DAF7B", 0, .12f, grain, true, false, .52f);
+        var ghostPaper = Mat("PreviewPaper", "#C3D7BB", 0, .08f, Grain("PaperGrain", true), true, false, .62f);
         string path = Folder + "/BookVisualLibrary.asset";
         var library = AssetDatabase.LoadAssetAtPath<BookVisualLibrary>(path);
         if (library == null) { library = ScriptableObject.CreateInstance<BookVisualLibrary>(); AssetDatabase.CreateAsset(library, path); }
@@ -177,6 +204,7 @@ public static class GameplayRoom3DBuilder
         ObjectArray(so.FindProperty("_coverMaterials"), covers); ObjectArray(so.FindProperty("_spineMaterials"), spines);
         ObjectArray(so.FindProperty("_ghostSpineMaterials"), ghosts);
         so.FindProperty("_paperMaterial").objectReferenceValue = paper; so.FindProperty("_ghostBodyMaterial").objectReferenceValue = ghostBody;
+        so.FindProperty("_ghostPaperMaterial").objectReferenceValue = ghostPaper;
         so.ApplyModifiedPropertiesWithoutUndo(); AssetDatabase.SaveAssetIfDirty(library); return library;
     }
 
@@ -304,19 +332,30 @@ public static class GameplayRoom3DBuilder
         Named("ReplayButton").GetComponentInChildren<TMP_Text>(true).color = C("#16313A");
     }
 
-    private static Material Mat(string name, string hex, float metallic, float smooth, Texture texture = null, bool transparent = false, bool spine = false)
+    private static Material Mat(string name, string hex, float metallic, float smooth, Texture texture = null, bool transparent = false, bool spine = false, float opacity = .30f)
     {
         string path = Folder + "/" + name + ".mat";
         var mat = AssetDatabase.LoadAssetAtPath<Material>(path);
         if (mat == null) { mat = new Material(Shader.Find("Universal Render Pipeline/Lit")); AssetDatabase.CreateAsset(mat, path); }
-        var color = C(hex); if (transparent) color.a = .30f;
+        var color = C(hex); if (transparent) color.a = opacity;
         mat.SetColor("_BaseColor", color); mat.SetFloat("_Metallic", metallic); mat.SetFloat("_Smoothness", smooth);
         mat.SetTexture("_BaseMap", texture); mat.SetTextureScale("_BaseMap", spine ? Vector2.one : new Vector2(3, 5));
         mat.SetFloat("_Surface", transparent ? 1 : 0); mat.SetFloat("_ZWrite", transparent ? 0 : 1);
-        mat.SetFloat("_SrcBlend", (float)(transparent ? BlendMode.SrcAlpha : BlendMode.One));
+        // URP Lit premultiplies the lit color in this mode. Applying SrcAlpha
+        // again made the binding/pages almost invisible and flattened the preview.
+        mat.SetFloat("_SrcBlend", (float)BlendMode.One);
         mat.SetFloat("_DstBlend", (float)(transparent ? BlendMode.OneMinusSrcAlpha : BlendMode.Zero));
-        if (transparent) { mat.EnableKeyword("_SURFACE_TYPE_TRANSPARENT"); mat.SetOverrideTag("RenderType", "Transparent"); mat.renderQueue = (int)RenderQueue.Transparent; }
+        if (transparent)
+        {
+            mat.SetFloat("_Blend", 0); // Alpha, with the diffuse alpha multiply in the Lit shader.
+            mat.SetFloat("_BlendModePreserveSpecular", 1);
+            mat.SetFloat("_ReceiveShadows", 0); mat.EnableKeyword("_RECEIVE_SHADOWS_OFF");
+            mat.SetOverrideTag("RenderType", "Transparent"); mat.renderQueue = (int)RenderQueue.Transparent;
+            mat.SetShaderPassEnabled("ShadowCaster", false); mat.SetShaderPassEnabled("DepthOnly", false);
+        }
         else { mat.DisableKeyword("_SURFACE_TYPE_TRANSPARENT"); mat.SetOverrideTag("RenderType", "Opaque"); mat.renderQueue = (int)RenderQueue.Geometry; }
+        // Use the same keyword/blend-factor setup as the URP material inspector.
+        BaseShaderGUI.SetupMaterialBlendMode(mat);
         mat.enableInstancing = true; EditorUtility.SetDirty(mat); AssetDatabase.SaveAssetIfDirty(mat); return mat;
     }
 
@@ -336,6 +375,48 @@ public static class GameplayRoom3DBuilder
             byte v = (byte)Mathf.Clamp(value * 255, 0, 255); pixels[y * 128 + x] = new Color32(v, v, v, 255);
         }
         texture.SetPixels32(pixels); texture.Apply(true, false); EditorUtility.SetDirty(texture); AssetDatabase.SaveAssetIfDirty(texture); return texture;
+    }
+
+    private static void BuildBoxContactShadow(Renderer body)
+    {
+        // A small, feathered floor shadow supplies the contact that a distant
+        // directional shadow map cannot resolve. The moving/animated lid keeps
+        // its real-time shadow; this mesh only follows the box's floor footprint.
+        string texturePath = Folder + "/BoxContactShadow.asset";
+        var texture = AssetDatabase.LoadAssetAtPath<Texture2D>(texturePath);
+        if (texture == null)
+        {
+            texture = new Texture2D(64, 64, TextureFormat.RGBA32, false) { name = "BoxContactShadow", wrapMode = TextureWrapMode.Clamp, filterMode = FilterMode.Bilinear };
+            AssetDatabase.CreateAsset(texture, texturePath);
+        }
+        var pixels = new Color32[64 * 64];
+        for (int y = 0; y < 64; y++) for (int x = 0; x < 64; x++)
+        {
+            float u = ((x + .5f) / 32 - 1) / .72f, v = ((y + .5f) / 32 - 1) / .72f;
+            byte alpha = (byte)(220 * Mathf.Exp(-1.7f * (Mathf.Pow(u, 4) + Mathf.Pow(v, 4))));
+            pixels[y * 64 + x] = new Color32(255, 255, 255, alpha);
+        }
+        texture.SetPixels32(pixels); texture.Apply(false, false); EditorUtility.SetDirty(texture); AssetDatabase.SaveAssetIfDirty(texture);
+        string materialPath = Folder + "/BoxContactShadow.mat";
+        var material = AssetDatabase.LoadAssetAtPath<Material>(materialPath);
+        if (material == null) { material = new Material(Shader.Find("Universal Render Pipeline/Unlit")); AssetDatabase.CreateAsset(material, materialPath); }
+        material.SetTexture("_BaseMap", texture); material.SetColor("_BaseColor", new Color(.025f, .035f, .03f, .35f));
+        material.SetFloat("_Surface", 1); material.SetFloat("_Blend", 0); material.SetFloat("_BlendModePreserveSpecular", 0);
+        material.SetFloat("_QueueOffset", -10); BaseShaderGUI.SetupMaterialBlendMode(material);
+        material.SetShaderPassEnabled("ShadowCaster", false); EditorUtility.SetDirty(material); AssetDatabase.SaveAssetIfDirty(material);
+        var geometry = new ShelfCareMeshGeometry(1);
+        geometry.Quad(new Vector3(-.5f, 0, -.5f), new Vector3(-.5f, 0, .5f), new Vector3(.5f, 0, .5f), new Vector3(.5f, 0, -.5f), Vector3.up, 0);
+        var mesh = SaveMesh(geometry.Mesh("BoxContactShadow")); AssetDatabase.SaveAssetIfDirty(mesh);
+        var existing = MaybeNamed("FloorContactShadow"); if (existing != null) Object.DestroyImmediate(existing);
+        var shadow = new GameObject("FloorContactShadow");
+        var bounds = body.bounds;
+        float floor = Named("Floor").GetComponent<Renderer>().bounds.max.y;
+        shadow.transform.position = new Vector3(bounds.center.x, floor + .006f, bounds.center.z);
+        shadow.transform.localScale = new Vector3(bounds.size.x * 1.18f, 1, bounds.size.z * 1.18f);
+        shadow.transform.SetParent(GameObject.Find("GameplayRoom3D").transform, true);
+        shadow.AddComponent<MeshFilter>().sharedMesh = mesh;
+        var renderer = shadow.AddComponent<MeshRenderer>(); renderer.sharedMaterial = material;
+        renderer.shadowCastingMode = ShadowCastingMode.Off; renderer.receiveShadows = false;
     }
 
     private static void Board(string name, Transform parent, Vector3 position, Vector3 size, Material material, float bevel = .018f)

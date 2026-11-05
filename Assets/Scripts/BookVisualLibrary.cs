@@ -18,9 +18,11 @@ public sealed class BookVisualLibrary : ScriptableObject
     [SerializeField] private Material[] _ghostSpineMaterials;
     [SerializeField] private Material _paperMaterial;
     [SerializeField] private Material _ghostBodyMaterial;
+    [SerializeField] private Material _ghostPaperMaterial;
     private Material[][] _bodyMaterials;
     private Material[] _ghostMaterials;
     public Mesh BodyMesh => _bodyMesh;
+    private void OnValidate() { _bodyMaterials = null; _ghostMaterials = null; }
 
     public bool TryGet(Sprite sprite, out Spine spine)
     {
@@ -33,7 +35,7 @@ public sealed class BookVisualLibrary : ScriptableObject
 
     public Material[] BodyMaterials(int color, bool ghost)
     {
-        if (ghost) return _ghostMaterials ?? (_ghostMaterials = new[] { _ghostBodyMaterial, _ghostBodyMaterial });
+        if (ghost) return _ghostMaterials ?? (_ghostMaterials = new[] { _ghostBodyMaterial, _ghostPaperMaterial });
         if (_bodyMaterials == null)
         {
             _bodyMaterials = new Material[_coverMaterials.Length][];

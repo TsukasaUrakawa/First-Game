@@ -193,8 +193,13 @@ completed shelves intentionally disable book input. Repeat at 1920×1080,
 1366×768 and 1024×768, including resizing an already zoomed shelf.
 `Gameplay3DPreviewSmoke.cs` needs a hand book and an empty place of that color;
 it checks that a cached translucent preview never intercepts the empty-slot ray,
-and that leaving/opening a modal hides it. The existing move/swap, save/restore,
-full 140-book completion, hand, tutorial, pause and settings checks use the same
+that its binding/pages have visible depth, that placement exactly replaces its
+geometry/pose, and that leaving/opening a modal hides it. `BoxReachabilitySmoke`
+also checks the visible cardboard bottom against the floor and its soft contact
+shadow, including after a resize or returning from a shelf.
+`ShelfBayFitSmoke.cs` runs after full placement and checks actual rendered book
+bounds against both physical bay edges, without stretched book transforms.
+The existing move/swap, save/restore, full 140-book completion, hand, tutorial, pause and settings checks use the same
 gameplay contracts with `BookObject.Sprite` and 3D Collider references.
 
 For the live 3D title, back up progress/settings as above, enter TitleScene Play,

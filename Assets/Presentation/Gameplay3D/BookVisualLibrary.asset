@@ -463,3 +463,4 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 92086f4f9bb99ad469b68f57a03c7fd0, type: 2}
   _paperMaterial: {fileID: 2100000, guid: c81e0631e6c43e9438379affba0299ed, type: 2}
   _ghostBodyMaterial: {fileID: 2100000, guid: 97565fd796506944394b23ac76b8a572, type: 2}
+  _ghostPaperMaterial: {fileID: 2100000, guid: aff8a23bd5450454dac654b0caa1de22, type: 2}
